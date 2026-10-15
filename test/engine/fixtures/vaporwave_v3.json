@@ -1,0 +1,1979 @@
+{
+  "engineVersion": 3,
+  "cases": [
+    {
+      "seed": 0,
+      "family": 14,
+      "accessible": false,
+      "hash": "dd8b7210",
+      "spec": {
+        "format": 1,
+        "seed": 0,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": false,
+        "palette": {
+          "background": "ffe0c2de",
+          "surface": "fffaf8ff",
+          "displayText": "ff1d183e",
+          "previewText": "ff5b4481",
+          "error": "ffb71824",
+          "caret": "ffa42d6c",
+          "focusRing": "ff1d1743",
+          "accent": "ff007784",
+          "digit": {
+            "face": "ffccbfe2",
+            "label": "ff1a1934",
+            "edge": "ff191037"
+          },
+          "operator": {
+            "face": "fff25aa6",
+            "label": "ff1a1934",
+            "edge": "ff191037"
+          },
+          "equals": {
+            "face": "ff91eefa",
+            "label": "ff1a1934",
+            "edge": "ff191037"
+          },
+          "function": {
+            "face": "ffe6ae93",
+            "label": "ff1a1934",
+            "edge": "ff191037"
+          },
+          "shadow": "ff191037",
+          "highlight": "ff1a2c74",
+          "seedColor": "fff25aa6"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 10,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 300,
+          "stateLayerPermille": 60,
+          "highlightPermille": 850
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 500,
+          "keyWeight": 500,
+          "operatorWeight": 700,
+          "widthPermille": 1250,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ffe0c2de",
+            "ffffcedc",
+            "ffffe1d3",
+            "fffde199",
+            "fff6b385",
+            "fff0649e",
+            "ffa68fc8",
+            "ff8e6db3",
+            "ffffdbf1",
+            "ffe64f9d"
+          ],
+          "angleTenths": 450,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            395,
+            846
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Gentle Cherry",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 1,
+      "family": 14,
+      "accessible": false,
+      "hash": "cc96b71a",
+      "spec": {
+        "format": 1,
+        "seed": 1,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": false,
+        "palette": {
+          "background": "ffe2c3e9",
+          "surface": "fffff7ff",
+          "displayText": "ff1d183e",
+          "previewText": "ff5b4481",
+          "error": "ffb71824",
+          "caret": "ffa53c25",
+          "focusRing": "ff1d1743",
+          "accent": "ff55f6d8",
+          "digit": {
+            "face": "ffd9b9db",
+            "label": "ff13132b",
+            "edge": "ff1d1a34"
+          },
+          "operator": {
+            "face": "fffb6e4e",
+            "label": "ff13132b",
+            "edge": "ff1d1a34"
+          },
+          "equals": {
+            "face": "ff55f6d8",
+            "label": "ff13132b",
+            "edge": "ff1d1a34"
+          },
+          "function": {
+            "face": "ffafc7eb",
+            "label": "ff13132b",
+            "edge": "ff1d1a34"
+          },
+          "shadow": "ff1d1a34",
+          "highlight": "fffb6e4e",
+          "seedColor": "fffb6e4e"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 10,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 320,
+          "stateLayerPermille": 60,
+          "highlightPermille": 850
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 600,
+          "keyWeight": 450,
+          "operatorWeight": 700,
+          "widthPermille": 1400,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ffe2c3e9",
+            "fffdc5d9",
+            "fffdd7bb",
+            "fffade91",
+            "fffba36a",
+            "fff369a5",
+            "ff9b87bf",
+            "ff9273b8",
+            "fffddaf1",
+            "fff15330"
+          ],
+          "angleTenths": 430,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            482,
+            814
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Cosmic Paprika",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 3,
+      "family": 14,
+      "accessible": false,
+      "hash": "b931bbfd",
+      "spec": {
+        "format": 1,
+        "seed": 3,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff18033a",
+          "surface": "ff150e28",
+          "displayText": "ffffecf2",
+          "previewText": "ff56d2de",
+          "error": "fffe8b83",
+          "caret": "fff3a2c1",
+          "focusRing": "fffff6f9",
+          "accent": "ff99f5fe",
+          "digit": {
+            "face": "ffc3bbde",
+            "label": "ff1d153c",
+            "edge": "ff050112"
+          },
+          "operator": {
+            "face": "fff95ea5",
+            "label": "ff1d153c",
+            "edge": "ff050112"
+          },
+          "equals": {
+            "face": "ff99f5fe",
+            "label": "ff1d153c",
+            "edge": "ff050112"
+          },
+          "function": {
+            "face": "fff3b998",
+            "label": "ff1d153c",
+            "edge": "ff050112"
+          },
+          "shadow": "ff050112",
+          "highlight": "fff95ea5",
+          "seedColor": "fff95ea5"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 10,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 100,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 260,
+          "stateLayerPermille": 60,
+          "highlightPermille": 900
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 550,
+          "keyWeight": 450,
+          "operatorWeight": 650,
+          "widthPermille": 1300,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ff18033a",
+            "ff4d1567",
+            "ff811470",
+            "fffb3e26",
+            "ffee2d7f",
+            "ffc118ab",
+            "ff31074d",
+            "ff0b0421",
+            "ffd523be",
+            "ffeb238e"
+          ],
+          "angleTenths": 380,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            395,
+            794
+          ],
+          "releaseAlt": null,
+          "depthCdp": 100,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Scarlet Lounge",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 7,
+      "family": 14,
+      "accessible": false,
+      "hash": "07c88086",
+      "spec": {
+        "format": 1,
+        "seed": 7,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff130337",
+          "surface": "ff151226",
+          "displayText": "ffffede8",
+          "previewText": "ff62d5bf",
+          "error": "fffe8b83",
+          "caret": "fff3a993",
+          "focusRing": "fffff6f4",
+          "accent": "ff35fcdd",
+          "digit": {
+            "face": "ffc9bce5",
+            "label": "ff181134",
+            "edge": "ff070516"
+          },
+          "operator": {
+            "face": "fff75b2d",
+            "label": "ff181134",
+            "edge": "ff070516"
+          },
+          "equals": {
+            "face": "ff35fcdd",
+            "label": "ff181134",
+            "edge": "ff070516"
+          },
+          "function": {
+            "face": "ffedb3c7",
+            "label": "ff181134",
+            "edge": "ff070516"
+          },
+          "shadow": "ff070516",
+          "highlight": "fff75b2d",
+          "seedColor": "fff75b2d"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 10,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 100,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 340,
+          "stateLayerPermille": 60,
+          "highlightPermille": 800
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 600,
+          "keyWeight": 500,
+          "operatorWeight": 800,
+          "widthPermille": 1400,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ff130337",
+            "ff501262",
+            "ff811868",
+            "fffd3a22",
+            "ffe8286b",
+            "ffc61d9b",
+            "ff330e42",
+            "ff070419",
+            "ffd12ac8",
+            "fff1511e"
+          ],
+          "angleTenths": 390,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            482,
+            833
+          ],
+          "releaseAlt": null,
+          "depthCdp": 100,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Paprika Sunset",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 10,
+      "family": 14,
+      "accessible": false,
+      "hash": "bcb5595c",
+      "spec": {
+        "format": 1,
+        "seed": 10,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff030a21",
+          "surface": "ff030d2f",
+          "displayText": "ffffecf4",
+          "previewText": "ff58d1e3",
+          "error": "fffe8b83",
+          "caret": "fff3a0c7",
+          "focusRing": "fffff5f9",
+          "accent": "ff8dedfc",
+          "digit": {
+            "face": "ffccbee9",
+            "label": "ff120e23",
+            "edge": "ff010416"
+          },
+          "operator": {
+            "face": "ffe752a3",
+            "label": "ff120e23",
+            "edge": "ff010416"
+          },
+          "equals": {
+            "face": "ff8dedfc",
+            "label": "ff120e23",
+            "edge": "ff010416"
+          },
+          "function": {
+            "face": "ffe8b79a",
+            "label": "ff120e23",
+            "edge": "ff010416"
+          },
+          "shadow": "ff010416",
+          "highlight": "ffe752a3",
+          "seedColor": "ffe752a3"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 10,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 280,
+          "stateLayerPermille": 60,
+          "highlightPermille": 800
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 550,
+          "keyWeight": 450,
+          "operatorWeight": 700,
+          "widthPermille": 1350,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ff030a21",
+            "ff1f0f43",
+            "ff691277",
+            "fff52ca4",
+            "ffdb41c0",
+            "ff9e4af3",
+            "ff17163c",
+            "ff03040d",
+            "ff9d5cf8",
+            "ffe7279a"
+          ],
+          "angleTenths": 380,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            439,
+            770
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Scarlet Marina",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 41,
+      "family": 14,
+      "accessible": false,
+      "hash": "b0532e4e",
+      "spec": {
+        "format": 1,
+        "seed": 41,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": false,
+        "palette": {
+          "background": "ffb6cbf3",
+          "surface": "fff6f2ff",
+          "displayText": "ff1d183e",
+          "previewText": "ff5b4481",
+          "error": "ffb71824",
+          "caret": "ff2b6f71",
+          "focusRing": "ff1d1743",
+          "accent": "ff00849c",
+          "digit": {
+            "face": "ffc2b7d8",
+            "label": "ff17142e",
+            "edge": "ff20183f"
+          },
+          "operator": {
+            "face": "ff4af7fc",
+            "label": "ff17142e",
+            "edge": "ff20183f"
+          },
+          "equals": {
+            "face": "ffed55a2",
+            "label": "ff17142e",
+            "edge": "ff20183f"
+          },
+          "function": {
+            "face": "ffecb9a3",
+            "label": "ff17142e",
+            "edge": "ff20183f"
+          },
+          "shadow": "ff20183f",
+          "highlight": "ff1d2f76",
+          "seedColor": "ff4af7fc"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 20,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 300,
+          "shadowOffsetCdp": 100,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 340,
+          "stateLayerPermille": 60,
+          "highlightPermille": 950
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 500,
+          "keyWeight": 450,
+          "operatorWeight": 700,
+          "widthPermille": 1400,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ffb6cbf3",
+            "ffb2e7ed",
+            "fffcd2e4",
+            "fffbcadf",
+            "fff288ca",
+            "ffdf59bc",
+            "ffb690be",
+            "ff9a72ad",
+            "ff6ef8fc",
+            "ffef459f"
+          ],
+          "angleTenths": 420,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            395,
+            814
+          ],
+          "releaseAlt": null,
+          "depthCdp": 100,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Bold Cerulean",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 42,
+      "family": 14,
+      "accessible": false,
+      "hash": "02222b0c",
+      "spec": {
+        "format": 1,
+        "seed": 42,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff1a0a3b",
+          "surface": "ff130a2b",
+          "displayText": "ffffecf2",
+          "previewText": "ff57d2e1",
+          "error": "fffe8b83",
+          "caret": "fff3a2be",
+          "focusRing": "fffff6f8",
+          "accent": "ff7ff0ff",
+          "digit": {
+            "face": "ffcbbdeb",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "operator": {
+            "face": "ffef5395",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "equals": {
+            "face": "ff7ff0ff",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "function": {
+            "face": "ffeeb795",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "shadow": "ff09041a",
+          "highlight": "ffef5395",
+          "seedColor": "ffef5395"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 0,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 300,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 320,
+          "stateLayerPermille": 60,
+          "highlightPermille": 900
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 450,
+          "keyWeight": 500,
+          "operatorWeight": 800,
+          "widthPermille": 1400,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ff1a0a3b",
+            "ff521b6b",
+            "ff760e7d",
+            "fff0501d",
+            "ffee2a77",
+            "ffce1ba6",
+            "ff350e4a",
+            "ff0a081b",
+            "ffd823c6",
+            "fff0258a"
+          ],
+          "angleTenths": 460,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            439,
+            846
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Rose Nocturne",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 1234,
+      "family": 14,
+      "accessible": false,
+      "hash": "2140e227",
+      "spec": {
+        "format": 1,
+        "seed": 1234,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": false,
+        "palette": {
+          "background": "ffe2c2ef",
+          "surface": "fff6f2fa",
+          "displayText": "ff1d183e",
+          "previewText": "ff5b4481",
+          "error": "ffb71824",
+          "caret": "ff2a6e76",
+          "focusRing": "ff1d1743",
+          "accent": "ff1f8094",
+          "digit": {
+            "face": "ffc1b3d5",
+            "label": "ff0f0e30",
+            "edge": "ff1b1135"
+          },
+          "operator": {
+            "face": "ff8ef0fc",
+            "label": "ff0f0e30",
+            "edge": "ff1b1135"
+          },
+          "equals": {
+            "face": "fff45e99",
+            "label": "ff0f0e30",
+            "edge": "ff1b1135"
+          },
+          "function": {
+            "face": "fff0b498",
+            "label": "ff0f0e30",
+            "edge": "ff1b1135"
+          },
+          "shadow": "ff1b1135",
+          "highlight": "ff052070",
+          "seedColor": "ff8ef0fc"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 20,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 300,
+          "stateLayerPermille": 60,
+          "highlightPermille": 900
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 500,
+          "keyWeight": 550,
+          "operatorWeight": 800,
+          "widthPermille": 1200,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ffe2c2ef",
+            "fffbbcd5",
+            "fffddbc1",
+            "fffad86f",
+            "fff3a872",
+            "ffeb6099",
+            "ffa687c2",
+            "ff8c71c0",
+            "ffffd9ef",
+            "ffe7498a"
+          ],
+          "angleTenths": 440,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            395,
+            820
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Cosmic Tide",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 2779096485,
+      "family": 14,
+      "accessible": false,
+      "hash": "598d5104",
+      "spec": {
+        "format": 1,
+        "seed": 2779096485,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": false,
+        "palette": {
+          "background": "ffe0c5e7",
+          "surface": "fff6f1fd",
+          "displayText": "ff1d183e",
+          "previewText": "ff5b4481",
+          "error": "ffb71824",
+          "caret": "ffa62e64",
+          "focusRing": "ff1d1743",
+          "accent": "ff00798f",
+          "digit": {
+            "face": "ffc5b1dd",
+            "label": "ff0f0e25",
+            "edge": "ff1c1538"
+          },
+          "operator": {
+            "face": "fff75d9e",
+            "label": "ff0f0e25",
+            "edge": "ff1c1538"
+          },
+          "equals": {
+            "face": "ff0cf5fa",
+            "label": "ff0f0e25",
+            "edge": "ff1c1538"
+          },
+          "function": {
+            "face": "ffdeb193",
+            "label": "ff0f0e25",
+            "edge": "ff1c1538"
+          },
+          "shadow": "ff1c1538",
+          "highlight": "ff16216d",
+          "seedColor": "fff75d9e"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 0,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 100,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 300,
+          "stateLayerPermille": 60,
+          "highlightPermille": 800
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 450,
+          "keyWeight": 450,
+          "operatorWeight": 700,
+          "widthPermille": 1200,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ffe0c5e7",
+            "ffedc5d8",
+            "ffffded2",
+            "fff8db71",
+            "fffcac77",
+            "fff06397",
+            "ffa587c4",
+            "ff9271bd",
+            "fffdd0e9",
+            "fff25599"
+          ],
+          "angleTenths": 460,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            395,
+            831
+          ],
+          "releaseAlt": null,
+          "depthCdp": 100,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Ruby Daybreak",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 0,
+      "family": 14,
+      "accessible": true,
+      "hash": "d1eb1a56",
+      "spec": {
+        "format": 1,
+        "seed": 0,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": true,
+        "palette": {
+          "background": "ffe0c2de",
+          "surface": "fffaf8ff",
+          "displayText": "ff1d183e",
+          "previewText": "ff5b4481",
+          "error": "ffae061c",
+          "caret": "ffa42d6c",
+          "focusRing": "ff1d1743",
+          "accent": "ff007784",
+          "digit": {
+            "face": "ffccbfe2",
+            "label": "ff1a1934",
+            "edge": "ff191037"
+          },
+          "operator": {
+            "face": "fff877b4",
+            "label": "ff161530",
+            "edge": "ff191037"
+          },
+          "equals": {
+            "face": "ff91eefa",
+            "label": "ff1a1934",
+            "edge": "ff191037"
+          },
+          "function": {
+            "face": "ffe6ae93",
+            "label": "ff1a1934",
+            "edge": "ff191037"
+          },
+          "shadow": "ff191037",
+          "highlight": "ff1a2c74",
+          "seedColor": "fff877b4"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 10,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 300,
+          "stateLayerPermille": 60,
+          "highlightPermille": 850
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 500,
+          "keyWeight": 500,
+          "operatorWeight": 700,
+          "widthPermille": 1250,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ffe0c2de",
+            "ffffcedc",
+            "ffffe1d3",
+            "fffde199",
+            "fff6b385",
+            "fff0649e",
+            "ffa68fc8",
+            "ff8e6db3",
+            "ffffdbf1",
+            "ffe64f9d"
+          ],
+          "angleTenths": 450,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            395,
+            846
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Gentle Cherry",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 13,
+      "family": 14,
+      "accessible": true,
+      "hash": "c6acb774",
+      "spec": {
+        "format": 1,
+        "seed": 13,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": true,
+        "palette": {
+          "background": "ff050a1c",
+          "surface": "ff060f30",
+          "displayText": "fff3efff",
+          "previewText": "ff57d2e2",
+          "error": "fffe8b83",
+          "caret": "ffc3b2f2",
+          "focusRing": "fff9f7ff",
+          "accent": "ff16899e",
+          "digit": {
+            "face": "ffefb1c9",
+            "label": "ff151139",
+            "edge": "ff020514"
+          },
+          "operator": {
+            "face": "ffb69bfa",
+            "label": "ff151139",
+            "edge": "ff020514"
+          },
+          "equals": {
+            "face": "ffa2f3fe",
+            "label": "ff151139",
+            "edge": "ff020514"
+          },
+          "function": {
+            "face": "ffe4b091",
+            "label": "ff151139",
+            "edge": "ff020514"
+          },
+          "shadow": "ff020514",
+          "highlight": "ff141f73",
+          "seedColor": "ffb69bfa"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 10,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 100,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 300,
+          "stateLayerPermille": 60,
+          "highlightPermille": 950
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 550,
+          "keyWeight": 550,
+          "operatorWeight": 800,
+          "widthPermille": 1200,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ff050a1c",
+            "ff20134a",
+            "ff63086f",
+            "fffa1d85",
+            "ffce3bc0",
+            "ff9739e2",
+            "ff121735",
+            "ff01020c",
+            "ff9861f9",
+            "ff9b66fa"
+          ],
+          "angleTenths": 460,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            482,
+            750
+          ],
+          "releaseAlt": null,
+          "depthCdp": 100,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Lilac Fountain",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 42,
+      "family": 14,
+      "accessible": true,
+      "hash": "47bf59d8",
+      "spec": {
+        "format": 1,
+        "seed": 42,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": true,
+        "palette": {
+          "background": "ff1a0a3b",
+          "surface": "ff130a2b",
+          "displayText": "ffffecf2",
+          "previewText": "ff57d2e1",
+          "error": "fffe8b83",
+          "caret": "fff3a2be",
+          "focusRing": "fffff6f8",
+          "accent": "ff7ff0ff",
+          "digit": {
+            "face": "ffcbbdeb",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "operator": {
+            "face": "fffc6ea7",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "equals": {
+            "face": "ff7ff0ff",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "function": {
+            "face": "ffeeb795",
+            "label": "ff12092e",
+            "edge": "ff09041a"
+          },
+          "shadow": "ff09041a",
+          "highlight": "fffc6ea7",
+          "seedColor": "fffc6ea7"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 0,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 300,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 320,
+          "stateLayerPermille": 60,
+          "highlightPermille": 900
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 450,
+          "keyWeight": 500,
+          "operatorWeight": 800,
+          "widthPermille": 1400,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ff1a0a3b",
+            "ff521b6b",
+            "ff760e7d",
+            "fff0501d",
+            "ffee2a77",
+            "ffce1ba6",
+            "ff350e4a",
+            "ff0a081b",
+            "ffd823c6",
+            "fff0258a"
+          ],
+          "angleTenths": 460,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            439,
+            846
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Rose Nocturne",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 102,
+      "family": 14,
+      "accessible": true,
+      "hash": "6007b764",
+      "spec": {
+        "format": 1,
+        "seed": 102,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": true,
+        "palette": {
+          "background": "ffb9cff7",
+          "surface": "fff7f6ff",
+          "displayText": "ff1d183e",
+          "previewText": "ff5b4481",
+          "error": "ffad011b",
+          "caret": "ff2a6e76",
+          "focusRing": "ff1d1743",
+          "accent": "ff007d96",
+          "digit": {
+            "face": "ffbfb6e1",
+            "label": "ff1c1c37",
+            "edge": "ff211a44"
+          },
+          "operator": {
+            "face": "ff8af0fc",
+            "label": "ff1c1c37",
+            "edge": "ff211a44"
+          },
+          "equals": {
+            "face": "fffc7fa5",
+            "label": "ff1a1a35",
+            "edge": "ff211a44"
+          },
+          "function": {
+            "face": "fff3b895",
+            "label": "ff1c1c37",
+            "edge": "ff211a44"
+          },
+          "shadow": "ff211a44",
+          "highlight": "ff123175",
+          "seedColor": "ff8af0fc"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 0,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 300,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 280,
+          "stateLayerPermille": 60,
+          "highlightPermille": 850
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 500,
+          "keyWeight": 550,
+          "operatorWeight": 800,
+          "widthPermille": 1350,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ffb9cff7",
+            "ffaee5e4",
+            "fffbd2e1",
+            "fffccfe6",
+            "fff890c8",
+            "ffe45fc4",
+            "ffb692c3",
+            "ff9375b0",
+            "ff93f2fe",
+            "fff13d82"
+          ],
+          "angleTenths": 380,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            439,
+            773
+          ],
+          "releaseAlt": null,
+          "depthCdp": 200,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Glacier Atrium",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 4294967295,
+      "family": 14,
+      "accessible": true,
+      "hash": "407a7412",
+      "spec": {
+        "format": 1,
+        "seed": 4294967295,
+        "family": 14,
+        "engineVersion": 3,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": true,
+        "palette": {
+          "background": "ff110335",
+          "surface": "ff171233",
+          "displayText": "fff4efff",
+          "previewText": "ff58d1e4",
+          "error": "fffe8b83",
+          "caret": "ffc6b0f2",
+          "focusRing": "fff9f7ff",
+          "accent": "ffabeffb",
+          "digit": {
+            "face": "ffecacc3",
+            "label": "ff140a32",
+            "edge": "ff04020e"
+          },
+          "operator": {
+            "face": "ffb78ffc",
+            "label": "ff140a32",
+            "edge": "ff04020e"
+          },
+          "equals": {
+            "face": "ffabeffb",
+            "label": "ff140a32",
+            "edge": "ff04020e"
+          },
+          "function": {
+            "face": "ffe7ba9e",
+            "label": "ff140a32",
+            "edge": "ff04020e"
+          },
+          "shadow": "ff04020e",
+          "highlight": "ffb78ffc",
+          "seedColor": "ffb78ffc"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 20,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "extruded",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 200,
+          "shadowOffsetCdp": 100,
+          "shadowBlurCdp": 0,
+          "opacityPermille": 1000,
+          "edgeShadePermille": 280,
+          "stateLayerPermille": 60,
+          "highlightPermille": 850
+        },
+        "type": {
+          "displayFont": "anybody",
+          "keyFont": "anybody",
+          "displayWeight": 500,
+          "keyWeight": 500,
+          "operatorWeight": 750,
+          "widthPermille": 1400,
+          "tabular": true,
+          "slashedZero": true,
+          "lcd": false
+        },
+        "background": {
+          "kind": "vaporSunset",
+          "colors": [
+            "ff110335",
+            "ff520a62",
+            "ff80016a",
+            "fff7442a",
+            "fff12d75",
+            "ffcd28a6",
+            "ff3d1151",
+            "ff06021b",
+            "ffe21ab7",
+            "ffa565fe"
+          ],
+          "angleTenths": 390,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 48000
+        },
+        "motion": {
+          "verb": "sink",
+          "scheme": "expressive",
+          "pressIn": [
+            3800,
+            1000
+          ],
+          "release": [
+            395,
+            837
+          ],
+          "releaseAlt": null,
+          "depthCdp": 100,
+          "scalePermille": 1000,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            700,
+            900
+          ],
+          "fx": "none",
+          "stepMs": 0,
+          "impact": "light",
+          "impactPermille": 600,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "softTap",
+        "name": "Gentle Violet",
+        "nonColourOperatorCue": "weight"
+      }
+    }
+  ]
+}

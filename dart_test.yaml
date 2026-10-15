@@ -1,0 +1,15 @@
+# Test runner configuration (package:test, also read by `flutter test`).
+tags:
+  # Tests with wall-clock budgets (Stopwatch assertions). The budgets stay as
+  # they are; a run on a loaded machine can miss one through no fault of the
+  # code, so these tests get up to 3 retries before they count as failed.
+  # They still run by default: `dart test test/engine` includes them, and
+  # `dart test -x perf` skips them.
+  perf:
+    retry: 3
+  # Whole-screen pixel goldens (test/goldens). The reference PNGs are made
+  # on macOS; Linux rasterises the same glyphs with different anti-aliasing
+  # (≈ 1% of pixels), so CI runs them only on a macOS runner (`-t golden`)
+  # and excludes them elsewhere (`-x golden`). No tolerance: the comparison
+  # stays exact where it runs.
+  golden:

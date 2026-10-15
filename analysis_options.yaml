@@ -1,0 +1,29 @@
+# Strict lints: very_good_analysis, with a few rules relaxed where they fight
+# the codebase's style (documented inline).
+include: package:very_good_analysis/analysis_options.11.0.0.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - "**/*.g.dart"
+    - "**/*.drift.dart"
+    - android/**
+    - ios/**
+    - windows/**
+    - macos/**
+    - linux/**
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    # Public API docs are required in lib/engine and lib/themes by review, not
+    # by the linter, so private-ish feature widgets aren't buried in boilerplate.
+    public_member_api_docs: ignore
+    # Test tables are long; the analyzer shouldn't force line wrapping in data.
+    lines_longer_than_80_chars: ignore
+
+linter:
+  rules:
+    # Readability of maths-heavy engine code beats strict cascade usage.
+    cascade_invocations: false
