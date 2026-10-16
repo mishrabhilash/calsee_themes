@@ -52,8 +52,7 @@ library;
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:calsee_themes/engine/paper_ink.dart'
-    show paperWashRimFactor;
+import 'package:calsee_themes/engine/paper_ink.dart' show paperWashRimFactor;
 import 'package:calsee_themes/key_role.dart';
 import 'package:calsee_themes/render/key_face.dart';
 import 'package:calsee_themes/render/paper_ink/paper_grain.dart';
@@ -89,6 +88,10 @@ const Set<String> paperMediumGlyphs = {'( )', '(', ')', '±'};
 
 /// See [paperMediumGlyphs].
 const double paperMediumGlyphScale = 1.12;
+
+/// Room the label layer leaves between a label and the sides of its
+/// [paperLabelZone], dp.
+const double paperLabelZoneMargin = 1;
 
 /// How much larger than the shared label size [text] is set.
 double paperLabelScale(String text) => paperLargeGlyphs.contains(text)
@@ -237,7 +240,11 @@ final class PaperKeyFace extends ThemedKeyFace implements LerpableKeyFace {
   }
 
   /// The label drops with the face (the `scale` channel when the motion
-  /// has it).
+  /// has it), and gets the slip's label zone as its room
+  /// ([paperLabelZone], less 1 dp each side): a label wider than the zone
+  /// (`GRAD` on a 56 dp key) scales down (`KeyLabel`) instead of running
+  /// into the artwork. The zone is centred on the key, so a label that
+  /// fits is laid out and placed exactly as before.
   @override
   Widget labelLayer(KeyFaceMotion motion, KeyFaceSpec spec, Widget label) =>
       PressTranslate(
@@ -245,7 +252,22 @@ final class PaperKeyFace extends ThemedKeyFace implements LerpableKeyFace {
         rest: Offset.zero,
         travel: Offset(0, depth),
         reduceMotion: spec.reduceMotion,
-        child: label,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final size = constraints.biggest;
+            if (!size.isFinite) return label;
+            final zone = paperLabelZone(size, paperArtKindOf(spec.role));
+            return Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: math.max(zone.width - paperLabelZoneMargin * 2, 0),
+                  maxHeight: math.max(zone.height, 0),
+                ),
+                child: label,
+              ),
+            );
+          },
+        ),
       );
 
   @override
