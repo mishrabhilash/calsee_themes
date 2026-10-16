@@ -1155,8 +1155,9 @@ Palette? repairBauhausExtras(
 
 /// Guardrail background samples of the scene: the ground, plus the grid
 /// field when there is one. Nothing else is ever painted under a key,
-/// label, focus ring, toolbar icon or display text (the scene keeps its
-/// shapes in the toolbar's free middle and in the screen margins).
+/// label, focus ring, toolbar control (icons and the mode button) or
+/// display text (the scene keeps its shapes in the toolbar's free middle,
+/// clear of the mode button, and in the screen margins).
 List<int>? bauhausSceneSamples(BackgroundSpec bg) {
   if (bg.colors.isEmpty) return const [0xFF000000];
   final ground = bg.colors[0] | 0xFF000000;

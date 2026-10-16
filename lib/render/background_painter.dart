@@ -56,14 +56,18 @@ final class SpecBackdrop extends CalcBackdrop {
       spec.pattern == BackgroundPattern.none;
 
   @override
-  BackgroundPainter painter({Rect? textSafeArea, bool reduceMotion = false}) =>
-      BackgroundPainter(
-        spec: spec,
-        surface: surface,
-        textSafeArea: textSafeArea,
-        patternFade: patternFade,
-        reduceMotion: reduceMotion,
-      );
+  BackgroundPainter painter({
+    Rect? textSafeArea,
+    Rect? toolbarExclusion,
+    bool reduceMotion = false,
+  }) => BackgroundPainter(
+    spec: spec,
+    surface: surface,
+    textSafeArea: textSafeArea,
+    toolbarExclusion: toolbarExclusion,
+    patternFade: patternFade,
+    reduceMotion: reduceMotion,
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -166,6 +170,7 @@ final class BackgroundScene {
     required this.patternFade,
     required this.cache,
     required this.paintFallback,
+    this.toolbarExclusion,
   });
 
   /// The scene's spec (its family documents each field's meaning).
@@ -173,6 +178,11 @@ final class BackgroundScene {
 
   /// Display text area to keep calm (null: none).
   final Rect? textSafeArea;
+
+  /// Chrome in the toolbar row of [textSafeArea] that a scene drawing art
+  /// there must leave clear (null: none), in the same coordinates: the
+  /// mode button (m7-design §6). Bauhaus starts its masthead after it.
+  final Rect? toolbarExclusion;
 
   /// Drift time: 0 under Reduce Motion or when `driftPeriodMs` is 0.
   final double driftSeconds;
@@ -214,12 +224,24 @@ const Map<BackgroundKind, BackgroundScenePainter> backgroundScenePainters = {
   BackgroundKind.bauhausComposition: paintBauhausScene,
 };
 
+/// The family scene [backdrop] paints (a key of
+/// [backgroundScenePainters]), or null for anything else: no backdrop, a
+/// plain colour, gradients, patterns and meshes. Chrome that sits over a
+/// scene's art checks it (the toolbar's mode button: Bauhaus's masthead,
+/// Vaporwave's sun).
+BackgroundKind? backdropSceneKind(CalcBackdrop? backdrop) {
+  if (backdrop is! SpecBackdrop) return null;
+  final kind = backdrop.spec.kind;
+  return backgroundScenePainters.containsKey(kind) ? kind : null;
+}
+
 /// Paints a [BackgroundSpec] over the whole canvas.
 class BackgroundPainter extends CustomPainter {
   new({
     required this.spec,
     required this.surface,
     this.textSafeArea,
+    this.toolbarExclusion,
     this.patternFade = 1,
     this.reduceMotion = false,
     this.driftSeconds,
@@ -248,6 +270,10 @@ class BackgroundPainter extends CustomPainter {
 
   /// Display text area to keep legible (null: none).
   final Rect? textSafeArea;
+
+  /// Toolbar chrome a scene keeps its art clear of
+  /// ([BackgroundScene.toolbarExclusion]; null: none).
+  final Rect? toolbarExclusion;
 
   /// Shader / picture cache.
   final BackgroundCache cache;
@@ -295,6 +321,7 @@ class BackgroundPainter extends CustomPainter {
         BackgroundScene(
           spec: spec,
           textSafeArea: textSafeArea,
+          toolbarExclusion: toolbarExclusion,
           driftSeconds: currentDriftSeconds,
           clockSeconds: reduceMotion
               ? 0
@@ -553,6 +580,7 @@ class BackgroundPainter extends CustomPainter {
       oldDelegate.surface != surface ||
       oldDelegate.patternFade != patternFade ||
       oldDelegate.textSafeArea != textSafeArea ||
+      oldDelegate.toolbarExclusion != toolbarExclusion ||
       oldDelegate.reduceMotion != reduceMotion ||
       oldDelegate.driftSeconds != driftSeconds ||
       (spec.driftPeriodMs > 0 && !reduceMotion);

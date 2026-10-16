@@ -191,8 +191,12 @@ class ThemeLayer extends StatelessWidget {
 /// Paints the calculator background — the per-frame [theme]'s background
 /// colour and its backdrop (gradient / pattern) — by repainting only.
 class LiveBackdropPainter extends CustomPainter {
-  new({required this.theme, this.textSafeArea, this.reduceMotion = false})
-    : super(repaint: Listenable.merge([theme, AmbientClock.instance]));
+  new({
+    required this.theme,
+    this.textSafeArea,
+    this.toolbarExclusion,
+    this.reduceMotion = false,
+  }) : super(repaint: Listenable.merge([theme, AmbientClock.instance]));
 
   /// The per-frame theme.
   final ValueListenable<CalcThemeData> theme;
@@ -200,12 +204,17 @@ class LiveBackdropPainter extends CustomPainter {
   /// Display text area the backdrop keeps plain.
   final Rect? textSafeArea;
 
+  /// Toolbar chrome the backdrop's scene art keeps clear of (the mode
+  /// button).
+  final Rect? toolbarExclusion;
+
   /// Freezes any backdrop drift.
   final bool reduceMotion;
 
   /// The backdrop's own painter this frame (null: a plain colour).
   CustomPainter? get backdropPainter => theme.value.backdrop?.painter(
     textSafeArea: textSafeArea,
+    toolbarExclusion: toolbarExclusion,
     reduceMotion: reduceMotion,
   );
 
@@ -222,5 +231,6 @@ class LiveBackdropPainter extends CustomPainter {
   bool shouldRepaint(LiveBackdropPainter oldDelegate) =>
       oldDelegate.theme != theme ||
       oldDelegate.textSafeArea != textSafeArea ||
+      oldDelegate.toolbarExclusion != toolbarExclusion ||
       oldDelegate.reduceMotion != reduceMotion;
 }

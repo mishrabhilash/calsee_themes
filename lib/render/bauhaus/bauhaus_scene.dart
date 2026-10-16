@@ -27,10 +27,16 @@
 /// from the right, so the band keeps 8 dp from every icon; no text or
 /// theme chip is ever there. Side-panel layouts have no history button
 /// (history is the panel), so there the band starts 12 dp in, on the line
-/// the display sheet's rule starts on. The keypad region `K` is the field
-/// colour only. So every key, label, focus ring, toolbar icon and the
-/// display only ever sit on `colors[0]` / `colors[1]` — exactly the
-/// guardrails' background samples (`bauhausSceneSamples`).
+/// the display sheet's rule starts on. The toolbar's mode button sits at
+/// the start of that middle (after the history button, or first beside a
+/// side panel): the band starts 8 dp after the scene's toolbar exclusion
+/// (`BackgroundScene.toolbarExclusion`, m7-design §6), and the masthead is
+/// dropped when that leaves under [BauhausSceneGeometry.minMastheadWidth]
+/// (the app then shows the button's icon form where that keeps it). The
+/// keypad region `K` is the field colour only. So every key, label, focus
+/// ring, toolbar control and the display only ever sit on `colors[0]` /
+/// `colors[1]` — exactly the guardrails' background samples
+/// (`bauhausSceneSamples`).
 ///
 /// **Margins** (tablets, desktop): two poster columns beside the
 /// calculator, locked to its grid — the keypad field's top edge is the
@@ -41,11 +47,11 @@
 /// (< 90 dp) the triangle and square grow 1.4× so they still read.
 ///
 /// Static (driftPeriodMs 0): nothing animates, Reduce Motion is moot.
-/// Geometry is cached per (size, text-safe area, orientation) in a small
-/// static LRU (rectangles plus two triangle paths); colours are applied
-/// per paint, so a same-family transition reuses it. The cache holds only
-/// paths and rectangles (no GPU resources), so it is deliberately not tied
-/// to `BackgroundCache.clear()`; it is bounded by
+/// Geometry is cached per (size, text-safe area, exclusion, orientation)
+/// in a small static LRU (rectangles plus two triangle paths); colours are
+/// applied per paint, so a same-family transition reuses it. The cache
+/// holds only paths and rectangles (no GPU resources), so it is
+/// deliberately not tied to `BackgroundCache.clear()`; it is bounded by
 /// [BauhausSceneGeometry.capacity]. At most 14 draws, one `save`/`clipRect`
 /// per margin, no `saveLayer`, shader or picture.
 library;
@@ -68,6 +74,7 @@ void paintBauhausScene(Canvas canvas, Size size, BackgroundScene scene) {
     size,
     scene.textSafeArea,
     bauhausOrientation(scene.spec.angleTenths),
+    exclusion: scene.toolbarExclusion,
   );
   final paint = _paint;
   Color c(int i) => Color(colors[i] | 0xFF000000);
@@ -181,25 +188,32 @@ final class BauhausMarginB {
   final Rect bar;
 }
 
-/// Where everything in the scene goes for one size, text-safe area and
-/// orientation (cached).
+/// Where everything in the scene goes for one size, text-safe area,
+/// toolbar exclusion and orientation (cached).
 final class BauhausSceneGeometry {
   new _({this.field, this.masthead, this.marginA, this.marginB});
 
   /// The geometry for a canvas of [size], the text-safe area [safe] and
-  /// orientation [o] (see [bauhausOrientation]), from the cache.
-  factory of(Size size, Rect? safe, int o) {
-    final key = (size, safe, o);
+  /// orientation [o] (see [bauhausOrientation]), with the masthead clear
+  /// of the toolbar chrome [exclusion] (see [mastheadBand]), from the
+  /// cache.
+  factory of(Size size, Rect? safe, int o, {Rect? exclusion}) {
+    final key = (size, safe, exclusion, o);
     final hit = _cache.remove(key);
     if (hit != null) return _cache[key] = hit;
-    final made = _cache[key] = BauhausSceneGeometry._build(size, safe, o);
+    final made = _cache[key] = BauhausSceneGeometry._build(
+      size,
+      safe,
+      o,
+      exclusion,
+    );
     while (_cache.length > capacity) {
       _cache.remove(_cache.keys.first);
     }
     return made;
   }
 
-  factory _build(Size size, Rect? safe, int o) {
+  factory _build(Size size, Rect? safe, int o, Rect? exclusion) {
     final canvas = Offset.zero & size;
     if (safe == null || !safe.isFinite) return BauhausSceneGeometry._();
     final s = safe.intersect(canvas);
@@ -221,14 +235,20 @@ final class BauhausSceneGeometry {
     final sidePanel = portrait && (w - s.right) - s.left > sidePanelAsymmetry;
     return BauhausSceneGeometry._(
       field: field,
-      masthead: _masthead(s, sidePanel: sidePanel, mirror: mirror, flip: flip),
+      masthead: _masthead(
+        s,
+        sidePanel: sidePanel,
+        exclusion: exclusion,
+        mirror: mirror,
+        flip: flip,
+      ),
       marginA: portrait ? _marginA(s, size, mirror: mirror, flip: flip) : null,
       marginB: portrait ? _marginB(s, size, mirror: mirror, flip: flip) : null,
     );
   }
 
-  static final LinkedHashMap<(Size, Rect?, int), BauhausSceneGeometry> _cache =
-      LinkedHashMap();
+  static final LinkedHashMap<(Size, Rect?, Rect?, int), BauhausSceneGeometry>
+  _cache = LinkedHashMap();
 
   /// Geometries kept.
   static const int capacity = 6;
@@ -256,6 +276,9 @@ final class BauhausSceneGeometry {
   /// layouts): the display sheet's rule line.
   static const double mastheadStartNoHistory = 12;
 
+  /// Room between the toolbar exclusion (the mode button) and the band.
+  static const double exclusionGap = 8;
+
   /// How much wider the right margin is than the left one in a side-panel
   /// layout (the 320 dp panel), at least: insets alone never reach it.
   static const double sidePanelAsymmetry = 160;
@@ -281,21 +304,38 @@ final class BauhausSceneGeometry {
   final BauhausMarginA? marginA;
   final BauhausMarginB? marginB;
 
+  /// The band the masthead may use in the toolbar row of the text-safe
+  /// area [s]: from [mastheadStart] (beside a side panel,
+  /// [mastheadStartNoHistory]) to [mastheadEnd] from the right, 8 dp
+  /// below the top and above the display, starting [exclusionGap] after
+  /// [exclusion] when that reaches into it (the mode button, which sits at
+  /// the start of the toolbar's free middle). Its width may be under
+  /// [minMastheadWidth], or negative: then there is no masthead. The app
+  /// asks this too, to choose the mode button's form.
+  static Rect mastheadBand(Rect s, {required bool sidePanel, Rect? exclusion}) {
+    var left = s.left + (sidePanel ? mastheadStartNoHistory : mastheadStart);
+    final right = s.right - mastheadEnd;
+    if (exclusion != null &&
+        exclusion.top < s.top + toolbarHeight &&
+        exclusion.bottom > s.top &&
+        exclusion.left < right &&
+        exclusion.right + exclusionGap > left) {
+      left = exclusion.right + exclusionGap;
+    }
+    return Rect.fromLTRB(left, s.top + 8, right, s.top + 40);
+  }
+
   /// The masthead in the toolbar band's free middle: three primitives
   /// clustered at one end, a rule running from them to the other.
   static BauhausMasthead? _masthead(
     Rect s, {
     required bool sidePanel,
+    required Rect? exclusion,
     required bool mirror,
     required bool flip,
   }) {
     if (s.height < toolbarHeight) return null;
-    final band = Rect.fromLTRB(
-      s.left + (sidePanel ? mastheadStartNoHistory : mastheadStart),
-      s.top + 8,
-      s.right - mastheadEnd,
-      s.top + 40,
-    );
+    final band = mastheadBand(s, sidePanel: sidePanel, exclusion: exclusion);
     if (band.width < minMastheadWidth) return null;
     const unit = 24.0;
     const gap = 6.0;

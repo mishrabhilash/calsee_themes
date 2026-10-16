@@ -383,9 +383,14 @@ abstract class CalcBackdrop {
 
   /// A painter filling the whole calculator surface. Inside
   /// [textSafeArea] (the display text) it keeps the display legible: a
-  /// solid surface behind the text, no pattern. With [reduceMotion] any
-  /// drift is frozen.
-  CustomPainter painter({Rect? textSafeArea, bool reduceMotion = false});
+  /// solid surface behind the text, no pattern. Scene art in the toolbar
+  /// row keeps clear of [toolbarExclusion] (the mode button). With
+  /// [reduceMotion] any drift is frozen.
+  CustomPainter painter({
+    Rect? textSafeArea,
+    Rect? toolbarExclusion,
+    bool reduceMotion = false,
+  });
 }
 
 /// How a newly typed display glyph enters (motion brief §2.3, §4.2).
