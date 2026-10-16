@@ -28,8 +28,8 @@ import 'package:flutter/widgets.dart';
 
 /// Fallback fonts for Vaporwave labels and display: Anybody lacks π, which
 /// Roboto Flex (same `wght` / `wdth` axes) supplies. √ and ∛ are in
-/// neither bundled font and fall back to the platform font (the
-/// scientific keys arrive in M7).
+/// neither, and come from CalseeSymbols ([scriptFallbackFonts]), which
+/// also draws the labels' super- and subscript runs (`KeyLabel`).
 const List<String> vaporwaveFontFallback = [
   'RobotoFlex',
   ...scriptFallbackFonts,

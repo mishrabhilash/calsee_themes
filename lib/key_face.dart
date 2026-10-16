@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:math' as math;
 
 import 'package:calsee_themes/key_role.dart';
+import 'package:calsee_themes/render/fonts.dart';
 import 'package:flutter/widgets.dart';
 import 'package:material_ui/material_ui.dart' show Icons;
 
@@ -255,6 +256,11 @@ abstract interface class LerpableKeyFace implements KeyFaceRenderer {
 /// platform's Bold Text setting, erasing the weight difference between
 /// digits and operators; the caller already made [style] heavier, so Bold
 /// Text is switched off for this label only.
+///
+/// Runs of super- and subscripts (`⁻¹` in `sin⁻¹`, `ʸ` in `xʸ`) are drawn
+/// in CalseeSymbols at the label's weight ([span]), so a run never mixes
+/// fonts. A label wider than the room it is given scales down to fit on
+/// one line, and is never scaled up (m7-design §6).
 class KeyLabel extends StatelessWidget {
   const new(this.text, {required this.style, super.key});
 
@@ -272,6 +278,41 @@ class KeyLabel extends StatelessWidget {
   /// (or to a missing-glyph box); the bundled Material icon looks the same
   /// everywhere.
   static const IconData backspaceIcon = Icons.backspace_outlined;
+
+  /// The label font size on a key whose shorter side is [shortSide]: 0.4×
+  /// for one or two characters, 0.3× for three or four, and 0.24× for five
+  /// or more (m7-design §6), so `sinh⁻¹` is 13.4 dp on a 56 dp key, not
+  /// 16.8.
+  static double fontSizeFor(String label, double shortSide) {
+    final runes = label.runes.length;
+    final fraction = runes >= 5
+        ? 0.24
+        : runes > 2
+        ? 0.3
+        : 0.4;
+    return shortSide * fraction;
+  }
+
+  /// What the label draws: [text] in [style], with each run of super- and
+  /// subscripts ([symbolRuns]) in a child span styled [symbolRunStyle].
+  /// A label without such a run is a single span.
+  TextSpan get span {
+    final runs = _symbolRunSpans();
+    return runs == null
+        ? TextSpan(text: text, style: style)
+        : TextSpan(style: style, children: runs);
+  }
+
+  /// [text]'s runs as spans, or null when it has no symbol run.
+  List<TextSpan>? _symbolRunSpans() {
+    final runs = symbolRuns(text);
+    if (!runs.any((run) => run.symbols)) return null;
+    final symbols = symbolRunStyle(style);
+    return [
+      for (final run in runs)
+        TextSpan(text: run.text, style: run.symbols ? symbols : null),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -300,18 +341,37 @@ class KeyLabel extends StatelessWidget {
       maxLines: ambient.maxLines,
       textWidthBasis: ambient.textWidthBasis,
       textHeightBehavior: ambient.textHeightBehavior,
-      child: Text(
-        text,
-        textScaler: TextScaler.noScaling,
-        maxLines: 1,
-        softWrap: false,
-        style: style,
-      ),
+      // Scales down only: a label that fits is laid out and painted as the
+      // bare Text.
+      child: FittedBox(fit: BoxFit.scaleDown, child: _text()),
     );
     if (!MediaQuery.boldTextOf(context)) return label;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(boldText: false),
       child: label,
+    );
+  }
+
+  /// One line of [text] in [style]: a plain [Text], or for a label with
+  /// symbol runs the same paragraph (the root style is still [style]) with
+  /// the runs as child spans.
+  Text _text() {
+    final runs = _symbolRunSpans();
+    if (runs == null) {
+      return Text(
+        text,
+        textScaler: TextScaler.noScaling,
+        maxLines: 1,
+        softWrap: false,
+        style: style,
+      );
+    }
+    return Text.rich(
+      TextSpan(children: runs),
+      textScaler: TextScaler.noScaling,
+      maxLines: 1,
+      softWrap: false,
+      style: style,
     );
   }
 }

@@ -275,11 +275,76 @@ FontWeight nearestFontWeight(double weight) {
 /// ever a [scriptFallbackFonts] entry.
 const String devanagariFontFamily = 'NotoSansDevanagari';
 
-/// `fontFamilyFallback` for every display, amount, history and settings
-/// style: scripts the theme fonts lack (Devanagari) resolve to bundled
-/// faces before the platform's. Weight follows the style's `wght`
-/// variation / `fontWeight`.
-const List<String> scriptFallbackFonts = [devanagariFontFamily];
+/// CalseeSymbols (m7-design D14; assets/fonts/README.md): the glyphs the
+/// theme fonts lack, from Noto Sans, Noto Sans Mono and Noto Sans Thai,
+/// variable in `wght` 100–900. It has every super- and subscript
+/// (U+2070–209F, ¹ ² ³), ʸ ˣ, √ ∛ ∞ π µ μ and the Currency Symbols block
+/// (₹ ₨ ₩ ₽ ₺ ₫ ₦ ₱ ₪ …) plus ฿, and nothing else: no digits, letters or
+/// spaces. Not a theme font: it is a [scriptFallbackFonts] entry, and key
+/// labels draw their super- and subscript runs in it ([symbolRunStyle]).
+const String symbolsFontFamily = 'CalseeSymbols';
+
+/// CalseeSymbols' `wght` axis (its only axis).
+const FontAxisRange symbolsFontWeight = FontAxisRange('wght', 100, 400, 900);
+
+/// `fontFamilyFallback` for every display, amount, history, settings and
+/// key-label style: what the theme fonts lack (Devanagari, the scientific
+/// symbols) resolves to bundled faces before the platform's. Weight
+/// follows the style's `wght` variation / `fontWeight`.
+const List<String> scriptFallbackFonts = [
+  devanagariFontFamily,
+  symbolsFontFamily,
+];
+
+/// Whether [rune] is a super- or subscript that labels draw in
+/// CalseeSymbols as a run ([symbolRuns]): ² ³ ¹ (U+00B2, B3, B9), ʸ
+/// (U+02B8), ˣ (U+02E3) and U+2070–209F. Fallback is chosen glyph by
+/// glyph, so `sin⁻¹` would otherwise mix a fallback ⁻ with the family's
+/// own ¹, and `x²` would not match a fallback `xʸ` beside it.
+bool isSymbolRunRune(int rune) =>
+    rune == 0x00B2 ||
+    rune == 0x00B3 ||
+    rune == 0x00B9 ||
+    rune == 0x02B8 ||
+    rune == 0x02E3 ||
+    (rune >= 0x2070 && rune <= 0x209F);
+
+/// [text] cut into its runs of [isSymbolRunRune] characters and the text
+/// between them, in order: `sin` then `⁻¹` (symbols) for `sin⁻¹`. Empty
+/// for an empty [text].
+List<({String text, bool symbols})> symbolRuns(String text) {
+  final runs = <({String text, bool symbols})>[];
+  final run = StringBuffer();
+  bool? current;
+  for (final rune in text.runes) {
+    final symbols = isSymbolRunRune(rune);
+    if (current != null && symbols != current) {
+      runs.add((text: run.toString(), symbols: current));
+      run.clear();
+    }
+    current = symbols;
+    run.writeCharCode(rune);
+  }
+  if (current != null) runs.add((text: run.toString(), symbols: current));
+  return runs;
+}
+
+/// The style of a symbol run inside a span styled [style]: CalseeSymbols at
+/// [style]'s weight (its `wght` variation, else its `fontWeight`); size,
+/// colour and the rest are inherited from the span.
+TextStyle symbolRunStyle(TextStyle style) {
+  final weight =
+      style.fontVariations
+          ?.where((v) => v.axis == symbolsFontWeight.tag)
+          .firstOrNull
+          ?.value ??
+      (style.fontWeight ?? FontWeight.w400).value.toDouble();
+  return TextStyle(
+    fontFamily: symbolsFontFamily,
+    fontWeight: nearestFontWeight(weight),
+    fontVariations: [symbolsFontWeight.variation(weight)],
+  );
+}
 
 /// [style] with [scriptFallbackFonts] (kept when it already names some).
 TextStyle withScriptFallback(TextStyle style) =>
@@ -301,6 +366,7 @@ const Map<String, String> bundledFontAssets = {
   'PatrickHand': 'assets/fonts/patrick_hand/PatrickHand.ttf',
   devanagariFontFamily:
       'assets/fonts/NotoSansDevanagari/NotoSansDevanagari.ttf',
+  symbolsFontFamily: 'assets/fonts/calsee_symbols/CalseeSymbols.ttf',
 };
 
 /// Licence files of the bundled fonts, keyed by pubspec family name.
@@ -315,4 +381,5 @@ const Map<String, String> bundledFontLicenses = {
   'Jost': 'assets/fonts/jost/OFL.txt',
   'PatrickHand': 'assets/fonts/patrick_hand/OFL.txt',
   devanagariFontFamily: 'assets/fonts/NotoSansDevanagari/OFL.txt',
+  symbolsFontFamily: 'assets/fonts/calsee_symbols/OFL.txt',
 };

@@ -223,8 +223,9 @@ final class PaperKeyFace extends ThemedKeyFace implements LerpableKeyFace {
   /// beside the digits; its hairline brackets and `±` 12 % larger
   /// ([paperLabelScale]).
   ///
-  /// Newsreader has no √ ∛ π ʸ ˣ ⁻ ₓ: those scientific labels fall back to
-  /// the platform font, glyph by glyph (scientific mode has not shipped).
+  /// Newsreader has no √ ∛ π ʸ ˣ ⁻ ₓ: √ ∛ π come from CalseeSymbols
+  /// (the style's fallback) and the super- and subscript runs are drawn in
+  /// it (`KeyLabel`), at the label's weight.
   @override
   Widget label(String text, TextStyle style) {
     final size = style.fontSize;
