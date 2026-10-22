@@ -65,29 +65,15 @@ class _ShareExampleState extends State<ShareExample> {
           const SizedBox(height: 16),
           SizedBox(
             height: 56,
-            child: Row(
-              children: [
-                Expanded(
-                  child: CalseeKey.text(
-                    _copied == code ? 'Copied' : 'Copy code',
-                    role: KeyRole.function,
-                    sizeFactor: 0.3,
-                    onPressed: () async {
-                      await Clipboard.setData(ClipboardData(text: code));
-                      setState(() => _copied = code);
-                    },
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CalseeKey.text(
-                    'Next theme',
-                    role: KeyRole.operator,
-                    sizeFactor: 0.3,
-                    onPressed: themes.next,
-                  ),
-                ),
-              ],
+            width: double.infinity,
+            child: CalseeKey.text(
+              _copied == code ? 'Copied' : 'Copy code',
+              role: KeyRole.function,
+              sizeFactor: 0.3,
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(text: code));
+                setState(() => _copied = code);
+              },
             ),
           ),
           const SizedBox(height: 10),

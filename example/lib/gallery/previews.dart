@@ -33,27 +33,6 @@ Widget _panel(Widget child) => CalseeDisplayPanel(
 
 void _noop() {}
 
-Widget feedPreview(BuildContext context) => Column(
-  children: [
-    // Display panels differ in size by family; the panel takes what the
-    // keys leave.
-    Expanded(
-      child: Center(
-        child: FittedBox(
-          child: CalseeDisplayPanel(
-            child: CalseeReadout(CalseeScope.of(context).spec.name, size: 24),
-          ),
-        ),
-      ),
-    ),
-    const SizedBox(height: 10),
-    _row([
-      CalseeKey.text('Back', role: KeyRole.function, onPressed: _noop),
-      CalseeKey.text('Next', role: KeyRole.equals, onPressed: _noop),
-    ]),
-  ],
-);
-
 Widget backdropPreview(BuildContext context) => Builder(
   builder: (context) {
     final colors = CalseeTextColors.of(context);

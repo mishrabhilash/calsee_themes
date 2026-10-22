@@ -38,8 +38,8 @@ void main() {
       await _settle(tester);
       expect(_codeShown(tester, needle), isTrue, reason: entry.route);
 
-      // Change the theme twice; the source must stay.
-      for (var i = 0; i < 2; i++) {
+      // Change the theme 30 times: the source stays, and nothing overflows.
+      for (var i = 0; i < 30; i++) {
         // The page below keeps its own theme bar; tap the top one.
         await tester.tap(find.bySemanticsLabel('Next theme').last);
         await _settle(tester);

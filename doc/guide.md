@@ -53,8 +53,12 @@ themes.spec.name;         // e.g. "Tide Gumdrop"
 Without a `controller`, the scope makes its own from `families`, `seed` and
 `savedState`. Read it anywhere below with `CalseeScope.of(context)`.
 
-[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/feed) ·
-[Source](../example/lib/gallery/examples/feed_example.dart)
+The gallery runs on exactly this: one `CalseeThemeController` above every
+page, and its **‹** and **Next theme ›** buttons call `previous()` and
+`next()`.
+
+[▶ Try it](https://mishrabhilash.github.io/calsee_themes/) ·
+[Source](../example/lib/gallery/app.dart)
 
 ## Backdrop and text
 

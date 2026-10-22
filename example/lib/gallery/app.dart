@@ -5,7 +5,6 @@ import 'package:calsee_themes_example/gallery/code_view.dart';
 import 'package:calsee_themes_example/gallery/examples/backdrop_example.dart';
 import 'package:calsee_themes_example/gallery/examples/custom_key_example.dart';
 import 'package:calsee_themes_example/gallery/examples/display_example.dart';
-import 'package:calsee_themes_example/gallery/examples/feed_example.dart';
 import 'package:calsee_themes_example/gallery/examples/icon_keys_example.dart';
 import 'package:calsee_themes_example/gallery/examples/keys_example.dart';
 import 'package:calsee_themes_example/gallery/examples/share_example.dart';
@@ -47,18 +46,6 @@ class GalleryEntry {
 const _examples = 'lib/gallery/examples';
 
 final galleryEntries = <GalleryEntry>[
-  GalleryEntry(
-    route: '/feed',
-    title: 'Theme feed',
-    summary:
-        'CalseeScope themes everything below it. Its controller moves '
-        'through the endless feed, filters families and turns on '
-        'accessible themes.',
-    source: '$_examples/feed_example.dart',
-    builder: (_) => const FeedExample(),
-    preview: feedPreview,
-    height: 420,
-  ),
   GalleryEntry(
     route: '/backdrop',
     title: 'Backdrop and text',
@@ -155,7 +142,7 @@ final galleryEntries = <GalleryEntry>[
     source: '$_examples/share_example.dart',
     builder: (_) => const ShareExample(),
     preview: sharePreview,
-    height: 300,
+    height: 340,
   ),
   GalleryEntry(
     route: '/payment',
