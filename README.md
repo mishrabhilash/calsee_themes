@@ -160,10 +160,27 @@ button, leave those two out.
 - `CalcThemeData` (from `CalcTheme.of`) exposes the colours, fonts,
   springs and renderers behind every widget here.
 
+## App size
+
+Adding the package to a release build costs about **3.4 MB on Android**
+and **4.5 MB on iOS**:
+
+| Release build | Without | With | Added | Dart code | Fonts |
+|---|---|---|---|---|---|
+| Android APK (arm64) | 14.3 MB | 17.7 MB | **+3.4 MB** | +1.4 MB | +1.7 MB |
+| iOS `Runner.app` | 13.3 MB | 17.8 MB | **+4.5 MB** | +1.5 MB | +2.9 MB |
+
+The figures compare two minimal apps built with Flutter 3.47.6: a
+payment screen with a readout and four keys, made once from plain widgets
+and once from `CalseeScope` with all twelve families. The APK figures
+are compressed sizes. The iOS figures are the unpacked app bundle, so the
+App Store download is smaller. Most of the remaining 0.3 MB on Android
+is the `dynamic_color` plugin's Java code and resources.
+
 ## Fonts and licence
 
 The package is MIT-licensed. Its fonts are bundled under the SIL Open Font
 License 1.1: Roboto Flex, Space Grotesk, Nunito, Open Sans, Newsreader,
 Oxanium, Anybody, Jost, Patrick Hand, Noto Sans Devanagari and Calsee
 Symbols. Sources and checksums are in [fonts/README.md](fonts/README.md).
-Together they add about 2.9 MB to an app.
+Together they take 2.9 MB uncompressed (1.7 MB compressed in an APK).
