@@ -18,21 +18,21 @@ screenshots:
     path: doc/families.png
   - description: Swiping between generated themes.
     path: doc/swipe.gif
-  - description: Claymorphism.
+  - description: The Claymorphism family on a payment screen.
     path: doc/family_claymorphism.png
-  - description: Liquid Glass.
+  - description: The Liquid Glass family on a payment screen.
     path: doc/family_liquidGlass.png
-  - description: Retro.
+  - description: The Retro family on a payment screen.
     path: doc/family_retro.png
-  - description: Cyberpunk.
+  - description: The Cyberpunk family on a payment screen.
     path: doc/family_cyberpunk.png
-  - description: Y2K Aero.
+  - description: The Y2K Aero family on a payment screen.
     path: doc/family_y2kChrome.png
-  - description: Paper & Ink.
+  - description: The Paper & Ink family on a payment screen.
     path: doc/family_paperInk.png
-  - description: Vaporwave.
+  - description: The Vaporwave family on a payment screen.
     path: doc/family_vaporwave.png
-  - description: Neo-brutalism.
+  - description: The Neo-brutalism family on a payment screen.
     path: doc/family_neoBrutalism.png
 
 environment:
