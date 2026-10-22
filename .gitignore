@@ -9,3 +9,4 @@ pubspec.lock
 example/**/ios/Flutter/ephemeral/
 example/screenshots/out/
 example/.flutter-plugins-dependencies
+example/screenshots/failures/
