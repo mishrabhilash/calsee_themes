@@ -18,5 +18,14 @@ dev_dependencies:
   very_good_analysis: ">=9.0.0 <12.0.0"
 
 flutter:
-  # The backspace key's icon.
+  # The backspace key's icon, and the gallery's icons.
   uses-material-design: true
+  # The gallery (lib/gallery.dart) shows these sources next to each example.
+  assets:
+    - lib/main.dart
+    - lib/gallery/examples/
+  fonts:
+    # The gallery's code panels (fonts/roboto_mono/README.md).
+    - family: RobotoMono
+      fonts:
+        - asset: fonts/roboto_mono/RobotoMono-Regular.ttf

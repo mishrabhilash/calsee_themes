@@ -97,6 +97,10 @@ For any other colour, font or shape, read the theme directly with
 The [example app](example/lib/main.dart) is a complete payment keypad
 built this way.
 
+**[Drawing themed UI](doc/guide.md)** covers every element with a snippet
+and its full source. The **[live gallery](https://mishrabhilash.github.io/calsee_themes/)**
+runs each example in your browser, in every family.
+
 ## Keeping the user's theme
 
 The feed is a small JSON object. Save it whenever it changes and restore it
