@@ -2,6 +2,11 @@
 # the codebase's style (documented inline).
 include: package:very_good_analysis/analysis_options.yaml
 
+# Explicit, so every very_good_analysis version formats alike (11
+# dropped it, 9 and 10 set it; pub.dev resolves the newest).
+formatter:
+  trailing_commas: preserve
+
 analyzer:
   exclude:
     - build/**

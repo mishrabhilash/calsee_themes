@@ -17,8 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 const _size = Size(390, 844);
 
 Future<void> _loadFonts() async {
-  for (final MapEntry(key: family, value: asset)
-      in bundledFontAssets.entries) {
+  for (final MapEntry(key: family, value: asset) in bundledFontAssets.entries) {
     await (FontLoader(family)..addFont(rootBundle.load(asset))).load();
   }
   // Text the demo leaves to the platform font, and the backspace icon.
