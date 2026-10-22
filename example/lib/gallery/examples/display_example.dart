@@ -1,4 +1,4 @@
-// CalseeDisplayPanel and CalseeReadout: amounts, scores and timers.
+// CalseeDisplayPanel and CalseeReadout: sums, scores and timers.
 //
 // The panel is the family's display (Retro's LCD, Clay's inset well, Y2K's
 // glass); families without one draw nothing. CalseeReadout is one line in

@@ -12,9 +12,9 @@ Picture a kids' maths game where a swipe gives the number pad a new
 look. Each one passes the contrast checks, so every look stays easy to
 read.
 
-<p align="center"><img src="doc/swipe.gif" width="300" alt="Swiping between generated themes on a payment screen"></p>
+<p align="center"><img src="doc/swipe.gif" width="300" alt="Swiping between generated themes on a kids' maths game"></p>
 
-![The same payment screen in twelve theme families](doc/families.png)
+![The same maths game in twelve theme families](doc/families.png)
 
 ## Features
 
@@ -56,19 +56,19 @@ CalseeScope(
   child: CalseeBackdrop(
     child: Column(
       children: [
-        // Swipe the amount for a new theme.
+        // Swipe the sum for a new theme.
         Expanded(
           child: CalseeSwipeArea(
             child: Center(
               child: CalseeDisplayPanel(
-                child: CalseeReadout('₹1,250', size: 64),
+                child: CalseeReadout('7 + 5 = ?', size: 64),
               ),
             ),
           ),
         ),
         SizedBox(
           height: 64,
-          child: CalseeKey.text('Pay', role: KeyRole.equals, onPressed: pay),
+          child: CalseeKey.text('OK', role: KeyRole.equals, onPressed: check),
         ),
         // ...a grid of CalseeKey.text('1', role: KeyRole.digit, ...)
       ],
@@ -78,7 +78,7 @@ CalseeScope(
 ```
 
 Only what's below the scope is themed, so you can add themes to a single
-screen of an existing app. Your handlers (`pay`, `onKey`) stay exactly as
+screen of an existing app. Your handlers (`check`, `onKey`) stay exactly as
 they are.
 
 ## Theming an existing screen
@@ -91,7 +91,7 @@ Swap each visual piece for its themed version and keep your callbacks.
 | Number keys | `CalseeKey.text(d, role: KeyRole.digit)` |
 | `.` key | `CalseeKey.text('.', role: KeyRole.decimal)` |
 | Backspace | `CalseeKey.icon(..., role: KeyRole.backspace)` |
-| Primary action (Pay, Send) | `CalseeKey.text(..., role: KeyRole.equals)` (the theme's accent) |
+| Primary action (OK, Submit) | `CalseeKey.text(..., role: KeyRole.equals)` (the theme's accent) |
 | Secondary actions | `KeyRole.operator` or `KeyRole.function` |
 | Amount, score or timer | `CalseeDisplayPanel` + `CalseeReadout` |
 | Cards and tiles that aren't buttons | `CalseeSurface` |
@@ -104,7 +104,7 @@ Swap each visual piece for its themed version and keep your callbacks.
 For any other colour, font or shape, read the theme directly with
 `CalcTheme.of(context)`.
 
-The [example app](example/lib/main.dart) is a complete payment keypad
+The [example app](example/lib/main.dart) is a complete kids' maths game
 built this way.
 
 **[Drawing themed UI](doc/guide.md)** covers every element with a snippet
@@ -151,8 +151,8 @@ CalseeScope(
 
 Two families reshape keys by role: **Material 3 Expressive** (blob and
 pentagon shapes) and **Bauhaus** (circles and triangles). On screens where
-one button must always look like a plain button, such as a payment's Pay
-button, leave those two out.
+one button must always look like a plain button, such as a checkout or
+sign-in button, leave those two out.
 
 ## Accessibility
 
@@ -185,7 +185,7 @@ and **4.5 MB on iOS**:
 | iOS `Runner.app` | 13.3 MB | 17.8 MB | **+4.5 MB** | +1.5 MB | +2.9 MB |
 
 The figures compare two minimal apps built with Flutter 3.47.6: a
-payment screen with a readout and four keys, made once from plain widgets
+screen with a readout and four keys, made once from plain widgets
 and once from `CalseeScope` with all twelve families. The APK figures
 are compressed sizes. The iOS figures are the unpacked app bundle, so the
 App Store download is smaller. Most of the remaining 0.3 MB on Android

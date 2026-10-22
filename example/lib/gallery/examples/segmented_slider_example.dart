@@ -15,13 +15,12 @@ class SegmentedSliderExample extends StatefulWidget {
 }
 
 class _SegmentedSliderExampleState extends State<SegmentedSliderExample> {
-  static const _bill = 2400;
-  int _people = 3;
-  double _tip = 10;
+  int _seconds = 20;
+  double _questions = 10;
 
   @override
   Widget build(BuildContext context) {
-    final each = (_bill * (1 + _tip / 100) / _people).round();
+    final minutes = (_questions * _seconds / 60).ceil();
     final colors = CalseeTextColors.of(context);
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -29,29 +28,33 @@ class _SegmentedSliderExampleState extends State<SegmentedSliderExample> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CalseeDisplayPanel(
-            child: Center(child: CalseeReadout('₹$each each', size: 40)),
-          ),
-          const SizedBox(height: 20),
-          Text('Split between', style: TextStyle(color: colors.secondary)),
-          const SizedBox(height: 8),
-          CalseeSegmented<int>(
-            options: const [(2, '2'), (3, '3'), (4, '4'), (5, '5')],
-            selected: _people,
-            onChanged: (value) => setState(() => _people = value),
+            child: Center(child: CalseeReadout('Up to $minutes min', size: 40)),
           ),
           const SizedBox(height: 20),
           Text(
-            'Tip ${_tip.round()}%',
+            'Seconds per question',
+            style: TextStyle(color: colors.secondary),
+          ),
+          const SizedBox(height: 8),
+          CalseeSegmented<int>(
+            options: const [(10, '10'), (20, '20'), (30, '30'), (60, '60')],
+            selected: _seconds,
+            onChanged: (value) => setState(() => _seconds = value),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            '${_questions.round()} questions',
             style: TextStyle(color: colors.secondary),
           ),
           const SizedBox(height: 8),
           CalseeSlider(
-            value: _tip,
+            value: _questions,
+            min: 5,
             max: 25,
-            divisions: 5,
-            semanticLabel: 'Tip',
-            semanticFormatter: (value) => '${value.round()} percent',
-            onChanged: (value) => setState(() => _tip = value),
+            divisions: 4,
+            semanticLabel: 'Questions',
+            semanticFormatter: (value) => '${value.round()} questions',
+            onChanged: (value) => setState(() => _questions = value),
           ),
         ],
       ),

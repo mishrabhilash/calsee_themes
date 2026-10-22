@@ -15,9 +15,9 @@ class SwitchExample extends StatefulWidget {
 
 class _SwitchExampleState extends State<SwitchExample> {
   final _settings = {
-    'Payment alerts': true,
-    'Haptics': true,
-    'Sounds': false,
+    'Sound effects': true,
+    'Hints': true,
+    'Timer': false,
   };
 
   @override
@@ -38,7 +38,7 @@ class _SwitchExampleState extends State<SwitchExample> {
         // No onChanged: disabled.
         const CalseeSwitch(
           value: false,
-          label: 'International payments',
+          label: 'Two players',
           onChanged: null,
         ),
       ],

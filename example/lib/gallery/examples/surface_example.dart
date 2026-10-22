@@ -9,10 +9,10 @@ import 'package:flutter/widgets.dart';
 class SurfaceExample extends StatelessWidget {
   const SurfaceExample({super.key});
 
-  static const _payments = [
-    ('Alex Morgan', 'Dinner', '₹1,250'),
-    ('Priya Shah', 'Movie tickets', '₹640'),
-    ('Sam Lee', 'Groceries', '₹2,310'),
+  static const _players = [
+    ('Asha', 'Times tables', '42 stars'),
+    ('Leo', 'Addition', '37 stars'),
+    ('Mia', 'Subtraction', '29 stars'),
   ];
 
   @override
@@ -20,7 +20,7 @@ class SurfaceExample extends StatelessWidget {
     padding: const EdgeInsets.all(16),
     child: Column(
       children: [
-        for (final (name, note, amount) in _payments)
+        for (final (name, topic, stars) in _players)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: SizedBox(
@@ -45,7 +45,7 @@ class SurfaceExample extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              note,
+                              topic,
                               style: TextStyle(
                                 color: style.label.withValues(alpha: 0.75),
                                 fontSize: 13,
@@ -54,7 +54,7 @@ class SurfaceExample extends StatelessWidget {
                           ],
                         ),
                       ),
-                      CalseeKeyLabel(amount, style: style, size: 20),
+                      CalseeKeyLabel(stars, style: style, size: 20),
                     ],
                   ),
                 ),
@@ -68,7 +68,7 @@ class SurfaceExample extends StatelessWidget {
             role: KeyRole.equals,
             builder: (context, style, shortSide) => Center(
               child: CalseeKeyLabel(
-                'Total ₹4,200',
+                'Total 108 stars',
                 style: style,
                 size: shortSide * 0.3,
               ),

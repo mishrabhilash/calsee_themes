@@ -1,7 +1,7 @@
 # calsee_themes example
 
-A payment keypad themed by `calsee_themes`. Swipe the amount for a new
-theme; the keypad and the Pay button keep working the same in every
+A kids' maths game themed by `calsee_themes`. Swipe the sum for a new
+theme; the number pad and the OK button keep working the same in every
 theme.
 
 ```bash

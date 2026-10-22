@@ -32,7 +32,7 @@ void main() {
                 SizedBox(
                   height: 60,
                   width: 120,
-                  child: CalseeKey.text('Pay', role: KeyRole.equals),
+                  child: CalseeKey.text('OK', role: KeyRole.equals),
                 ),
               ],
             ),
@@ -43,7 +43,7 @@ void main() {
     await tester.tap(find.bySemanticsLabel('7'));
     await tester.pump(const Duration(milliseconds: 500));
     expect(taps, 1);
-    await tester.tap(find.bySemanticsLabel('Pay'));
+    await tester.tap(find.bySemanticsLabel('OK'));
     await tester.pump(const Duration(milliseconds: 500));
     expect(taps, 1);
     expect(tester.takeException(), isNull);
@@ -64,7 +64,7 @@ void main() {
             child: CalseeSwipeArea(
               child: Center(
                 child: CalseeDisplayPanel(
-                  child: CalseeReadout('₹1250', size: 48),
+                  child: CalseeReadout('7 + 5', size: 48),
                 ),
               ),
             ),

@@ -13,17 +13,17 @@ class CheckboxRadioExample extends StatefulWidget {
   State<CheckboxRadioExample> createState() => _CheckboxRadioExampleState();
 }
 
-enum _Method { upi, card, netBanking }
+enum _Level { easy, medium, hard }
 
 class _CheckboxRadioExampleState extends State<CheckboxRadioExample> {
-  _Method _method = _Method.upi;
-  bool _saveCard = true;
-  bool _receipt = false;
+  _Level _level = _Level.easy;
+  bool _bonusRound = true;
+  bool _readAloud = false;
 
-  static const Map<_Method, String> _labels = {
-    _Method.upi: 'UPI',
-    _Method.card: 'Card',
-    _Method.netBanking: 'Net banking',
+  static const Map<_Level, String> _labels = {
+    _Level.easy: 'Easy',
+    _Level.medium: 'Medium',
+    _Level.hard: 'Hard',
   };
 
   @override
@@ -33,37 +33,37 @@ class _CheckboxRadioExampleState extends State<CheckboxRadioExample> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Pay with',
+          'Difficulty',
           style: TextStyle(
             color: CalseeTextColors.of(context).secondary,
             fontSize: 14,
           ),
         ),
         const SizedBox(height: 10),
-        for (final method in _Method.values)
+        for (final level in _Level.values)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: CalseeRadio<_Method>(
-              value: method,
-              groupValue: _method,
-              label: _labels[method],
-              onChanged: (value) => setState(() => _method = value),
+            child: CalseeRadio<_Level>(
+              value: level,
+              groupValue: _level,
+              label: _labels[level],
+              onChanged: (value) => setState(() => _level = value),
             ),
           ),
         const SizedBox(height: 10),
         CalseeCheckbox(
-          value: _saveCard,
-          label: 'Save this card',
-          // Disabled unless the card is chosen: no onChanged.
-          onChanged: _method == _Method.card
-              ? (value) => setState(() => _saveCard = value)
+          value: _bonusRound,
+          label: 'Bonus round',
+          // Disabled unless Hard is chosen: no onChanged.
+          onChanged: _level == _Level.hard
+              ? (value) => setState(() => _bonusRound = value)
               : null,
         ),
         const SizedBox(height: 10),
         CalseeCheckbox(
-          value: _receipt,
-          label: 'Email me a receipt',
-          onChanged: (value) => setState(() => _receipt = value),
+          value: _readAloud,
+          label: 'Read questions aloud',
+          onChanged: (value) => setState(() => _readAloud = value),
         ),
       ],
     ),

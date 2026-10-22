@@ -16,7 +16,7 @@ class TextFieldExample extends StatefulWidget {
 
 class _TextFieldExampleState extends State<TextFieldExample> {
   String _name = '';
-  String _note = '';
+  String _team = '';
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +27,21 @@ class _TextFieldExampleState extends State<TextFieldExample> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CalseeTextField(
-            hint: 'Name or UPI ID',
+            hint: "Player's name",
             textInputAction: TextInputAction.next,
             onChanged: (value) => setState(() => _name = value),
           ),
           const SizedBox(height: 12),
           CalseeTextField(
-            hint: 'Add a note',
-            inputFormatters: [LengthLimitingTextInputFormatter(40)],
-            onChanged: (value) => setState(() => _note = value),
+            hint: 'Team name',
+            inputFormatters: [LengthLimitingTextInputFormatter(20)],
+            onChanged: (value) => setState(() => _team = value),
           ),
           const SizedBox(height: 16),
           Text(
             _name.isEmpty
                 ? 'Type above to see it here.'
-                : 'Paying $_name${_note.isEmpty ? '' : ' for "$_note"'}',
+                : 'Ready, $_name?${_team.isEmpty ? '' : ' Go, $_team!'}',
             style: TextStyle(color: colors.secondary, fontSize: 14),
           ),
         ],

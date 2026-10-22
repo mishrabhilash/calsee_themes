@@ -17,10 +17,10 @@ class ThemeDataExample extends StatefulWidget {
 }
 
 class _ThemeDataExampleState extends State<ThemeDataExample> {
-  double _saved = 0.6;
+  double _progress = 0.6;
 
-  void _add(double amount) =>
-      setState(() => _saved = (_saved + amount).clamp(0, 1));
+  void _add(double step) =>
+      setState(() => _progress = (_progress + step).clamp(0, 1));
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +33,13 @@ class _ThemeDataExampleState extends State<ThemeDataExample> {
             dimension: 180,
             child: CustomPaint(
               painter: _RingPainter(
-                progress: _saved,
+                progress: _progress,
                 track: theme.digitKey.fill,
                 fill: theme.equalsKey.fill,
               ),
               child: Center(
                 child: Text(
-                  '${(_saved * 100).round()}%',
+                  '${(_progress * 100).round()}%',
                   style: calseeDisplayStyle(context, 40),
                 ),
               ),

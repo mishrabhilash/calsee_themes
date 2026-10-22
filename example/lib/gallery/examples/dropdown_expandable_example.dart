@@ -15,7 +15,7 @@ class DropdownExpandableExample extends StatefulWidget {
 }
 
 class _DropdownExpandableExampleState extends State<DropdownExpandableExample> {
-  String? _account;
+  String? _table;
 
   @override
   Widget build(BuildContext context) {
@@ -25,25 +25,25 @@ class _DropdownExpandableExampleState extends State<DropdownExpandableExample> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Pay from', style: TextStyle(color: colors.secondary)),
+          Text('Practise', style: TextStyle(color: colors.secondary)),
           const SizedBox(height: 8),
           CalseeDropdown<String>(
             items: const [
-              ('savings', 'Savings ••4821'),
-              ('salary', 'Salary ••1290'),
-              ('joint', 'Joint ••7754'),
+              ('twos', '2 times table'),
+              ('fives', '5 times table'),
+              ('sevens', '7 times table'),
             ],
-            value: _account,
-            hint: 'Choose an account',
-            semanticLabel: 'Pay from',
-            onChanged: (value) => setState(() => _account = value),
+            value: _table,
+            hint: 'Choose a times table',
+            semanticLabel: 'Times table',
+            onChanged: (value) => setState(() => _table = value),
           ),
           const SizedBox(height: 20),
           CalseeExpandable(
-            title: 'Fees and limits',
+            title: 'How to play',
             child: Text(
-              'No fee for UPI payments. Up to ₹1,00,000 a day, '
-              '20 payments a day.',
+              'Type the answer on the number pad and press OK. A right '
+              'answer earns a star; Skip moves on to the next sum.',
               style: TextStyle(color: colors.primary, height: 1.4),
             ),
           ),

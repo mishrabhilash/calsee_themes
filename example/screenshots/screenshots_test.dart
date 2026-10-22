@@ -38,7 +38,7 @@ Widget _app(CalseeThemeController controller) => WidgetsApp(
   debugShowCheckedModeBanner: false,
   builder: (context, _) => DefaultTextStyle(
     style: const TextStyle(fontFamily: 'Roboto'),
-    child: CalseeScope(controller: controller, child: const PayScreen()),
+    child: CalseeScope(controller: controller, child: const MathsGameScreen()),
   ),
 );
 
@@ -63,10 +63,10 @@ void main() {
         seed: 7,
       );
       await tester.pumpWidget(_app(controller));
-      await _type(tester, '1250');
+      await _type(tester, '12');
       await tester.pump(const Duration(seconds: 2));
       await expectLater(
-        find.byType(PayScreen),
+        find.byType(MathsGameScreen),
         matchesGoldenFile('out/family_${family.name}.png'),
       );
     });
@@ -89,11 +89,11 @@ void main() {
       seed: 11,
     );
     await tester.pumpWidget(_app(controller));
-    await _type(tester, '480');
+    await _type(tester, '12');
     await tester.pump(const Duration(seconds: 1));
     var frame = 0;
     Future<void> shoot() => expectLater(
-      find.byType(PayScreen),
+      find.byType(MathsGameScreen),
       matchesGoldenFile(
         'out/swipe/frame_${(frame++).toString().padLeft(3, '0')}.png',
       ),

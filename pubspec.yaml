@@ -14,25 +14,25 @@ topics:
   - animation
 
 screenshots:
-  - description: Twelve theme families on one payment screen.
+  - description: Twelve theme families on one kids' maths game.
     path: doc/families.png
-  - description: Swiping between generated themes.
+  - description: Swiping between generated themes on a maths game.
     path: doc/swipe.gif
-  - description: The Claymorphism family on a payment screen.
+  - description: The Claymorphism family on a kids' maths game.
     path: doc/family_claymorphism.png
-  - description: The Liquid Glass family on a payment screen.
+  - description: The Liquid Glass family on a kids' maths game.
     path: doc/family_liquidGlass.png
-  - description: The Retro family on a payment screen.
+  - description: The Retro family on a kids' maths game.
     path: doc/family_retro.png
-  - description: The Cyberpunk family on a payment screen.
+  - description: The Cyberpunk family on a kids' maths game.
     path: doc/family_cyberpunk.png
-  - description: The Y2K Aero family on a payment screen.
+  - description: The Y2K Aero family on a kids' maths game.
     path: doc/family_y2kChrome.png
-  - description: The Paper & Ink family on a payment screen.
+  - description: The Paper & Ink family on a kids' maths game.
     path: doc/family_paperInk.png
-  - description: The Vaporwave family on a payment screen.
+  - description: The Vaporwave family on a kids' maths game.
     path: doc/family_vaporwave.png
-  - description: The Neo-brutalism family on a payment screen.
+  - description: The Neo-brutalism family on a kids' maths game.
     path: doc/family_neoBrutalism.png
 
 environment:

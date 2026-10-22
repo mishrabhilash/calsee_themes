@@ -74,18 +74,18 @@ void main() {
   });
 
   testWidgets('radio buttons choose their value', (tester) async {
-    var group = 'card';
+    var group = 'easy';
     await tester.pumpWidget(
       _app(
         StatefulBuilder(
           builder: (context, setState) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (final method in ['card', 'upi'])
+              for (final level in ['easy', 'hard'])
                 CalseeRadio<String>(
-                  value: method,
+                  value: level,
                   groupValue: group,
-                  label: method,
+                  label: level,
                   onChanged: (v) => setState(() => group = v),
                 ),
             ],
@@ -93,9 +93,9 @@ void main() {
         ),
       ),
     );
-    await tester.tap(find.text('upi'));
+    await tester.tap(find.text('hard'));
     await _settle(tester);
-    expect(group, 'upi');
+    expect(group, 'hard');
   });
 
   testWidgets('switch toggles and reports its state', (tester) async {
@@ -164,21 +164,21 @@ void main() {
       _app(
         StatefulBuilder(
           builder: (context, setState) => CalseeDropdown<String>(
-            items: const [('inr', 'Rupee'), ('usd', 'Dollar')],
+            items: const [('add', 'Addition'), ('times', 'Times tables')],
             value: chosen,
-            hint: 'Currency',
+            hint: 'Topic',
             onChanged: (v) => setState(() => chosen = v),
           ),
         ),
       ),
     );
-    expect(find.text('Dollar'), findsNothing);
-    await tester.tap(find.text('Currency'));
+    expect(find.text('Times tables'), findsNothing);
+    await tester.tap(find.text('Topic'));
     await _settle(tester);
-    await tester.tap(find.text('Dollar'));
+    await tester.tap(find.text('Times tables'));
     await _settle(tester);
-    expect(chosen, 'usd');
-    expect(find.text('Rupee'), findsNothing);
+    expect(chosen, 'times');
+    expect(find.text('Addition'), findsNothing);
   });
 
   testWidgets('expandable opens and closes its child', (tester) async {

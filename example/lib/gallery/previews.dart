@@ -5,9 +5,9 @@ import 'package:flutter/widgets.dart';
 // the current theme, sized for a card. They don't take input; the card
 // opens the element's page.
 
-const _send = IconData(0xe571, fontFamily: 'MaterialIcons');
-const _scan = IconData(0xe4f7, fontFamily: 'MaterialIcons');
-const _history = IconData(0xe314, fontFamily: 'MaterialIcons');
+const _play = IconData(0xe4cb, fontFamily: 'MaterialIcons');
+const _hint = IconData(0xe37b, fontFamily: 'MaterialIcons');
+const _scores = IconData(0xe36f, fontFamily: 'MaterialIcons');
 
 Widget _row(List<Widget> children, {double height = 52}) => SizedBox(
   height: height,
@@ -80,24 +80,24 @@ Widget keysPreview(BuildContext context) => Column(
 Widget iconKeysPreview(BuildContext context) => Center(
   child: _row(height: 84, [
     CalseeKey.icon(
-      _send,
+      _play,
       role: KeyRole.equals,
-      semanticLabel: 'Send',
-      label: 'Send',
+      semanticLabel: 'Play',
+      label: 'Play',
       onPressed: _noop,
     ),
     CalseeKey.icon(
-      _scan,
+      _hint,
       role: KeyRole.function,
-      semanticLabel: 'Scan',
-      label: 'Scan',
+      semanticLabel: 'Show a hint',
+      label: 'Hint',
       onPressed: _noop,
     ),
     CalseeKey.icon(
-      _history,
+      _scores,
       role: KeyRole.operator,
-      semanticLabel: 'History',
-      label: 'History',
+      semanticLabel: 'High scores',
+      label: 'Scores',
       onPressed: _noop,
     ),
   ]),
@@ -105,17 +105,17 @@ Widget iconKeysPreview(BuildContext context) => Center(
 
 Widget customKeysPreview(BuildContext context) => Center(
   child: _row(height: 84, [
-    for (final (percent, amount) in const [(10, 125), (15, 187), (20, 250)])
+    for (final (letter, answer) in const [('A', 54), ('B', 56), ('C', 63)])
       CalseeKey(
-        role: percent == 15 ? KeyRole.equals : KeyRole.digit,
-        semanticLabel: '$percent percent',
+        role: answer == 56 ? KeyRole.equals : KeyRole.digit,
+        semanticLabel: 'Answer $answer',
         onPressed: _noop,
         builder: (context, style, shortSide) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CalseeKeyLabel('$percent%', style: style, size: shortSide * 0.3),
+            CalseeKeyLabel('$answer', style: style, size: shortSide * 0.3),
             Text(
-              '₹$amount',
+              letter,
               style: TextStyle(color: style.label, fontSize: shortSide * 0.16),
             ),
           ],
@@ -125,14 +125,14 @@ Widget customKeysPreview(BuildContext context) => Center(
 );
 
 Widget displayPreview(BuildContext context) =>
-    Center(child: _panel(const CalseeReadout('₹1,250', size: 48)));
+    Center(child: _panel(const CalseeReadout('7 × 8', size: 48)));
 
 Widget surfacesPreview(BuildContext context) => Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    for (final (name, amount) in const [
-      ('Alex Morgan', '₹1,250'),
-      ('Priya Shah', '₹640'),
+    for (final (name, stars) in const [
+      ('Asha', '42 stars'),
+      ('Leo', '37 stars'),
     ])
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
@@ -154,7 +154,7 @@ Widget surfacesPreview(BuildContext context) => Column(
                       ),
                     ),
                   ),
-                  CalseeKeyLabel(amount, style: style, size: 17),
+                  CalseeKeyLabel(stars, style: style, size: 17),
                 ],
               ),
             ),
@@ -229,18 +229,18 @@ Widget checkboxRadioPreview(BuildContext context) => const Column(
     CalseeRadio<int>(
       value: 1,
       groupValue: 1,
-      label: 'UPI',
+      label: 'Easy',
       onChanged: _ignore,
     ),
     SizedBox(height: 10),
     CalseeRadio<int>(
       value: 2,
       groupValue: 1,
-      label: 'Card',
+      label: 'Medium',
       onChanged: _ignore,
     ),
     SizedBox(height: 10),
-    CalseeCheckbox(value: true, label: 'Save this card', onChanged: _ignore),
+    CalseeCheckbox(value: true, label: 'Bonus round', onChanged: _ignore),
   ],
 );
 
@@ -248,9 +248,9 @@ Widget switchPreview(BuildContext context) => const Column(
   mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
-    CalseeSwitch(value: true, label: 'Payment alerts', onChanged: _ignore),
+    CalseeSwitch(value: true, label: 'Sound effects', onChanged: _ignore),
     SizedBox(height: 14),
-    CalseeSwitch(value: false, label: 'Sounds', onChanged: _ignore),
+    CalseeSwitch(value: false, label: 'Timer', onChanged: _ignore),
   ],
 );
 
@@ -258,8 +258,8 @@ Widget segmentedSliderPreview(BuildContext context) => const Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
     CalseeSegmented<int>(
-      options: [(2, '2'), (3, '3'), (4, '4'), (5, '5')],
-      selected: 3,
+      options: [(10, '10'), (20, '20'), (30, '30'), (60, '60')],
+      selected: 20,
       onChanged: _ignore,
     ),
     SizedBox(height: 20),
@@ -271,20 +271,20 @@ Widget dropdownExpandablePreview(BuildContext context) => const Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
     CalseeDropdown<int>(
-      items: [(1, 'Savings ••4821')],
+      items: [(1, '7 times table')],
       value: 1,
       onChanged: _ignore,
     ),
     SizedBox(height: 12),
-    CalseeExpandable(title: 'Fees and limits', child: SizedBox.shrink()),
+    CalseeExpandable(title: 'How to play', child: SizedBox.shrink()),
   ],
 );
 
 Widget textFieldPreview(BuildContext context) => const Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    CalseeTextField(hint: 'Name or UPI ID', enabled: false),
+    CalseeTextField(hint: "Player's name", enabled: false),
     SizedBox(height: 12),
-    CalseeTextField(hint: 'Add a note', enabled: false),
+    CalseeTextField(hint: 'Team name', enabled: false),
   ],
 );

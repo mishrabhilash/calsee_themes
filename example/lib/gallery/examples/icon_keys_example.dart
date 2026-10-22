@@ -6,9 +6,9 @@
 import 'package:calsee_themes/calsee_themes.dart';
 import 'package:flutter/widgets.dart';
 
-const _send = IconData(0xe571, fontFamily: 'MaterialIcons');
-const _scan = IconData(0xe4f7, fontFamily: 'MaterialIcons');
-const _history = IconData(0xe314, fontFamily: 'MaterialIcons');
+const _play = IconData(0xe4cb, fontFamily: 'MaterialIcons');
+const _hint = IconData(0xe37b, fontFamily: 'MaterialIcons');
+const _scores = IconData(0xe36f, fontFamily: 'MaterialIcons');
 const _backspace = IconData(
   0xeeb5,
   fontFamily: 'MaterialIcons',
@@ -40,31 +40,31 @@ class _IconKeysExampleState extends State<IconKeysExample> {
             children: [
               Expanded(
                 child: CalseeKey.icon(
-                  _send,
+                  _play,
                   role: KeyRole.equals,
-                  semanticLabel: 'Send money',
-                  label: 'Send',
-                  onPressed: () => _say('Send'),
+                  semanticLabel: 'Play',
+                  label: 'Play',
+                  onPressed: () => _say('Play'),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: CalseeKey.icon(
-                  _scan,
+                  _hint,
                   role: KeyRole.function,
-                  semanticLabel: 'Scan a QR code',
-                  label: 'Scan',
-                  onPressed: () => _say('Scan'),
+                  semanticLabel: 'Show a hint',
+                  label: 'Hint',
+                  onPressed: () => _say('Hint'),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: CalseeKey.icon(
-                  _history,
+                  _scores,
                   role: KeyRole.operator,
-                  semanticLabel: 'History',
-                  label: 'History',
-                  onPressed: () => _say('History'),
+                  semanticLabel: 'High scores',
+                  label: 'Scores',
+                  onPressed: () => _say('Scores'),
                 ),
               ),
             ],

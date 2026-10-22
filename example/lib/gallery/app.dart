@@ -99,7 +99,7 @@ final galleryEntries = <GalleryEntry>[
     title: 'Display and readout',
     summary:
         "CalseeDisplayPanel draws the family's display (an LCD, a clay well, "
-        'glass). CalseeReadout shows an amount or score in the display font.',
+        'glass). CalseeReadout shows a sum or score in the display font.',
     source: '$_examples/display_example.dart',
     builder: (_) => const DisplayExample(),
     preview: displayPreview,
@@ -205,15 +205,15 @@ final galleryEntries = <GalleryEntry>[
     height: 340,
   ),
   GalleryEntry(
-    route: '/payment',
+    route: '/game',
     title: 'A whole screen',
     summary:
-        'A payment keypad built from these pieces. The payment logic is '
+        "A kids' maths game built from these pieces. The game logic is "
         'ordinary app code that knows nothing about themes.',
     source: 'lib/main.dart',
-    builder: (_) => const PayScreen(),
+    builder: (_) => const MathsGameScreen(),
     preview: (_) => const FittedBox(
-      child: SizedBox(width: 390, height: 720, child: PayScreen()),
+      child: SizedBox(width: 390, height: 720, child: MathsGameScreen()),
     ),
     height: 720,
   ),

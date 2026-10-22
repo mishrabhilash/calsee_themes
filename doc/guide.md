@@ -44,7 +44,7 @@ final themes = CalseeThemeController(
 CalseeScope(
   controller: themes,
   onChanged: (state) => prefs.setString('theme', jsonEncode(state)),
-  child: const PayScreen(),
+  child: const MathsGameScreen(),
 );
 
 themes.next();
@@ -102,7 +102,7 @@ grid.
 ```dart
 SizedBox(
   height: 64,
-  child: CalseeKey.text('Pay', role: KeyRole.equals, onPressed: pay),
+  child: CalseeKey.text('OK', role: KeyRole.equals, onPressed: check),
 );
 ```
 
@@ -110,7 +110,7 @@ The `role` picks which of the theme's faces the key wears:
 
 | Role | Use it for |
 |---|---|
-| `KeyRole.equals` | The one primary action (Pay, Send). It wears the theme's accent. |
+| `KeyRole.equals` | The one primary action (OK, Submit). It wears the theme's accent. Keep its label short: Material 3 Expressive and Bauhaus may draw it as a blob or a triangle. |
 | `KeyRole.operator` | Secondary actions. |
 | `KeyRole.function` | Tertiary actions and toggles. |
 | `KeyRole.digit` | Everything else. |
@@ -130,11 +130,11 @@ label under it. Icon-only keys need a `semanticLabel` for screen readers.
 
 ```dart
 CalseeKey.icon(
-  sendIcon,
+  playIcon,
   role: KeyRole.equals,
-  semanticLabel: 'Send money',
-  label: 'Send',
-  onPressed: send,
+  semanticLabel: 'Play',
+  label: 'Play',
+  onPressed: play,
 );
 ```
 
@@ -154,13 +154,13 @@ in the theme's key font.
 ```dart
 CalseeKey(
   role: KeyRole.digit,
-  semanticLabel: '15 percent tip',
-  onPressed: () => setTip(15),
+  semanticLabel: 'Answer 56',
+  onPressed: () => choose(56),
   builder: (context, style, shortSide) => Column(
     mainAxisSize: MainAxisSize.min,
     children: [
-      CalseeKeyLabel('15%', style: style, size: shortSide * 0.32),
-      Text('₹187', style: TextStyle(color: style.label)),
+      CalseeKeyLabel('56', style: style, size: shortSide * 0.32),
+      Text('B', style: TextStyle(color: style.label)),
     ],
   ),
 );
@@ -174,11 +174,11 @@ CalseeKey(
 `CalseeDisplayPanel` draws the family's display: Retro's LCD, Clay's inset
 well, Y2K's glass. Families without a display draw nothing. `CalseeReadout`
 is one line in the theme's display font that shrinks to fit. Use them for
-an amount, a score or a timer.
+a sum, a score or a timer.
 
 ```dart
 CalseeDisplayPanel(
-  child: CalseeReadout('₹1,250', size: 64),
+  child: CalseeReadout('7 + 5', size: 64),
 );
 ```
 
@@ -199,7 +199,7 @@ CalseeSurface(
   role: KeyRole.digit,
   builder: (context, style, shortSide) => Padding(
     padding: calseeFaceInset(context, shortSide),
-    child: Text('Alex Morgan', style: TextStyle(color: style.label)),
+    child: Text('Asha', style: TextStyle(color: style.label)),
   ),
 );
 ```
@@ -225,16 +225,16 @@ slider's value) and follows Reduce Motion and Bold Text.
 
 ```dart
 CalseeCheckbox(
-  value: saveCard,
-  label: 'Save this card',
-  onChanged: (value) => setState(() => saveCard = value),
+  value: bonusRound,
+  label: 'Bonus round',
+  onChanged: (value) => setState(() => bonusRound = value),
 );
 
-CalseeRadio<Method>(
-  value: Method.upi,
-  groupValue: method,
-  label: 'UPI',
-  onChanged: (value) => setState(() => method = value),
+CalseeRadio<Level>(
+  value: Level.easy,
+  groupValue: level,
+  label: 'Easy',
+  onChanged: (value) => setState(() => level = value),
 );
 ```
 
@@ -247,9 +247,9 @@ Tapping the label toggles or chooses too. `size` sets the box's side.
 
 ```dart
 CalseeSwitch(
-  value: alerts,
-  label: 'Payment alerts',
-  onChanged: (value) => setState(() => alerts = value),
+  value: sounds,
+  label: 'Sound effects',
+  onChanged: (value) => setState(() => sounds = value),
 );
 ```
 
@@ -260,17 +260,18 @@ CalseeSwitch(
 
 ```dart
 CalseeSegmented<int>(
-  options: const [(2, '2'), (3, '3'), (4, '4')],
-  selected: people,
-  onChanged: (value) => setState(() => people = value),
+  options: const [(10, '10'), (20, '20'), (30, '30')],
+  selected: seconds,
+  onChanged: (value) => setState(() => seconds = value),
 );
 
 CalseeSlider(
-  value: tip,
+  value: questions,
+  min: 5,
   max: 25,
-  divisions: 5, // snaps to 0, 5, 10, 15, 20, 25
-  semanticLabel: 'Tip',
-  onChanged: (value) => setState(() => tip = value),
+  divisions: 4, // snaps to 5, 10, 15, 20, 25
+  semanticLabel: 'Questions',
+  onChanged: (value) => setState(() => questions = value),
 );
 ```
 
@@ -284,15 +285,15 @@ width; drag it or tap along it.
 
 ```dart
 CalseeDropdown<String>(
-  items: const [('savings', 'Savings ••4821'), ('salary', 'Salary ••1290')],
-  value: account,
-  hint: 'Choose an account',
-  onChanged: (value) => setState(() => account = value),
+  items: const [('twos', '2 times table'), ('fives', '5 times table')],
+  value: table,
+  hint: 'Choose a times table',
+  onChanged: (value) => setState(() => table = value),
 );
 
 CalseeExpandable(
-  title: 'Fees and limits',
-  child: Text('No fee for UPI payments.'),
+  title: 'How to play',
+  child: Text('Type the answer and press OK.'),
 );
 ```
 
@@ -307,8 +308,8 @@ closes on a choice or a tap outside.
 
 ```dart
 CalseeTextField(
-  hint: 'Name or UPI ID',
-  onChanged: (value) => setState(() => payee = value),
+  hint: "Player's name",
+  onChanged: (value) => setState(() => player = value),
 );
 ```
 
@@ -328,7 +329,7 @@ scrolls pass through to the child.
 
 ```dart
 CalseeSwipeArea(
-  child: CalseeDisplayPanel(child: CalseeReadout(amount, size: 64)),
+  child: CalseeDisplayPanel(child: CalseeReadout(question, size: 64)),
 );
 ```
 
@@ -391,10 +392,10 @@ turn a code back into a `FeedEntry` with `decodeShareCode`.
 ## A whole screen
 
 The [example app](../example/lib/main.dart) puts it all together: a
-payment keypad with a themed amount, keypad and Pay button. The payment
+kids' maths game with a themed sum, number pad and OK button. The game
 logic is ordinary app code that knows nothing about themes.
 
-[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/payment) ·
+[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/game) ·
 [Source](../example/lib/main.dart)
 
 ## Running the gallery locally

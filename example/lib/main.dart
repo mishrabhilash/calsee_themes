@@ -1,14 +1,14 @@
-// A payment keypad in endless themes: the amount, the keys and the Pay
-// button are drawn by calsee_themes; the payment logic is ordinary app
-// code that knows nothing about themes. Swipe the amount for a new theme.
+// A kids' maths game in endless themes: the sum, the number pad and the
+// OK button are drawn by calsee_themes; the game logic is ordinary app
+// code that knows nothing about themes. Swipe the sum for a new theme.
 import 'package:calsee_themes/calsee_themes.dart';
 import 'package:calsee_themes/key_face.dart' show KeyLabel;
 import 'package:flutter/widgets.dart';
 
-void main() => runApp(const PayDemoApp());
+void main() => runApp(const MathsGameApp());
 
-class PayDemoApp extends StatelessWidget {
-  const PayDemoApp({super.key, this.seed});
+class MathsGameApp extends StatelessWidget {
+  const MathsGameApp({super.key, this.seed});
 
   /// Where the theme feed starts (random when null).
   final int? seed;
@@ -21,43 +21,69 @@ class PayDemoApp extends StatelessWidget {
     builder: (context, _) => CalseeScope(
       seed: seed,
       // In an app: load savedState at launch and store it in onChanged,
-      // so the user keeps their theme.
-      child: const PayScreen(),
+      // so the player keeps their theme.
+      child: const MathsGameScreen(),
     ),
   );
 }
 
-class PayScreen extends StatefulWidget {
-  const PayScreen({super.key});
+class MathsGameScreen extends StatefulWidget {
+  const MathsGameScreen({super.key});
 
   @override
-  State<PayScreen> createState() => _PayScreenState();
+  State<MathsGameScreen> createState() => _MathsGameScreenState();
 }
 
-class _PayScreenState extends State<PayScreen> {
-  String _amount = '';
+class _MathsGameScreenState extends State<MathsGameScreen> {
+  static const _sums = [
+    (7, '+', 5),
+    (9, '−', 4),
+    (3, '×', 6),
+    (8, '+', 7),
+    (12, '−', 5),
+    (4, '×', 4),
+  ];
+
+  int _round = 0;
+  int _stars = 0;
+  String _answer = '';
   String? _status;
 
-  // Up to 7 rupee digits and 2 paise digits.
+  (int, String, int) get _sum => _sums[_round % _sums.length];
+
+  int get _result => switch (_sum) {
+    (final a, '+', final b) => a + b,
+    (final a, '−', final b) => a - b,
+    (final a, _, final b) => a * b,
+  };
+
+  // Answers have at most 3 digits.
   void _key(String key) => setState(() {
     _status = null;
     if (key == '<') {
-      if (_amount.isNotEmpty) {
-        _amount = _amount.substring(0, _amount.length - 1);
+      if (_answer.isNotEmpty) {
+        _answer = _answer.substring(0, _answer.length - 1);
       }
       return;
     }
-    final dot = _amount.indexOf('.');
-    if (key == '.') {
-      if (dot < 0) _amount = _amount.isEmpty ? '0.' : '$_amount.';
+    if (key == 'Skip') {
+      _round++;
+      _answer = '';
       return;
     }
-    if (dot >= 0 ? _amount.length - dot > 2 : _amount.length >= 7) return;
-    if (_amount == '0') _amount = '';
-    _amount += key;
+    if (_answer.length < 3) _answer += key;
   });
 
-  void _pay() => setState(() => _status = 'Paid ₹$_amount to Alex');
+  void _check() => setState(() {
+    if (int.parse(_answer) == _result) {
+      _stars++;
+      _round++;
+      _status = 'Correct! Here is the next one.';
+    } else {
+      _status = 'Not quite. Try again!';
+    }
+    _answer = '';
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +96,7 @@ class _PayScreenState extends State<PayScreen> {
           child: Column(
             children: [
               Text(
-                'to Alex Morgan',
+                'Maths Quest',
                 style: TextStyle(
                   color: colors.primary,
                   fontSize: 24,
@@ -79,26 +105,26 @@ class _PayScreenState extends State<PayScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                'alex@bank · ${theme.spec.name}',
+                'Round ${_round + 1} · $_stars stars · ${theme.spec.name}',
                 style: TextStyle(color: colors.secondary, fontSize: 14),
               ),
               Expanded(
                 child: CalseeSwipeArea(
-                  child: Center(child: _AmountDisplay(_amount, _status)),
+                  child: Center(child: _SumDisplay(_sum, _answer, _status)),
                 ),
               ),
               SizedBox(
                 height: 64,
                 width: double.infinity,
                 child: CalseeKey.text(
-                  'Pay',
+                  'OK',
                   role: KeyRole.equals,
                   sizeFactor: 0.36,
-                  onPressed: _amount.isEmpty ? null : _pay,
+                  onPressed: _answer.isEmpty ? null : _check,
                 ),
               ),
               const SizedBox(height: 16),
-              _Keypad(onKey: _key),
+              _NumberPad(onKey: _key),
             ],
           ),
         ),
@@ -107,10 +133,11 @@ class _PayScreenState extends State<PayScreen> {
   }
 }
 
-class _AmountDisplay extends StatelessWidget {
-  const _AmountDisplay(this.amount, this.status);
+class _SumDisplay extends StatelessWidget {
+  const _SumDisplay(this.sum, this.answer, this.status);
 
-  final String amount;
+  final (int, String, int) sum;
+  final String answer;
   final String? status;
 
   @override
@@ -120,13 +147,15 @@ class _AmountDisplay extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final colors = CalseeTextColors.of(context);
+          final (a, op, b) = sum;
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              CalseeReadout('$a $op $b', size: 56),
               CalseeReadout(
-                '₹${amount.isEmpty ? '0' : amount}',
-                size: 64,
-                color: amount.isEmpty ? colors.secondary : null,
+                '= ${answer.isEmpty ? '?' : answer}',
+                size: 56,
+                color: answer.isEmpty ? colors.secondary : null,
               ),
               const SizedBox(height: 8),
               Text(
@@ -141,8 +170,8 @@ class _AmountDisplay extends StatelessWidget {
   );
 }
 
-class _Keypad extends StatelessWidget {
-  const _Keypad({required this.onKey});
+class _NumberPad extends StatelessWidget {
+  const _NumberPad({required this.onKey});
 
   final ValueChanged<String> onKey;
 
@@ -150,7 +179,7 @@ class _Keypad extends StatelessWidget {
     ['1', '2', '3'],
     ['4', '5', '6'],
     ['7', '8', '9'],
-    ['.', '0', '<'],
+    ['Skip', '0', '<'],
   ];
 
   @override
@@ -181,9 +210,9 @@ class _Keypad extends StatelessWidget {
       semanticLabel: 'Delete',
       onPressed: () => onKey(key),
     ),
-    '.' => CalseeKey.text(
-      '.',
-      role: KeyRole.decimal,
+    'Skip' => CalseeKey.text(
+      'Skip',
+      role: KeyRole.function,
       onPressed: () => onKey(key),
     ),
     _ => CalseeKey.text(key, role: KeyRole.digit, onPressed: () => onKey(key)),

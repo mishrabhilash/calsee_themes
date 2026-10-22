@@ -27,7 +27,8 @@ Read this before changing anything. The hard rules are in "Rules".
   few types users need. Deeper libraries are importable but less stable.
 - **Fonts** (`fonts/`): 11 bundled OFL fonts. Sources and checksums are in
   `fonts/README.md`.
-- **Example** (`example/`): a payment keypad. `example/screenshots/`
+- **Example** (`example/`): a kids' maths game. Keep payment examples
+  out of the package, its docs and its gallery. `example/screenshots/`
   renders the README and pub.dev images into `doc/`.
 
 Families (`ThemeFamily`, `lib/engine/families.dart`): m3Expressive,
@@ -151,8 +152,8 @@ pana --no-warning --flutter-sdk ~/flutter-3.47.6 .   # pub.dev score, expect 160
 ## Gotchas
 
 - **Material 3 Expressive and Bauhaus reshape keys by role** (blobs,
-  pentagons, triangles). The README tells payment-style screens to filter
-  them out. The default feed (`FeedFilter.surpriseMe`) includes every
+  pentagons, triangles). The README tells screens where a button must
+  look plain to filter them out. The default feed (`FeedFilter.surpriseMe`) includes every
   enabled family, Bauhaus too. Calsee makes Bauhaus opt-in in its own
   settings.
 - In the package's own widget tests, fonts register without the
