@@ -1,3 +1,9 @@
+## Unreleased
+
+- `CalseeKey.icon` with a `label` no longer overflows its key on faces
+  that leave less room for content (some Material 3 Expressive shapes);
+  the icon and label shrink to fit, as text labels do.
+
 ## 1.0.0
 
 First public release.

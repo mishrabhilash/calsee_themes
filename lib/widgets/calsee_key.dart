@@ -84,13 +84,18 @@ class CalseeKey extends StatefulWidget {
         size: shortSide * sizeFactor,
       );
       if (label == null) return glyph;
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          glyph,
-          SizedBox(height: shortSide * 0.06),
-          CalseeKeyLabel(label, style: style, size: shortSide * 0.14),
-        ],
+      // Some faces (Material 3 Expressive shapes) leave less than the
+      // short side for content: shrink to fit, as text labels do.
+      return FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            glyph,
+            SizedBox(height: shortSide * 0.06),
+            CalseeKeyLabel(label, style: style, size: shortSide * 0.14),
+          ],
+        ),
       );
     },
   );

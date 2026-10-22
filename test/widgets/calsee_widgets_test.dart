@@ -136,4 +136,59 @@ void main() {
     // Retro's LCD solves its text against the panel, not the backdrop.
     expect(inside.primary, isNot(outside.primary));
   });
+
+  testWidgets('icon keys with a label fit their key in every theme', (
+    tester,
+  ) async {
+    const icon = IconData(0xe571, fontFamily: 'MaterialIcons');
+    // Steps through the feed, so hero themes are covered too.
+    final controller = CalseeThemeController(seed: 7);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      _app(
+        CalseeScope(
+          controller: controller,
+          child: CalseeBackdrop(
+            child: Center(
+              child: Wrap(
+                children: [
+                  for (final (width, height) in const [
+                    (100.0, 84.0),
+                    (94.7, 84.0),
+                    (60.0, 60.0),
+                    (120.0, 48.0),
+                  ])
+                    for (final role in const [
+                      KeyRole.equals,
+                      KeyRole.function,
+                      KeyRole.operator,
+                    ])
+                      SizedBox(
+                        width: width,
+                        height: height,
+                        child: CalseeKey.icon(
+                          icon,
+                          role: role,
+                          semanticLabel: 'Send',
+                          label: 'History',
+                          onPressed: () {},
+                        ),
+                      ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    for (var i = 0; i < 60; i++) {
+      controller.next();
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(
+        tester.takeException(),
+        isNull,
+        reason: '${controller.spec.name} (${controller.spec.family})',
+      );
+    }
+  });
 }
