@@ -5,8 +5,9 @@ section has a short snippet, a live example you can play with, and the
 example's full source.
 
 **[Open the live gallery](https://mishrabhilash.github.io/calsee_themes/)**.
-It runs every example below in your browser. Press **Next** at the top to
-see each element in every family.
+It runs every example below in your browser. Press **Next theme** at the
+top to see each element in every family but Bauhaus, whose role shapes
+don't suit small form examples (apps can still use it).
 
 All snippets use one import:
 

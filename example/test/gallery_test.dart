@@ -1,3 +1,4 @@
+import 'package:calsee_themes/calsee_themes.dart';
 import 'package:calsee_themes_example/gallery/app.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,9 +28,12 @@ void main() {
     final navigator = tester.state<NavigatorState>(find.byType(Navigator));
 
     // The home page's previews lay out in every family without overflow.
+    // It never shows Bauhaus.
     for (var i = 0; i < 24; i++) {
       await tester.tap(find.bySemanticsLabel('Next theme').last);
       await _settle(tester);
+      final themes = CalseeScope.of(tester.element(find.byType(Navigator)));
+      expect(themes.spec.family, isNot(ThemeFamily.bauhaus));
     }
 
     for (final entry in galleryEntries) {

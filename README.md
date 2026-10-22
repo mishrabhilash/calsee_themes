@@ -109,7 +109,7 @@ built this way.
 
 **[Drawing themed UI](doc/guide.md)** covers every element with a snippet
 and its full source. The **[live gallery](https://mishrabhilash.github.io/calsee_themes/)**
-runs each example in your browser, in every family.
+runs each example in your browser, in every family but Bauhaus.
 
 ## Keeping the user's theme
 

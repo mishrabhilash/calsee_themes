@@ -227,7 +227,15 @@ class GalleryApp extends StatefulWidget {
 }
 
 class _GalleryAppState extends State<GalleryApp> {
-  final _themes = CalseeThemeController(seed: 7);
+  // Every family but Bauhaus, whose role shapes (circles, triangles) don't
+  // suit these small form examples. Apps can still opt into it.
+  final _themes = CalseeThemeController(
+    seed: 7,
+    families: [
+      for (final family in ThemeFamily.enabledFamilies)
+        if (family != ThemeFamily.bauhaus) family,
+    ],
+  );
 
   @override
   void initState() {
@@ -502,8 +510,8 @@ class _HomePage extends StatelessWidget {
         const SizedBox(height: 6),
         Text(
           'Every themed element, drawn live in the widget theme below. '
-          'Change the theme to see each one in every family, and open an '
-          'element to play with it and read its source.',
+          'Change the theme to see each one in every family but Bauhaus, '
+          'and open an element to play with it and read its source.',
           style: TextStyle(color: palette.muted, fontSize: 15, height: 1.45),
         ),
         const SizedBox(height: 16),
