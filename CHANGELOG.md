@@ -1,6 +1,4 @@
-## Unreleased
-
-New widgets, so the next release is 1.1.0.
+## 1.1.0
 
 - Form controls drawn by the theme: `CalseeCheckbox`, `CalseeRadio`,
   `CalseeSwitch`, `CalseeSegmented`, `CalseeSlider`, `CalseeDropdown`,
@@ -15,6 +13,8 @@ New widgets, so the next release is 1.1.0.
 - `CalseeKey.icon` with a `label` no longer overflows its key on faces
   that leave less room for content (some Material 3 Expressive shapes);
   the icon and label shrink to fit, as text labels do.
+- The README opens with an example of where the themes fit: a kids'
+  maths game whose number pad gets a new look with each swipe.
 
 ## 1.0.0
 
