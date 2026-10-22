@@ -688,9 +688,9 @@ void main() {
           function: KeyColors(face: face!, label: 0xFF000000, edge: ink),
         ),
       );
-      final boundary = validateTheme(bad)
-          .where((v) => v.rule == GuardrailRule.vaporBoundary)
-          .toList();
+      final boundary = validateTheme(
+        bad,
+      ).where((v) => v.rule == GuardrailRule.vaporBoundary).toList();
       expect(boundary, isNotEmpty);
       expect(
         boundary.every((v) => v.detail.contains('grid over floor')),

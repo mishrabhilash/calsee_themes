@@ -2,7 +2,7 @@ import 'package:calsee_themes/calc_theme_data.dart';
 import 'package:calsee_themes/plain_theme.dart';
 import 'package:calsee_themes/render/ambient_drift.dart';
 import 'package:flutter/foundation.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/widgets.dart';
 
 export 'package:calsee_themes/calc_theme_data.dart';
 
@@ -26,7 +26,7 @@ enum CalcThemeAspect {
 /// "theme widgets rebuild only theme-dependent layers"). [of] still
 /// rebuilds on every change.
 class CalcTheme extends InheritedModel<CalcThemeAspect> {
-  const new({
+  const CalcTheme({
     required this.data,
     required super.child,
     this.live,
@@ -105,7 +105,7 @@ class CalcTheme extends InheritedModel<CalcThemeAspect> {
 /// compare cheaply.
 @immutable
 final class FixedCalcTheme implements ValueListenable<CalcThemeData> {
-  const new(this.value);
+  const FixedCalcTheme(this.value);
 
   @override
   final CalcThemeData value;
@@ -126,7 +126,7 @@ final class FixedCalcTheme implements ValueListenable<CalcThemeData> {
 
 /// Interpolates two [CalcThemeData]s with [CalcThemeData.lerp].
 class CalcThemeDataTween extends Tween<CalcThemeData> {
-  new({super.begin, super.end});
+  CalcThemeDataTween({super.begin, super.end});
 
   @override
   CalcThemeData lerp(double t) => CalcThemeData.lerp(begin!, end!, t);
@@ -136,10 +136,12 @@ class CalcThemeDataTween extends Tween<CalcThemeData> {
 /// transitions: a brightness change now, theme switches in M3), in step
 /// with Material's own `AnimatedTheme`.
 class AnimatedCalcTheme extends ImplicitlyAnimatedWidget {
-  const new({
+  const AnimatedCalcTheme({
     required this.data,
     required this.child,
-    super.duration = kThemeAnimationDuration,
+    super.duration = const Duration(
+      milliseconds: 200,
+    ), // Material's theme change
     super.curve,
     super.key,
   });
@@ -161,11 +163,13 @@ class _AnimatedCalcThemeState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _data = visitor(
-      _data,
-      widget.data,
-      (value) => CalcThemeDataTween(begin: value as CalcThemeData),
-    ) as CalcThemeDataTween?;
+    _data =
+        visitor(
+              _data,
+              widget.data,
+              (value) => CalcThemeDataTween(begin: value as CalcThemeData),
+            )
+            as CalcThemeDataTween?;
   }
 
   @override
@@ -179,7 +183,7 @@ class _AnimatedCalcThemeState
 /// the screen's layout above it is never re-run (design doc: "theme
 /// widgets rebuild only theme-dependent layers").
 class ThemeLayer extends StatelessWidget {
-  const new({required this.child, super.key});
+  const ThemeLayer({required this.child, super.key});
 
   final Widget child;
 
@@ -191,7 +195,7 @@ class ThemeLayer extends StatelessWidget {
 /// Paints the calculator background — the per-frame [theme]'s background
 /// colour and its backdrop (gradient / pattern) — by repainting only.
 class LiveBackdropPainter extends CustomPainter {
-  new({
+  LiveBackdropPainter({
     required this.theme,
     this.textSafeArea,
     this.toolbarExclusion,

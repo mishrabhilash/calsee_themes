@@ -20,7 +20,7 @@ import 'package:flutter/widgets.dart';
 
 /// The drift time (seconds of motion so far). Notifies on every advance.
 final class AmbientClock extends ChangeNotifier {
-  new();
+  AmbientClock();
 
   /// The app-wide clock.
   static final AmbientClock instance = AmbientClock();
@@ -46,7 +46,7 @@ final class AmbientClock extends ChangeNotifier {
 
 /// Drives [AmbientClock] while [theme]'s backdrop drifts and [enabled].
 class AmbientDrift extends StatefulWidget {
-  const new({
+  const AmbientDrift({
     required this.theme,
     required this.enabled,
     required this.child,

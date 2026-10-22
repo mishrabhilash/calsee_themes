@@ -18,7 +18,7 @@ import 'package:flutter/widgets.dart';
 /// Draws display glyphs and the display panel for a theme family.
 @immutable
 abstract class DisplayFace {
-  const new();
+  const DisplayFace();
 
   /// Whether this face draws the UTF-16 code unit [codeUnit] itself.
   bool drawsChar(int codeUnit);
@@ -98,7 +98,12 @@ abstract class DisplayFace {
 /// One line of display text drawn with a [DisplayFace]: a [Text]
 /// replacement (no wrapping, no text scaling) for faces that paint glyphs.
 class FaceText extends LeafRenderObjectWidget {
-  const new(this.text, {required this.style, required this.face, super.key});
+  const FaceText(
+    this.text, {
+    required this.style,
+    required this.face,
+    super.key,
+  });
 
   /// The text.
   final String text;
@@ -124,7 +129,13 @@ class FaceText extends LeafRenderObjectWidget {
 
 /// Render object of [FaceText].
 class RenderFaceText extends RenderBox {
-  new({required this._text, required this._style, required this._face});
+  RenderFaceText({
+    required String text,
+    required TextStyle style,
+    required DisplayFace face,
+  }) : _text = text,
+       _style = style,
+       _face = face;
 
   final TextPainter _painter = TextPainter(
     textDirection: TextDirection.ltr,
@@ -240,7 +251,7 @@ class RenderFaceText extends RenderBox {
 
 /// Paints a [DisplayFace]'s panel behind the display.
 class DisplayPanelPainter extends CustomPainter {
-  const new(this.face);
+  const DisplayPanelPainter(this.face);
 
   /// The face whose panel to paint.
   final DisplayFace face;

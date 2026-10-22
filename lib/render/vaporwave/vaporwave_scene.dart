@@ -78,7 +78,7 @@ const List<(double, double)> vaporwaveSunFixedGaps = [
 /// Where a Vaporwave scene puts its horizon, sun and grid in a canvas.
 @immutable
 final class VaporSceneGeometry {
-  const new({
+  const VaporSceneGeometry({
     required this.horizon,
     required this.centerX,
     required this.columnWidth,
@@ -89,7 +89,7 @@ final class VaporSceneGeometry {
 
   /// Lays the scene out in [size] around the text-safe area [safe] (null:
   /// the horizon at [horizonPermille] of the height).
-  factory of(Size size, Rect? safe, int horizonPermille) {
+  factory VaporSceneGeometry.of(Size size, Rect? safe, int horizonPermille) {
     final w = size.width;
     final h = size.height;
     if (safe == null) {

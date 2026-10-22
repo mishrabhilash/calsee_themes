@@ -3,8 +3,7 @@ library;
 
 import 'dart:ui' show Color;
 
-import 'package:calsee_themes/engine/liquid_glass.dart'
-    show glassDiffuseColor;
+import 'package:calsee_themes/engine/liquid_glass.dart' show glassDiffuseColor;
 import 'package:calsee_themes/engine/oklab.dart' show compositeOver;
 import 'package:calsee_themes/engine/theme_spec.dart';
 import 'package:calsee_themes/render/glass/glass_display_face.dart';
@@ -68,8 +67,9 @@ GlassDisplayFace glassDisplayFaceFor(
     solid: glassSolidTint(p.surface, base),
     frostColor: Color(base),
     frost: spec.keyStyle.frostPermille / 1000,
-    rim: Color(p.digit.edge)
-        .withValues(alpha: spec.accessible ? 1 : Color(p.digit.edge).a * 0.8),
+    rim: Color(
+      p.digit.edge,
+    ).withValues(alpha: spec.accessible ? 1 : Color(p.digit.edge).a * 0.8),
     rendering: rendering,
   );
 }

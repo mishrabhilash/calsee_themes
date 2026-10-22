@@ -4,21 +4,22 @@ publish_to: 'none'
 version: 1.0.0
 
 environment:
-  sdk: ^3.13.5
-  flutter: ">=3.47.0"
+  sdk: ^3.9.0
+  flutter: ">=3.35.0"
 
 # Fonts are app assets: every app bundles the families in
 # lib/render/fonts.dart under the same names (see README.md).
 dependencies:
-  dynamic_color: ^2.1.0
+  # 1.x on Flutter <3.38 (material_color_utilities 0.11), 2.x on newer.
+  dynamic_color: ">=1.9.0 <3.0.0"
   flutter:
     sdk: flutter
   material_new_shapes: ^1.0.0
-  material_ui: ^1.5.0
-  meta: ^1.19.0
+  meta: ^1.16.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  test: ^1.31.1
-  very_good_analysis: ^11.0.0
+  test: ">=1.26.2 <2.0.0"
+  # The newest release the running SDK supports (11 needs Dart 3.13).
+  very_good_analysis: ">=9.0.0 <12.0.0"

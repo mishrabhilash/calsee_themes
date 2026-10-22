@@ -85,7 +85,7 @@ enum CyberBand {
   toxic(IntRange(1350, 1550)),
   amber(IntRange(600, 740));
 
-  new(this.hues);
+  const CyberBand(this.hues);
 
   /// Hue range, tenths of a degree.
   final IntRange hues;

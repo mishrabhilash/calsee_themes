@@ -44,7 +44,7 @@ import 'package:calsee_themes/engine/theme_spec.dart';
 
 /// Soft-shadow lightness offsets from the surface (× 1000 of OKLCH L).
 final class SoftShadowRanges {
-  const new({
+  const SoftShadowRanges({
     required this.highlightMilli,
     required this.shadowMilli,
     required this.accessibleShadowMilli,

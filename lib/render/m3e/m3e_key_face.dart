@@ -24,7 +24,7 @@ import 'package:flutter/widgets.dart';
 /// [FlatMorph] ([prepareLerp] builds them ahead), following the
 /// transition's shape progress — including its rubber-band past 1.
 class M3eKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const M3eKeyFace({
     required this.restShape,
     this.operatorShape,
     this.pressedCornerPermille = 300,
@@ -136,7 +136,7 @@ class M3eKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// colour plus the state layer, an optional outline, and the long-press
 /// fill. Repaints from the motion channels; reuses one [Path].
 class M3eKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
+  M3eKeyPainter({required this.motion, required this.spec, required this.face})
     : super(repaint: motion.listenable);
 
   /// The key's animation channels.
@@ -208,7 +208,7 @@ class M3eKeyPainter extends CustomPainter {
 /// progress; it may pass 1 for the rubber-band). A key pressed during the
 /// morph shows the press morph of the nearer theme.
 final class M3eLerpKeyFace extends M3eKeyFace {
-  new({required this.from, required this.to, required this.t})
+  M3eLerpKeyFace({required this.from, required this.to, required this.t})
     : super(
         restShape: (t < 0.5 ? from : to).restShape,
         operatorShape: (t < 0.5 ? from : to).operatorShape,

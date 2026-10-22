@@ -27,7 +27,7 @@ import 'package:flutter/painting.dart';
 
 /// The Claymorphism display card.
 final class ClayDisplayFace extends DisplayFace {
-  const new({
+  const ClayDisplayFace({
     required this.panel,
     required this.shade,
     required this.highlight,

@@ -39,7 +39,10 @@ enum EffectsTier {
 /// The glass rendering configuration a theme is resolved with.
 @immutable
 final class GlassRendering {
-  const new({this.mode = GlassMode.glass, this.tier = EffectsTier.full});
+  const GlassRendering({
+    this.mode = GlassMode.glass,
+    this.tier = EffectsTier.full,
+  });
 
   /// Full glass, full effects.
   static const GlassRendering standard = GlassRendering();

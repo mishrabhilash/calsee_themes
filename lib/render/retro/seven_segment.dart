@@ -98,7 +98,7 @@ abstract final class SevenSegment {
 /// Geometry and painting of 7-segment glyphs.
 @immutable
 final class SegmentGlyphPainter {
-  const new({
+  const SegmentGlyphPainter({
     this.thicknessRatio = 0.13,
     this.gapRatio = 0.22,
     this.slant = 0.09,

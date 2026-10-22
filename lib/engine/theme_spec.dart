@@ -272,9 +272,13 @@ bool _listEq<T>(List<T> a, List<T> b) {
 /// Face, label and edge colours of one key role.
 @immutable
 final class KeyColors {
-  const new({required this.face, required this.label, required this.edge});
+  const KeyColors({
+    required this.face,
+    required this.label,
+    required this.edge,
+  });
 
-  factory fromJson(Object? json) {
+  factory KeyColors.fromJson(Object? json) {
     final j = _map(json, 'KeyColors');
     return KeyColors(
       face: argbFromHex(j['face']),
@@ -324,7 +328,7 @@ final class KeyColors {
 /// guardrails checked).
 @immutable
 final class Palette {
-  const new({
+  const Palette({
     required this.background,
     required this.surface,
     required this.displayText,
@@ -343,7 +347,7 @@ final class Palette {
     this.lcdGhost,
   });
 
-  factory fromJson(Object? json) {
+  factory Palette.fromJson(Object? json) {
     final j = _map(json, 'Palette');
     return Palette(
       background: argbFromHex(j['background']),
@@ -540,7 +544,7 @@ enum KeyGroup { digit, operator, equals, function }
 /// Key outline (spec §5.1 KeyShape).
 @immutable
 final class KeyShapeSpec {
-  const new({
+  const KeyShapeSpec({
     required this.kind,
     this.cornerPermille = 300,
     this.m3eShape,
@@ -550,7 +554,7 @@ final class KeyShapeSpec {
     this.operatorM3eShape,
   });
 
-  factory fromJson(Object? json) {
+  factory KeyShapeSpec.fromJson(Object? json) {
     final j = _map(json, 'KeyShapeSpec');
     return KeyShapeSpec(
       kind: _enumByName(KeyShapeKind.values, j['kind'], 'shape kind'),
@@ -655,7 +659,7 @@ final class KeyShapeSpec {
 /// How key faces are drawn (spec §5.1 KeyStyle).
 @immutable
 final class KeyStyleSpec {
-  const new({
+  const KeyStyleSpec({
     required this.kind,
     this.outlineWidthCdp = 0,
     this.extrudeDepthCdp = 0,
@@ -669,7 +673,7 @@ final class KeyStyleSpec {
     this.refractionPermille = 0,
   });
 
-  factory fromJson(Object? json) {
+  factory KeyStyleSpec.fromJson(Object? json) {
     final j = _map(json, 'KeyStyleSpec');
     int optional(String k) => j[k] == null ? 0 : _int(j, k);
     return KeyStyleSpec(
@@ -806,7 +810,7 @@ final class KeyStyleSpec {
 /// `BundledFont.id` (`lib/themes/render/fonts.dart`), see [FontIds].
 @immutable
 final class TypeSpec {
-  const new({
+  const TypeSpec({
     required this.displayFont,
     required this.keyFont,
     this.displayWeight = 400,
@@ -818,7 +822,7 @@ final class TypeSpec {
     this.lcd = false,
   });
 
-  factory fromJson(Object? json) {
+  factory TypeSpec.fromJson(Object? json) {
     final j = _map(json, 'TypeSpec');
     return TypeSpec(
       displayFont: _str(j, 'displayFont'),
@@ -928,7 +932,7 @@ final class BackgroundSpec {
   /// [colors] must be unmodifiable (a const literal, or wrapped with
   /// `List.unmodifiable`): specs are deeply immutable and cache their
   /// stable hash. The generator, `copyWith` and `fromJson` all comply.
-  const new({
+  const BackgroundSpec({
     required this.kind,
     required this.colors,
     this.angleTenths = 0,
@@ -939,7 +943,7 @@ final class BackgroundSpec {
     this.driftPeriodMs = 0,
   });
 
-  factory fromJson(Object? json) {
+  factory BackgroundSpec.fromJson(Object? json) {
     final j = _map(json, 'BackgroundSpec');
     final colors = j['colors'];
     if (colors is! List) throw const FormatException('Expected colors list');
@@ -1051,9 +1055,9 @@ final class BackgroundSpec {
 /// stiffness: k, ratio: zetaPermille / 1000)` in the render layer.
 @immutable
 final class SpringToken {
-  const new(this.stiffness, this.zetaPermille);
+  const SpringToken(this.stiffness, this.zetaPermille);
 
-  factory fromJson(Object? json) {
+  factory SpringToken.fromJson(Object? json) {
     if (json is List && json.length == 2 && json[0] is int && json[1] is int) {
       return SpringToken(json[0] as int, json[1] as int);
     }
@@ -1126,7 +1130,7 @@ abstract final class SpringTokens {
 /// battery tier) are applied by the render layer and never stored here.
 @immutable
 final class MotionSpec {
-  const new({
+  const MotionSpec({
     required this.verb,
     required this.scheme,
     required this.pressIn,
@@ -1149,7 +1153,7 @@ final class MotionSpec {
     this.releaseImpactPermille = 0,
   });
 
-  factory fromJson(Object? json) {
+  factory MotionSpec.fromJson(Object? json) {
     final j = _map(json, 'MotionSpec');
     return MotionSpec(
       verb: _enumByName(PressVerb.values, j['verb'], 'verb'),
@@ -1357,14 +1361,14 @@ final class MotionSpec {
 /// Effects never animate behind the display text (spec §5.4).
 @immutable
 final class EffectsSpec {
-  const new({
+  const EffectsSpec({
     this.kind = EffectKind.none,
     this.intensityPermille = 0,
     this.color = 0,
     this.densityPermille = 0,
   });
 
-  factory fromJson(Object? json) {
+  factory EffectsSpec.fromJson(Object? json) {
     final j = _map(json, 'EffectsSpec');
     return EffectsSpec(
       kind: _enumByName(EffectKind.values, j['kind'], 'effect'),
@@ -1408,7 +1412,7 @@ final class EffectsSpec {
 /// [hashCode] is [stableHash], identical on every run and platform.
 @immutable
 final class ThemeSpec {
-  const new({
+  const ThemeSpec({
     required this.seed,
     required this.family,
     required this.engineVersion,
@@ -1429,7 +1433,7 @@ final class ThemeSpec {
     this.nonColourOperatorCue = OperatorCue.none,
   });
 
-  factory fromJson(Object? json) {
+  factory ThemeSpec.fromJson(Object? json) {
     final j = _map(json, 'ThemeSpec');
     final format = _int(j, 'format');
     if (format != jsonFormat) {
@@ -1469,7 +1473,7 @@ final class ThemeSpec {
   }
 
   /// Parses [source] produced by [toJsonString].
-  factory fromJsonString(String source) =>
+  factory ThemeSpec.fromJsonString(String source) =>
       ThemeSpec.fromJson(jsonDecode(source));
 
   /// Version of the JSON layout (not the generator; see [engineVersion]).

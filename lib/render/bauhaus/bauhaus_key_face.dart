@@ -65,7 +65,7 @@ bool bauhausInverted(KeyFaceMotion motion, {required bool reduceMotion}) =>
 /// adjacent radii within each side).
 @immutable
 final class BauhausFigure {
-  const new({
+  const BauhausFigure({
     this.squareness = 0,
     this.scaleW = 1,
     this.scaleH = 1,
@@ -80,7 +80,7 @@ final class BauhausFigure {
   });
 
   /// A block: the whole key with corners of [corner] · s.
-  const new block(double corner)
+  const BauhausFigure.block(double corner)
     : squareness = 0,
       scaleW = 1,
       scaleH = 1,
@@ -94,7 +94,7 @@ final class BauhausFigure {
       labelY = 0;
 
   /// A disc of [diameter] · s, centred.
-  const new disc(double diameter)
+  const BauhausFigure.disc(double diameter)
     : squareness = 1,
       scaleW = diameter,
       scaleH = diameter,
@@ -109,7 +109,7 @@ final class BauhausFigure {
 
   /// This figure [t] of the way to [b] (t clamped to [0, 1]); a triangle
   /// and a rectangle swap at the midpoint.
-  factory lerp(BauhausFigure a, BauhausFigure b, double t) {
+  factory BauhausFigure.lerp(BauhausFigure a, BauhausFigure b, double t) {
     final c = t.clamp(0.0, 1.0);
     if (a == b) return a;
     if (a.triangle != b.triangle) return c < 0.5 ? a : b;
@@ -305,7 +305,7 @@ const Set<KeyRole> bauhausAccentRoles = {
 
 /// Bauhaus key renderer for one theme.
 final class BauhausKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const BauhausKeyFace({
     required this.digitFigure,
     required this.operatorFigure,
     required this.equalsFigure,
@@ -458,10 +458,16 @@ final class BauhausKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// The cache holds only paths (no GPU resources), so it is deliberately not
 /// tied to `BackgroundCache.clear()`; it is bounded by [capacity].
 final class BauhausTriangle {
-  new _(this.outer, this.core, this.coreBounds, this.bar, this.barBounds);
+  BauhausTriangle._(
+    this.outer,
+    this.core,
+    this.coreBounds,
+    this.bar,
+    this.barBounds,
+  );
 
   /// The [figure]'s paths in a key box of [size].
-  factory of(BauhausFigure figure, Size size) {
+  factory BauhausTriangle.of(BauhausFigure figure, Size size) {
     final key = (figure.scaleW, figure.offsetY, size);
     final hit = _cache.remove(key);
     if (hit != null) return _cache[key] = hit;
@@ -531,7 +537,7 @@ final class BauhausTriangle {
 
 /// The geometry of one key at one size.
 final class _KeyGeometry {
-  new(BauhausFigure figure, Size size, {required bool accent})
+  _KeyGeometry(BauhausFigure figure, Size size, {required bool accent})
     : s = size.shortestSide,
       triangle = figure.triangle ? BauhausTriangle.of(figure, size) : null,
       outer = figure.rrect(size) {
@@ -641,8 +647,11 @@ final class _KeyGeometry {
 /// rest), its inverted core while pressed, the function accent and the
 /// long-press bar. Repaints from the motion channels without rebuilds.
 class BauhausKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  BauhausKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;
@@ -786,7 +795,7 @@ class BauhausKeyPainter extends CustomPainter {
 /// ([bauhausLabelScale]: `+GST` at Bold Text on 64 dp business keys), so
 /// it never touches the ring. The label never moves with the press.
 class BauhausInvertedLabel extends SingleChildRenderObjectWidget {
-  const new({
+  const BauhausInvertedLabel({
     required this.motion,
     required this.pressedColor,
     this.reduceMotion = false,
@@ -851,12 +860,15 @@ double bauhausLabelScale(Size cell, double labelWidth, double labelHeight) {
 /// only when that state flips. The [shift] and the scale apply to
 /// painting, hit testing and paint transforms alike.
 class RenderBauhausInvertedLabel extends RenderProxyBox {
-  new({
-    required this._motion,
-    required this._pressedColor,
-    this._reduceMotion = false,
-    this._shift = Offset.zero,
-  });
+  RenderBauhausInvertedLabel({
+    required KeyFaceMotion motion,
+    required Color pressedColor,
+    bool reduceMotion = false,
+    Offset shift = Offset.zero,
+  }) : _motion = motion,
+       _pressedColor = pressedColor,
+       _reduceMotion = reduceMotion,
+       _shift = shift;
 
   KeyFaceMotion _motion;
   Color _pressedColor;

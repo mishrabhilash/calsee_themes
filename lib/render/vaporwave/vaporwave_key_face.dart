@@ -54,7 +54,7 @@ const double vaporwaveBracketWeightBonus = 100;
 /// the line, bevel, travel, corners, bevel tones and ink
 /// ([LerpableKeyFace]).
 final class VaporwaveKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const VaporwaveKeyFace({
     required this.ink,
     this.outlineWidth = 1,
     this.bevelWidth = 2.5,
@@ -251,8 +251,11 @@ final class VaporwaveKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// Repaints from the motion channels without rebuilds; no `saveLayer`, no
 /// clip, no shader, one reused [Paint] and [Path].
 class VaporwaveKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  VaporwaveKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;

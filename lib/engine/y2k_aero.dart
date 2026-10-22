@@ -74,8 +74,7 @@ import 'package:calsee_themes/engine/contrast.dart';
 import 'package:calsee_themes/engine/cvd.dart';
 import 'package:calsee_themes/engine/families.dart';
 import 'package:calsee_themes/engine/guardrails.dart';
-import 'package:calsee_themes/engine/liquid_glass.dart'
-    show meshHullSamples;
+import 'package:calsee_themes/engine/liquid_glass.dart' show meshHullSamples;
 import 'package:calsee_themes/engine/names.dart';
 import 'package:calsee_themes/engine/oklab.dart';
 import 'package:calsee_themes/engine/rng.dart';
@@ -107,7 +106,7 @@ enum Y2kScene {
 /// lightness (thousandths; [waterLMilli] in the dark AERO scene), chroma as
 /// a share of the gamut (thousandths) capped at [capMilli], and its weight.
 final class Y2kGel {
-  const new({
+  const Y2kGel({
     required this.hue,
     required this.lMilli,
     required this.rel,
@@ -875,7 +874,7 @@ bool _accentApart(int face, int digit) =>
 
 /// One scene's colours while the palette is built.
 final class _SceneColours {
-  new(this.colors, this.light, this.pattern, this.hScene, this.h1);
+  _SceneColours(this.colors, this.light, this.pattern, this.hScene, this.h1);
 
   /// `colors[0..4]` (opaque).
   final List<int> colors;

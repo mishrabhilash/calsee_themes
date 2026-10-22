@@ -137,7 +137,7 @@ const double y2kToolbarHeight = 48;
 @immutable
 final class Y2kSceneLayout {
   /// Lays out a canvas of [size].
-  factory of(Size size, Rect? safe) {
+  factory Y2kSceneLayout.of(Size size, Rect? safe) {
     final bounds = Offset.zero & size;
     final s = safe == null || safe.isEmpty ? null : safe.intersect(bounds);
     final valid = s != null && s.width > 0 && s.height > 0;
@@ -193,7 +193,7 @@ final class Y2kSceneLayout {
     );
   }
 
-  const new _({
+  const Y2kSceneLayout._({
     required this.size,
     required this.keypadTop,
     required this.horizon,
@@ -903,7 +903,7 @@ void _paintBubbles(
 
 /// The holographic foil's repeating band gradient.
 final class _Holo {
-  new(this.spec, this.size)
+  _Holo(this.spec, this.size)
     : period = math.max(
         24,
         0.45 * math.sqrt(size.width * size.width + size.height * size.height),

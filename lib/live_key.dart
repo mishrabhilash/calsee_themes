@@ -14,7 +14,7 @@ import 'package:flutter/widgets.dart';
 /// [theme]: it delegates to `theme.value.keyFace.painter(...)`, rebuilt
 /// only when the face or its spec changes.
 class LiveKeyFacePainter extends CustomPainter {
-  new({
+  LiveKeyFacePainter({
     required this.motion,
     required this.theme,
     required this.role,
@@ -75,7 +75,7 @@ class LiveKeyFacePainter extends CustomPainter {
 /// The focus ring in the per-frame colour, corner fraction and width of
 /// [theme].
 class LiveKeyFocusRingPainter extends KeyFocusRingPainter {
-  new(this.theme)
+  LiveKeyFocusRingPainter(this.theme)
     : super(color: const Color(0x00000000), cornerFraction: 0, repaint: theme);
 
   /// The per-frame theme.
@@ -98,7 +98,7 @@ class LiveKeyFocusRingPainter extends KeyFocusRingPainter {
 /// The label colour of keys with [role] in the per-frame [theme].
 @immutable
 final class LiveLabelColor implements ValueListenable<Color> {
-  const new(this.theme, this.role);
+  const LiveLabelColor(this.theme, this.role);
 
   /// The per-frame theme.
   final ValueListenable<CalcThemeData> theme;
@@ -128,7 +128,12 @@ final class LiveLabelColor implements ValueListenable<Color> {
 /// settles and the key rebuilds), a `srcIn` colour filter while a theme
 /// transition runs.
 class LiveLabelTint extends SingleChildRenderObjectWidget {
-  const new({required this.color, required this.baked, super.child, super.key});
+  const LiveLabelTint({
+    required this.color,
+    required this.baked,
+    super.child,
+    super.key,
+  });
 
   /// The colour to show.
   final ValueListenable<Color> color;
@@ -153,7 +158,11 @@ class LiveLabelTint extends SingleChildRenderObjectWidget {
 
 /// Render object of [LiveLabelTint].
 class RenderLiveLabelTint extends RenderProxyBox {
-  new({required this._color, required this._baked});
+  RenderLiveLabelTint({
+    required ValueListenable<Color> color,
+    required Color baked,
+  }) : _color = color,
+       _baked = baked;
 
   ValueListenable<Color> _color;
   Color _baked;
@@ -228,7 +237,12 @@ class RenderLiveLabelTint extends RenderProxyBox {
 /// whose per-tick rebuild inside the key's label-sizing `LayoutBuilder`
 /// re-ran that layout every press frame.
 class PressScale extends SingleChildRenderObjectWidget {
-  const new({required this.press, required this.theme, super.child, super.key});
+  const PressScale({
+    required this.press,
+    required this.theme,
+    super.child,
+    super.key,
+  });
 
   /// Press depth (0 rest, 1 pressed; springs may overshoot).
   final Animation<double> press;
@@ -257,7 +271,11 @@ class PressScale extends SingleChildRenderObjectWidget {
 
 /// Render object of [PressScale].
 class RenderPressScale extends RenderProxyBox {
-  new({required this._press, required this._theme});
+  RenderPressScale({
+    required Animation<double> press,
+    required ValueListenable<CalcThemeData> theme,
+  }) : _press = press,
+       _theme = theme;
 
   Animation<double> _press;
   ValueListenable<CalcThemeData> _theme;

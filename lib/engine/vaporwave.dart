@@ -192,7 +192,7 @@ enum VaporHue {
 /// One scene colour: lightness (× 1000), chroma (absolute, or relative to
 /// the gamut and capped) and hue.
 final class VaporTone {
-  const new(
+  const VaporTone(
     this.lMilli,
     this.chroma, [
     this.hueTenths = const IntRange(0, 0),

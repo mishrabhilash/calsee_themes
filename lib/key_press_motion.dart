@@ -11,7 +11,7 @@ import 'package:flutter/widgets.dart';
 /// evaluates its first frame at `elapsed = 0`; without the lead the press
 /// would only start moving on the second frame.
 final class LeadSimulation extends Simulation {
-  new(this.inner, this.lead) : super(tolerance: inner.tolerance);
+  LeadSimulation(this.inner, this.lead) : super(tolerance: inner.tolerance);
 
   /// The simulation being led.
   final Simulation inner;
@@ -49,7 +49,7 @@ final class LeadSimulation extends Simulation {
 /// [CalcThemeData.minPress] after the press began; callers commit input
 /// immediately regardless.
 final class KeyPressMotion implements KeyFaceMotionDetail {
-  new({required TickerProvider vsync})
+  KeyPressMotion({required TickerProvider vsync})
     : press = AnimationController.unbounded(vsync: vsync),
       scale = AnimationController.unbounded(vsync: vsync),
       tint = AnimationController(vsync: vsync),

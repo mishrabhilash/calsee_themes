@@ -28,8 +28,7 @@ library;
 import 'dart:math' as math;
 
 import 'package:calsee_themes/display_face.dart';
-import 'package:calsee_themes/engine/paper_ink.dart'
-    show paperDisplayRuleAlpha;
+import 'package:calsee_themes/engine/paper_ink.dart' show paperDisplayRuleAlpha;
 import 'package:calsee_themes/render/fonts.dart';
 import 'package:calsee_themes/render/paper_ink/paper_grain.dart';
 import 'package:calsee_themes/render/paper_ink/paper_key_art.dart'
@@ -45,7 +44,7 @@ const double paperFeintRuleZone = 0.4;
 
 /// The Paper & ink display panel.
 final class PaperDisplayFace extends DisplayFace {
-  const new({
+  const PaperDisplayFace({
     required this.panel,
     required this.ink,
     required this.rule,

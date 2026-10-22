@@ -28,7 +28,7 @@ import 'package:flutter/painting.dart';
 
 /// The Bauhaus display sheet.
 final class BauhausDisplayFace extends DisplayFace {
-  const new({
+  const BauhausDisplayFace({
     required this.panel,
     required this.bar,
     required this.disc,

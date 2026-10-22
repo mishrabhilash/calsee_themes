@@ -23,8 +23,7 @@ import 'package:test/test.dart';
 
 const ThemeGenerator gen = ThemeGenerator();
 
-String fixturePath(int version) =>
-    'test/engine/fixtures/retro_v$version.json';
+String fixturePath(int version) => 'test/engine/fixtures/retro_v$version.json';
 
 /// Pinned Retro cases: desk and pocket bodies, LCD and VFD panels, both
 /// locks.

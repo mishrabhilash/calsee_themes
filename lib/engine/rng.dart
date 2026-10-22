@@ -48,7 +48,7 @@ int fnv1a32(String tag) {
 /// into xoshiro state.
 final class SplitMix32 {
   /// Starts the sequence at [seed] (taken modulo 2^32).
-  new(int seed) : _s = seed & _m32;
+  SplitMix32(int seed) : _s = seed & _m32;
 
   int _s;
 
@@ -90,7 +90,7 @@ abstract final class RngTag {
 final class Rng {
   /// Raw state constructor (tests and known-answer vectors). The all-zero
   /// state is forbidden and replaced by `(1, 0, 0, 0)`.
-  new fromState(int a, int b, int c, int d)
+  Rng.fromState(int a, int b, int c, int d)
     : _a = ((a | b | c | d) & _m32) == 0 ? 1 : a & _m32,
       _b = b & _m32,
       _c = c & _m32,
@@ -98,7 +98,7 @@ final class Rng {
 
   /// The independent sub-stream named [tag] of [seed] (seed taken modulo
   /// 2^32).
-  factory stream(int seed, String tag) {
+  factory Rng.stream(int seed, String tag) {
     final sm = SplitMix32((seed & _m32) ^ fnv1a32(tag));
     final a = sm.next();
     final b = sm.next();

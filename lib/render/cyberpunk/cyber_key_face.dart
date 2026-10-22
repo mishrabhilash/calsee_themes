@@ -63,7 +63,7 @@ const double cyberKeyLabelZoneBottom = cyberLabelZoneBottom;
 /// Cyberpunk key renderer for one theme. A same-family theme change lerps
 /// the plunge, edge width, glow and chamfer ([LerpableKeyFace]).
 final class CyberKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const CyberKeyFace({
     this.plunge = 2,
     this.edgeWidth = 1.25,
     this.haloSigma = 2,
@@ -274,8 +274,11 @@ final class CyberKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// rebuilds; every Paint is a field and every Path comes from the cached
 /// geometry.
 class CyberKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  CyberKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;

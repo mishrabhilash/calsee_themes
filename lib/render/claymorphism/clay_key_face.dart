@@ -90,7 +90,7 @@ abstract final class ClayPaintCache {
 /// lerps shadows, highlight and sizes ([LerpableKeyFace]); the tier and
 /// the label placement follow the nearer end.
 final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const ClayKeyFace({
     required this.digitShadow,
     required this.operatorShadow,
     required this.equalsShadow,
@@ -324,7 +324,7 @@ final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// highlight and the cover clipped to the face, and the long-press fill.
 /// Repaints from the motion channels without rebuilds.
 class ClayKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
+  ClayKeyPainter({required this.motion, required this.spec, required this.face})
     : super(repaint: motion.listenable);
 
   /// The key's animation channels.
@@ -542,7 +542,7 @@ class ClayKeyPainter extends CustomPainter {
 /// bottom-anchored squash ([ClayKeyFace.squash]); only the inverse under
 /// Reduce Motion. Repaints on the press and scale channels.
 class ClaySquash extends SingleChildRenderObjectWidget {
-  const new({
+  const ClaySquash({
     required this.motion,
     required this.face,
     this.reduceMotion = false,
@@ -574,11 +574,13 @@ class ClaySquash extends SingleChildRenderObjectWidget {
 
 /// Render object of [ClaySquash].
 class RenderClaySquash extends RenderProxyBox {
-  new({
-    required this._motion,
-    required this._face,
-    required this._reduceMotion,
-  });
+  RenderClaySquash({
+    required KeyFaceMotion motion,
+    required ClayKeyFace face,
+    required bool reduceMotion,
+  }) : _motion = motion,
+       _face = face,
+       _reduceMotion = reduceMotion;
 
   KeyFaceMotion _motion;
   ClayKeyFace _face;

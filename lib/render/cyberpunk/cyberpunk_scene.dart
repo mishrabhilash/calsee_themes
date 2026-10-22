@@ -65,7 +65,7 @@ const int cyberTraceSlots = 16;
 final class CyberSceneGeometry {
   /// Builds the geometry of a canvas of [size] whose traces stay below
   /// [safeBottom].
-  new(Size size, {required double safeBottom, double dpr = 1}) {
+  CyberSceneGeometry(Size size, {required double safeBottom, double dpr = 1}) {
     final w = size.width;
     final h = size.height;
     final px = dpr > 0 && dpr.isFinite ? dpr : 1.0;
@@ -93,7 +93,11 @@ final class CyberSceneGeometry {
   }
 
   /// The cached geometry of [size] (built on a miss).
-  factory cached(Size size, {required double safeBottom, double dpr = 1}) {
+  factory CyberSceneGeometry.cached(
+    Size size, {
+    required double safeBottom,
+    double dpr = 1,
+  }) {
     final key = (size, safeBottom, dpr);
     final hit = _cache.remove(key);
     if (hit != null) return _cache[key] = hit;

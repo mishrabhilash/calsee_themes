@@ -13,8 +13,7 @@ import 'package:calsee_themes/accessible_text.dart';
 import 'package:calsee_themes/calc_theme_data.dart';
 import 'package:calsee_themes/chrome_style.dart';
 import 'package:calsee_themes/engine/families.dart' show FontIds;
-import 'package:calsee_themes/engine/liquid_glass.dart'
-    show glassDiffuseColor;
+import 'package:calsee_themes/engine/liquid_glass.dart' show glassDiffuseColor;
 import 'package:calsee_themes/engine/oklab.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
 import 'package:calsee_themes/plain_theme.dart';
@@ -195,7 +194,7 @@ abstract final class ThemeResolver {
     );
   }
 
-  static FontWeight _weight(int css) => FontWeight(css.clamp(100, 900));
+  static FontWeight _weight(int css) => cssFontWeight(css);
 
   static double _focusCornerFraction(ThemeSpec spec) {
     final shape = spec.keyShape;
@@ -300,10 +299,8 @@ final Map<ThemeFamily, KeyFaceFactory> keyFaceRegistry = {
 
 /// A family key renderer that honours the device's [GlassRendering]
 /// (Reduce Transparency, the lite effects tier).
-typedef RenderedKeyFaceFactory = KeyFaceRenderer Function(
-  ThemeSpec spec, {
-  GlassRendering rendering,
-});
+typedef RenderedKeyFaceFactory =
+    KeyFaceRenderer Function(ThemeSpec spec, {GlassRendering rendering});
 
 /// Families whose key renderers take the device [GlassRendering]; the
 /// resolver memoises them per rendering. Everyone else is resolved with
@@ -319,10 +316,8 @@ final Map<ThemeFamily, RenderedKeyFaceFactory> renderedKeyFaceRegistry = {
 };
 
 /// A family display face that honours the device's [GlassRendering].
-typedef RenderedDisplayFaceFactory = DisplayFace? Function(
-  ThemeSpec spec, {
-  GlassRendering rendering,
-});
+typedef RenderedDisplayFaceFactory =
+    DisplayFace? Function(ThemeSpec spec, {GlassRendering rendering});
 
 /// Families whose display faces take the device [GlassRendering].
 final Map<ThemeFamily, RenderedDisplayFaceFactory> renderedDisplayFaceRegistry =

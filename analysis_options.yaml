@@ -1,6 +1,6 @@
 # Strict lints: very_good_analysis, with a few rules relaxed where they fight
 # the codebase's style (documented inline).
-include: package:very_good_analysis/analysis_options.11.0.0.yaml
+include: package:very_good_analysis/analysis_options.yaml
 
 analyzer:
   exclude:

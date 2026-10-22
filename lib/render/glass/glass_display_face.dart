@@ -18,7 +18,7 @@ import 'package:flutter/widgets.dart';
 /// The glass display backing for one theme.
 @immutable
 final class GlassDisplayFace extends DisplayFace {
-  const new({
+  const GlassDisplayFace({
     required this.panel,
     required this.solid,
     required this.frostColor,

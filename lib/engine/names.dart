@@ -25,7 +25,7 @@ enum NamePattern {
   colourTimePlace(20),
   materialMoodNoun(10);
 
-  new(this.weight);
+  const NamePattern(this.weight);
 
   /// Sampling weight.
   final int weight;

@@ -23,7 +23,7 @@ import 'package:flutter/widgets.dart';
 /// The two extruded-edge tones of one key group.
 @immutable
 final class NeoPopEdges {
-  const new({required this.side, required this.bottom});
+  const NeoPopEdges({required this.side, required this.bottom});
 
   /// Right side.
   final Color side;
@@ -52,7 +52,7 @@ enum NeoPopShape {
 /// NeoPOP key renderer for one theme. A same-family theme change lerps
 /// depth, corners, edge tones and shadow ([LerpableKeyFace]).
 final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const NeoPopKeyFace({
     required this.depth,
     required this.digitEdges,
     required this.operatorEdges,
@@ -234,8 +234,11 @@ final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// NeoPOP has no pressed tint), an optional outline and the long-press
 /// fill. Repaints from the motion channels without rebuilds.
 class NeoPopKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  NeoPopKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;

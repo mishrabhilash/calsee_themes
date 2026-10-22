@@ -42,7 +42,7 @@ enum ThemeFamily {
   vaporwave(14, enabled: true),
   bauhaus(15, enabled: true);
 
-  new(this.id, {required this.enabled});
+  const ThemeFamily(this.id, {required this.enabled});
 
   /// Stable numeric id (0–29).
   final int id;
@@ -83,7 +83,7 @@ enum HarmonyScheme {
 
 /// A value with an integer sampling weight.
 final class Weighted<T> {
-  const new(this.value, this.weight);
+  const Weighted(this.value, this.weight);
 
   final T value;
 
@@ -97,10 +97,10 @@ T pickWeightedValue<T>(Rng rng, List<Weighted<T>> options) =>
 
 /// Inclusive integer range.
 final class IntRange {
-  const new(this.lo, this.hi);
+  const IntRange(this.lo, this.hi);
 
   /// A single value.
-  const new single(int v) : lo = v, hi = v;
+  const IntRange.single(int v) : lo = v, hi = v;
 
   final int lo;
   final int hi;
@@ -122,11 +122,11 @@ final class IntRange {
 /// (thousandths of `maxChroma(L, h)`, then an absolute cap in thousandths).
 final class ChromaRange {
   /// Absolute chroma in `[loMilli, hiMilli] / 1000`.
-  const new abs(this.lo, this.hi) : relative = false, capMilli = 400;
+  const ChromaRange.abs(this.lo, this.hi) : relative = false, capMilli = 400;
 
   /// `rel · maxChroma(L,h)` with rel in `[lo, hi] / 1000`, capped at
   /// [capMilli] / 1000.
-  const new rel(this.lo, this.hi, this.capMilli) : relative = true;
+  const ChromaRange.rel(this.lo, this.hi, this.capMilli) : relative = true;
 
   final bool relative;
   final int lo;
@@ -136,7 +136,7 @@ final class ChromaRange {
 
 /// OKLCH lightness (thousandths) + chroma range for one role.
 final class RoleRange {
-  const new(this.lMilli, this.chroma);
+  const RoleRange(this.lMilli, this.chroma);
 
   /// Lightness × 1000.
   final IntRange lMilli;
@@ -145,7 +145,7 @@ final class RoleRange {
 
 /// Role ranges for one brightness (research §5.3).
 final class RoleRanges {
-  const new({
+  const RoleRanges({
     required this.background,
     required this.surfaceOffsetMilli,
     required this.surfaceChroma,
@@ -215,7 +215,7 @@ final class RoleRanges {
 /// [maxL] read as bile / olive and are rotated to [lowTarget] (hues below
 /// the band's middle) or [highTarget].
 final class BileRule {
-  const new({
+  const BileRule({
     required this.loTenths,
     required this.hiTenths,
     required this.maxL,
@@ -357,7 +357,7 @@ const RoleRanges neoPopDarkRangesV2 = RoleRanges(
 );
 
 final class MotionRanges {
-  const new({
+  const MotionRanges({
     this.depthCdp,
     this.releaseStiffnessPermille = const [900, 1000, 1100],
     this.bounceJitterPermille = 0,
@@ -412,7 +412,7 @@ final class MotionRanges {
 
 /// Everything the generator needs to know about a family.
 final class FamilyDefinition {
-  const new({
+  const FamilyDefinition({
     required this.family,
     required this.brightnessWeights,
     required this.schemes,

@@ -21,8 +21,7 @@ import 'dart:ui' as ui;
 
 import 'package:calsee_themes/engine/paper_ink.dart'
     show paperFibreMaxPermille, paperFleckMaxPermille, paperInkGridMajorEvery;
-import 'package:calsee_themes/engine/theme_spec.dart'
-    show BackgroundPattern;
+import 'package:calsee_themes/engine/theme_spec.dart' show BackgroundPattern;
 import 'package:calsee_themes/render/paper_ink/paper_key_art.dart'
     show paperUnit;
 import 'package:flutter/painting.dart';

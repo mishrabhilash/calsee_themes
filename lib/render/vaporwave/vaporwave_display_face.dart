@@ -109,7 +109,7 @@ const int vaporwaveOperatorGlyphCacheSize = 48;
 
 /// The Vaporwave display window.
 final class VaporwaveDisplayFace extends DisplayFace {
-  const new({
+  const VaporwaveDisplayFace({
     required this.panel,
     required this.chrome,
     required this.ink,

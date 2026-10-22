@@ -4,12 +4,11 @@ import 'dart:math' as math;
 import 'package:calsee_themes/key_role.dart';
 import 'package:calsee_themes/render/fonts.dart';
 import 'package:flutter/widgets.dart';
-import 'package:material_ui/material_ui.dart' show Icons;
 
 /// Colours and label weight for one group of keys.
 @immutable
 final class KeyStyle {
-  const new({
+  const KeyStyle({
     required this.fill,
     required this.label,
     this.labelWeight = FontWeight.w400,
@@ -17,7 +16,7 @@ final class KeyStyle {
   });
 
   /// Interpolates fill, label, weight and outline.
-  factory lerp(KeyStyle a, KeyStyle b, double t) => KeyStyle(
+  factory KeyStyle.lerp(KeyStyle a, KeyStyle b, double t) => KeyStyle(
     fill: Color.lerp(a.fill, b.fill, t)!,
     label: Color.lerp(a.label, b.label, t)!,
     labelWeight: FontWeight.lerp(a.labelWeight, b.labelWeight, t)!,
@@ -48,7 +47,7 @@ final class KeyStyle {
   /// heavier (w400 → w700, w600 → w900), so roles keep their weight order
   /// instead of all becoming bold.
   FontWeight labelWeightFor({required bool boldText}) => boldText
-      ? FontWeight(math.min(labelWeight.value + 300, FontWeight.w900.value))
+      ? cssFontWeight(math.min(labelWeight.value + 300, 900))
       : labelWeight;
 
   @override
@@ -105,7 +104,7 @@ abstract interface class KeyFaceMotionDetail implements KeyFaceMotion {
 /// What a [KeyFaceRenderer] draws one key with.
 @immutable
 final class KeyFaceSpec {
-  const new({
+  const KeyFaceSpec({
     required this.role,
     required this.style,
     required this.cornerFraction,
@@ -167,7 +166,7 @@ final class KeyFaceSpec {
 /// concrete painter.
 @immutable
 abstract class KeyFaceRenderer {
-  const new();
+  const KeyFaceRenderer();
 
   /// The painter behind the label: fill, state layers, long-press fill. It
   /// should repaint from [motion]'s `listenable` without rebuilds.
@@ -203,7 +202,7 @@ abstract class KeyFaceRenderer {
 /// so no commit or transition frame builds one (design doc "60 fps
 /// budget: no Morph construction in commit frames").
 final class KeyCellSizes extends ChangeNotifier {
-  new();
+  KeyCellSizes();
 
   /// The app-wide registry.
   static final KeyCellSizes instance = KeyCellSizes();
@@ -262,7 +261,7 @@ abstract interface class LerpableKeyFace implements KeyFaceRenderer {
 /// fonts. A label wider than the room it is given scales down to fit on
 /// one line, and is never scaled up (m7-design §6).
 class KeyLabel extends StatelessWidget {
-  const new(this.text, {required this.style, super.key});
+  const KeyLabel(this.text, {required this.style, super.key});
 
   /// The label.
   final String text;
@@ -277,7 +276,11 @@ class KeyLabel extends StatelessWidget {
   /// so as text it fell back to a different system font on every platform
   /// (or to a missing-glyph box); the bundled Material icon looks the same
   /// everywhere.
-  static const IconData backspaceIcon = Icons.backspace_outlined;
+  static const IconData backspaceIcon = IconData(
+    0xeeb5,
+    fontFamily: 'MaterialIcons',
+    matchTextDirection: true,
+  );
 
   /// The label font size on a key whose shorter side is [shortSide]: 0.4×
   /// for one or two characters, 0.3× for three or four, and 0.24× for five
@@ -378,7 +381,7 @@ class KeyLabel extends StatelessWidget {
 
 /// The plain theme's key faces: [PlainKeyPainter].
 final class PlainKeyFace extends KeyFaceRenderer {
-  const new();
+  const PlainKeyFace();
 
   @override
   CustomPainter painter(KeyFaceMotion motion, KeyFaceSpec spec) =>
@@ -399,7 +402,7 @@ final class PlainKeyFace extends KeyFaceRenderer {
 /// face and label), so this only paints colour. It repaints on every
 /// [KeyFaceMotion] channel without rebuilding any widget.
 class PlainKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec})
+  PlainKeyPainter({required this.motion, required this.spec})
     : super(repaint: motion.listenable);
 
   /// The key's animation channels.
@@ -470,7 +473,7 @@ class PlainKeyPainter extends CustomPainter {
 /// Paints the keyboard focus ring just outside the key face (motion brief
 /// §4.1: it appears instantly, no animation).
 class KeyFocusRingPainter extends CustomPainter {
-  const new({
+  const KeyFocusRingPainter({
     required this.color,
     required this.cornerFraction,
     this.width = 2,

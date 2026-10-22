@@ -24,10 +24,10 @@ import 'package:meta/meta.dart';
 /// short side (0–0.5).
 @immutable
 final class KeyGeometry {
-  const new(this.kind, {this.m3eShape, this.cornerPermille = 300});
+  const KeyGeometry(this.kind, {this.m3eShape, this.cornerPermille = 300});
 
   /// A rounded rectangle with [cornerPermille] / 1000 of the short side.
-  const new roundedRect(int cornerPermille)
+  const KeyGeometry.roundedRect(int cornerPermille)
     : this(KeyShapeKind.roundedRect, cornerPermille: cornerPermille);
 
   /// A full-round key: a circle in a square cell, a stadium otherwise.
@@ -200,11 +200,11 @@ RoundedPolygon materialShape(M3eShape shape) => switch (shape) {
 /// Progress outside [0, 1] extrapolates like [Morph] does (overshoot).
 final class FlatMorph {
   /// Flattens [morph] (calls `asCubics` twice; build it ahead of time).
-  factory fromMorph(Morph morph) =>
+  factory FlatMorph.fromMorph(Morph morph) =>
       FlatMorph.fromCubics(morph.asCubics(0), morph.asCubics(1));
 
   /// A morph between two matched cubic lists of equal length.
-  new fromCubics(List<Cubic> start, List<Cubic> end)
+  FlatMorph.fromCubics(List<Cubic> start, List<Cubic> end)
     : assert(start.length == end.length, 'unmatched cubics'),
       _a = _flatten(start),
       _b = _flatten(end) {
@@ -212,7 +212,7 @@ final class FlatMorph {
   }
 
   /// A degenerate "morph" that always draws [polygon].
-  factory still(RoundedPolygon polygon) =>
+  factory FlatMorph.still(RoundedPolygon polygon) =>
       FlatMorph.fromCubics(polygon.cubics, polygon.cubics);
 
   final Float64List _a;
@@ -287,7 +287,7 @@ final class FlatMorph {
 
 /// A rest → pressed key morph at one cell aspect, ready to paint.
 final class KeyMorph {
-  new({
+  KeyMorph({
     required this.rest,
     required this.pressed,
     required this.aspect,
@@ -341,7 +341,7 @@ final class KeyMorph {
 /// paint builds synchronously (correct, but slower) and is counted in
 /// [misses] so tests can assert the commit frame never builds.
 final class KeyShapeCache {
-  new({this.capacity = 256});
+  KeyShapeCache({this.capacity = 256});
 
   /// The app-wide cache.
   static final KeyShapeCache instance = KeyShapeCache();

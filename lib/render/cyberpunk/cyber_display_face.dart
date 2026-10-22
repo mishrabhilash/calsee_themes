@@ -25,7 +25,7 @@ import 'package:flutter/painting.dart';
 
 /// The Cyberpunk HUD display panel.
 final class CyberHudDisplayFace extends DisplayFace {
-  const new({
+  const CyberHudDisplayFace({
     required this.panel,
     required this.scanInk,
     required this.edge,
@@ -267,7 +267,7 @@ final class CyberPanelGeometry {
   /// [scanOffset] is the fractional device-pixel position of the plate's
   /// top and [dpr] the device pixels per canvas unit: scanline rows land on
   /// whole device pixels (no beat at 2.625× or 2.75×).
-  new build(
+  CyberPanelGeometry.build(
     Rect plate,
     double cut, {
     required double inset,
@@ -336,7 +336,7 @@ final class CyberPanelGeometry {
   }
 
   /// The cached geometry (built on a miss).
-  factory cached(
+  factory CyberPanelGeometry.cached(
     Rect plate,
     double cut, {
     required double inset,

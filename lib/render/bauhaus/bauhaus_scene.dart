@@ -120,7 +120,7 @@ int bauhausOrientation(int angleTenths) => ((angleTenths + 450) % 3600) ~/ 900;
 
 /// The toolbar masthead: a rule and a square, triangle and disc.
 final class BauhausMasthead {
-  const new({
+  const BauhausMasthead({
     required this.bounds,
     required this.bar,
     required this.square,
@@ -146,7 +146,7 @@ final class BauhausMasthead {
 
 /// The left-hand poster margin's figures (before mirroring).
 final class BauhausMarginA {
-  const new({
+  const BauhausMarginA({
     required this.clip,
     required this.halfDisc,
     required this.triangle,
@@ -168,7 +168,7 @@ final class BauhausMarginA {
 
 /// The right-hand poster margin's figures (before mirroring).
 final class BauhausMarginB {
-  const new({
+  const BauhausMarginB({
     required this.clip,
     required this.quarterDisc,
     required this.square,
@@ -191,13 +191,23 @@ final class BauhausMarginB {
 /// Where everything in the scene goes for one size, text-safe area,
 /// toolbar exclusion and orientation (cached).
 final class BauhausSceneGeometry {
-  new _({this.field, this.masthead, this.marginA, this.marginB});
+  BauhausSceneGeometry._({
+    this.field,
+    this.masthead,
+    this.marginA,
+    this.marginB,
+  });
 
   /// The geometry for a canvas of [size], the text-safe area [safe] and
   /// orientation [o] (see [bauhausOrientation]), with the masthead clear
   /// of the toolbar chrome [exclusion] (see [mastheadBand]), from the
   /// cache.
-  factory of(Size size, Rect? safe, int o, {Rect? exclusion}) {
+  factory BauhausSceneGeometry.of(
+    Size size,
+    Rect? safe,
+    int o, {
+    Rect? exclusion,
+  }) {
     final key = (size, safe, exclusion, o);
     final hit = _cache.remove(key);
     if (hit != null) return _cache[key] = hit;
@@ -213,7 +223,12 @@ final class BauhausSceneGeometry {
     return made;
   }
 
-  factory _build(Size size, Rect? safe, int o, Rect? exclusion) {
+  factory BauhausSceneGeometry._build(
+    Size size,
+    Rect? safe,
+    int o,
+    Rect? exclusion,
+  ) {
     final canvas = Offset.zero & size;
     if (safe == null || !safe.isFinite) return BauhausSceneGeometry._();
     final s = safe.intersect(canvas);

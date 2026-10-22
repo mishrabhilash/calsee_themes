@@ -37,7 +37,11 @@ import 'package:flutter/widgets.dart';
 
 /// The [CalcBackdrop] for a [BackgroundSpec].
 final class SpecBackdrop extends CalcBackdrop {
-  const new({required this.spec, required this.surface, this.patternFade = 1});
+  const SpecBackdrop({
+    required this.spec,
+    required this.surface,
+    this.patternFade = 1,
+  });
 
   /// What to paint.
   final BackgroundSpec spec;
@@ -82,7 +86,7 @@ final class SpecBackdrop extends CalcBackdrop {
 
 /// Small LRU of gradient shaders and pattern pictures.
 final class BackgroundCache {
-  new({this.capacity = 8});
+  BackgroundCache({this.capacity = 8});
 
   /// The app-wide cache.
   static final BackgroundCache instance = BackgroundCache();
@@ -161,7 +165,7 @@ final class BackgroundCache {
 
 /// What a family scene painter is given (see [backgroundScenePainters]).
 final class BackgroundScene {
-  new({
+  BackgroundScene({
     required this.spec,
     required this.textSafeArea,
     required this.driftSeconds,
@@ -207,11 +211,8 @@ final class BackgroundScene {
 }
 
 /// Paints one family scene over the whole canvas.
-typedef BackgroundScenePainter = void Function(
-  Canvas canvas,
-  Size size,
-  BackgroundScene scene,
-);
+typedef BackgroundScenePainter =
+    void Function(Canvas canvas, Size size, BackgroundScene scene);
 
 /// Family scene kind → its painter (each family's render directory).
 const Map<BackgroundKind, BackgroundScenePainter> backgroundScenePainters = {
@@ -237,7 +238,7 @@ BackgroundKind? backdropSceneKind(CalcBackdrop? backdrop) {
 
 /// Paints a [BackgroundSpec] over the whole canvas.
 class BackgroundPainter extends CustomPainter {
-  new({
+  BackgroundPainter({
     required this.spec,
     required this.surface,
     this.textSafeArea,

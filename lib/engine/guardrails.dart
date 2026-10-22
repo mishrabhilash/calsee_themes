@@ -295,7 +295,7 @@ enum GuardrailRule {
 /// Thresholds for one theme (standard or Accessible lock).
 @immutable
 final class GuardrailLimits {
-  const new({
+  const GuardrailLimits({
     required this.labelRatio,
     required this.displayRatio,
     required this.previewRatio,
@@ -359,7 +359,12 @@ final class GuardrailLimits {
 /// A failed guardrail.
 @immutable
 final class GuardrailViolation {
-  const new(this.rule, this.measured, this.required, [this.detail = '']);
+  const GuardrailViolation(
+    this.rule,
+    this.measured,
+    this.required, [
+    this.detail = '',
+  ]);
 
   final GuardrailRule rule;
 

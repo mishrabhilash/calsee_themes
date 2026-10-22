@@ -124,7 +124,7 @@ const double paperPressedPen = 1.4;
 /// lerps every colour and number ([LerpableKeyFace]); the artwork is the
 /// key's own and does not change.
 final class PaperKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const PaperKeyFace({
     required this.ink,
     required this.wash,
     required this.slip,
@@ -305,8 +305,11 @@ final class PaperKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// Paints one Paper & ink key (see the library comment). Repaints from
 /// the motion channels without rebuilds.
 class PaperKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  PaperKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;

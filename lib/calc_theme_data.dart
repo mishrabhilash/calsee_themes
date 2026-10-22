@@ -4,8 +4,7 @@ import 'package:calsee_themes/chrome_style.dart';
 import 'package:calsee_themes/display_face.dart';
 import 'package:calsee_themes/key_face.dart';
 import 'package:calsee_themes/key_role.dart';
-import 'package:calsee_themes/render/fonts.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/widgets.dart';
 
 export 'package:calsee_themes/chrome_style.dart' show ChromeStyle;
 export 'package:calsee_themes/display_face.dart';
@@ -20,7 +19,7 @@ export 'package:calsee_themes/key_role.dart';
 /// Read it with `CalcTheme.of`.
 @immutable
 final class CalcThemeData {
-  new({
+  CalcThemeData({
     required this.brightness,
     required this.background,
     required this.displayText,
@@ -56,7 +55,7 @@ final class CalcThemeData {
 
   /// Interpolates every channel ([t] = 0 gives [a], 1 gives [b]). Discrete
   /// values (brightness, fonts, springs) switch at t = 0.5.
-  factory lerp(CalcThemeData a, CalcThemeData b, double t) {
+  factory CalcThemeData.lerp(CalcThemeData a, CalcThemeData b, double t) {
     if (identical(a, b)) return a;
     T pick<T>(T x, T y) => t < 0.5 ? x : y;
     Color color(Color x, Color y) => Color.lerp(x, y, t)!;
@@ -141,7 +140,7 @@ final class CalcThemeData {
 
   /// The family's Material chrome recipe (settings, history, dialogs,
   /// sheets); null = stock Material 3 (the plain theme, the Accessible
-  /// lock). Applied by [materialThemeFor].
+  /// lock). Applied by `materialThemeFor` (package calsee_themes_material).
   final ChromeStyle? chrome;
 
   /// Error message in the preview slot (≥ 4.5:1 on [background]).
@@ -379,7 +378,7 @@ final class CalcThemeData {
 /// implementations live in `lib/themes/render/background_painter.dart`.
 @immutable
 abstract class CalcBackdrop {
-  const new();
+  const CalcBackdrop();
 
   /// A painter filling the whole calculator surface. Inside
   /// [textSafeArea] (the display text) it keeps the display legible: a
@@ -425,7 +424,7 @@ enum DisplayEntryKind {
 /// A family's display glyph entry: start scale / offset and its spring.
 @immutable
 final class DisplayEntry {
-  const new({
+  const DisplayEntry({
     this.kind = DisplayEntryKind.none,
     this.startScale = 1,
     this.startOffset = 0,
@@ -479,24 +478,4 @@ final class DisplayEntry {
     spring?.stiffness,
     spring?.damping,
   );
-}
-
-/// Material chrome (app bars, sheets, dialogs, settings) that follows any
-/// [CalcThemeData]: the accent is the `=` key's fill, surfaces use the
-/// calculator background, and a family's [CalcThemeData.chrome] adds its
-/// type, shapes, edges and surfaces ([applyChrome]).
-ThemeData materialThemeFor(CalcThemeData calc) {
-  final scheme = ColorScheme.fromSeed(
-    seedColor: calc.equalsKey.fill,
-    brightness: calc.brightness,
-  ).copyWith(surface: calc.background, error: calc.errorText);
-  final base = ThemeData(
-    useMaterial3: true,
-    colorScheme: scheme,
-    scaffoldBackgroundColor: calc.background,
-    // Hindi amount words in settings and history: the bundled Devanagari.
-    fontFamilyFallback: scriptFallbackFonts,
-  );
-  final chrome = calc.chrome;
-  return chrome == null ? base : applyChrome(base, calc, chrome);
 }

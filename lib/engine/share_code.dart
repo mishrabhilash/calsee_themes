@@ -39,7 +39,7 @@ const String deepLinkThemeHost = 't';
 /// Decoded share-code payload.
 @immutable
 final class SharePayload {
-  const new({
+  const SharePayload({
     required this.familyId,
     required this.engineVersion,
     required this.seed,

@@ -64,7 +64,7 @@ bool y2kMetalRole(KeyRole role) => switch (role) {
 @immutable
 abstract base class Y2kKeyFace extends ThemedKeyFace
     implements LerpableKeyFace {
-  const new({
+  const Y2kKeyFace({
     required this.accentHueTenths,
     required this.shadow,
     this.capPeak = 0.8,
@@ -213,7 +213,7 @@ abstract base class Y2kKeyFace extends ThemedKeyFace
 /// AERO: every key is a gel (pearl / moonstone digits, frost / sea-glass
 /// function keys, coloured gel operators and `=`) with a darker rim.
 final class Y2kAeroKeyFace extends Y2kKeyFace {
-  const new({
+  const Y2kAeroKeyFace({
     required super.accentHueTenths,
     required super.shadow,
     super.capPeak,
@@ -276,7 +276,7 @@ final class Y2kAeroKeyFace extends Y2kKeyFace {
 /// CHROME: satin-metal digit and function keys and candy-gel operators in
 /// a light–dark–light chrome bezel tinted by the holographic foil.
 final class Y2kChromeKeyFace extends Y2kKeyFace {
-  const new({
+  const Y2kChromeKeyFace({
     required super.accentHueTenths,
     required super.shadow,
     this.bezelTints = const [
@@ -381,7 +381,7 @@ bool _sameColors(List<Color> a, List<Color> b) {
 /// paint and the guardrails agree exactly.
 @immutable
 final class Y2kTones {
-  const new({
+  const Y2kTones({
     required this.rest,
     required this.pressed,
     required this.glow,
@@ -389,7 +389,7 @@ final class Y2kTones {
   });
 
   /// Computes (or recalls from a 64-entry LRU) the tones of [fill].
-  factory of(
+  factory Y2kTones.of(
     Color fill, {
     required int depthMilli,
     required int deepFloorMilli,
@@ -447,7 +447,7 @@ final class Y2kTones {
 /// Geometry and shaders for one (face, colours, size): shared by every key
 /// that looks the same, built once (static LRU).
 final class _Artwork {
-  new(Y2kKeyFace face, KeyFaceSpec spec, this.size, {required this.metal})
+  _Artwork(Y2kKeyFace face, KeyFaceSpec spec, this.size, {required this.metal})
     : chrome = face.chrome {
     final w = size.width;
     final h = size.height;
@@ -580,7 +580,7 @@ final class _Artwork {
 
   /// The artwork for ([face], [spec]'s fill, [size]), shared via a 64-entry
   /// LRU (the keypad's ~30 keys need a handful).
-  factory of(
+  factory _Artwork.of(
     Y2kKeyFace face,
     KeyFaceSpec spec,
     Size size, {
@@ -750,7 +750,7 @@ final class _Artwork {
 /// vector path. Images are kept in a small LRU and disposed on eviction
 /// (pictures that drew them keep their own reference).
 final class Y2kRestImage {
-  new _(this.image, this.rect, this.pixelSize);
+  Y2kRestImage._(this.image, this.rect, this.pixelSize);
 
   /// The baked layers.
   final ui.Image image;
@@ -856,7 +856,7 @@ final class Y2kRestImage {
 /// Paints one Y2K key (see the library docs for the layers). Repaints
 /// from the motion channels without rebuilds.
 class Y2kKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
+  Y2kKeyPainter({required this.motion, required this.spec, required this.face})
     : metal = face.chrome && y2kMetalRole(spec.role),
       super(repaint: motion.listenable);
 
@@ -1073,8 +1073,9 @@ class Y2kKeyPainter extends CustomPainter {
         _fill.color = art.tones.pressedFace.withValues(alpha: k);
         canvas.drawRect(bounds, _fill);
       }
-      _fill.color = const Color(0xFFFFFFFF)
-          .withValues(alpha: (face.capPeak * 0.45).clamp(0.0, 1.0));
+      _fill.color = const Color(
+        0xFFFFFFFF,
+      ).withValues(alpha: (face.capPeak * 0.45).clamp(0.0, 1.0));
       canvas.drawRRect(art.cap, _fill);
     }
     // L8: hover, the contrast-safe (white) state layer.

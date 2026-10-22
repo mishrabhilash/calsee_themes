@@ -108,7 +108,11 @@ int _kindSalt(PaperArtKind kind) => switch (kind) {
 
 /// One drawing of a key outline (pass 1 and its retrace).
 final class PaperStroke {
-  const new({required this.stroke, required this.sketch, required this.blobs});
+  const PaperStroke({
+    required this.stroke,
+    required this.sketch,
+    required this.blobs,
+  });
 
   /// Pass 1: four open sides.
   final Path stroke;
@@ -124,7 +128,7 @@ final class PaperStroke {
 /// thirds of its width, so x is linear in the curve parameter and the pen
 /// tip at any fraction is found without measuring the path.
 final class PaperUnderline {
-  const new({
+  const PaperUnderline({
     required this.path,
     required this.left,
     required this.right,
@@ -158,7 +162,7 @@ final class PaperUnderline {
 
 /// A key's cached artwork.
 final class PaperKeyArt {
-  const new({
+  const PaperKeyArt({
     required this.size,
     required this.kind,
     required this.rest,
@@ -761,7 +765,7 @@ Path _speckles(int seed, Size size, Rect zone, RRect border, double angle) {
 /// size, kind). Never keyed by theme: the same keys share their drawings
 /// across every Paper & ink theme and every morph frame.
 final class PaperArtCache {
-  new({this.capacity = 256});
+  PaperArtCache({this.capacity = 256});
 
   /// The app-wide cache.
   static final PaperArtCache instance = PaperArtCache();

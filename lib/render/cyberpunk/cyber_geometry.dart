@@ -54,7 +54,7 @@ Path addInsetCutOctagon(Path path, Rect r, double c, double delta) =>
 /// The plate geometry of one key size.
 final class CyberKeyGeometry {
   /// Builds the geometry of a key box of [size].
-  new build(
+  CyberKeyGeometry.build(
     Size size, {
     required double chamfer,
     required double edgeWidth,
@@ -154,7 +154,7 @@ final class CyberKeyGeometry {
   }
 
   /// The cached geometry for a key box of [size] (built on a miss).
-  factory cached(
+  factory CyberKeyGeometry.cached(
     Size size, {
     required double chamfer,
     required double edgeWidth,
@@ -179,7 +179,7 @@ final class CyberKeyGeometry {
   /// The geometry of an in-between face of a theme transition (values
   /// already quantised by the caller), from a second LRU so a transition
   /// never evicts the steady-state entries of `cached`.
-  factory transient(
+  factory CyberKeyGeometry.transient(
     Size size, {
     required double chamfer,
     required double edgeWidth,
@@ -291,12 +291,12 @@ final class CyberKeyGeometry {
 /// glow: such a plate gets an exact image of its own size instead
 /// ([center] null; drawn with `drawImageRect`).
 final class CyberHalo {
-  new _(this.image, this.center, this.pad);
+  CyberHalo._(this.image, this.center, this.pad);
 
   /// The halo for [plate] with chamfer leg [cut] blurred by [sigma] dp:
   /// the shared nine-slice image when the plate fits its corners, else an
   /// exact image of the plate's size (quantised to 0.5 dp).
-  factory forPlate(Rect plate, double cut, double sigma) {
+  factory CyberHalo.forPlate(Rect plate, double cut, double sigma) {
     final c = (math.max(0, cut) * 2).round() / 2;
     final pad = padFor(sigma);
     final corners = 2 * (2 * pad + c);
@@ -316,10 +316,10 @@ final class CyberHalo {
   /// The nine-slice halo of a plate with chamfer leg [cut] blurred by
   /// [sigma] dp (built on a miss; evicted images are disposed — pictures
   /// that drew them keep their own reference).
-  factory cached(double cut, double sigma) =>
+  factory CyberHalo.cached(double cut, double sigma) =>
       CyberHalo._build((math.max(0, cut) * 2).round() / 2, sigma, null);
 
-  factory _build(double c, double sigma, Size? exact) {
+  factory CyberHalo._build(double c, double sigma, Size? exact) {
     final key = (c, sigma, exact);
     final hit = _cache.remove(key);
     if (hit != null) return _cache[key] = hit;

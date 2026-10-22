@@ -38,7 +38,7 @@ const EdgeInsets y2kPanelMargin = EdgeInsets.fromLTRB(12, 4, 12, 9);
 
 /// The Y2K / Frutiger Aero display panel.
 final class Y2kDisplayFace extends DisplayFace {
-  const new({
+  const Y2kDisplayFace({
     required this.surface,
     required this.rim,
     this.bezelTints = const [

@@ -17,7 +17,7 @@ import 'package:meta/meta.dart';
 @immutable
 final class FontAxisRange {
   /// Creates an axis range.
-  const new(this.tag, this.min, this.defaultValue, this.max);
+  const FontAxisRange(this.tag, this.min, this.defaultValue, this.max);
 
   /// OpenType axis tag, e.g. `wght`.
   final String tag;
@@ -132,7 +132,7 @@ enum BundledFont {
   /// figures, so it is never used for numbers or by the theme generator.
   patrickHand('patrick_hand', 'PatrickHand', tabularByDefault: false);
 
-  new(
+  const BundledFont(
     this.id,
     this.family, {
     required this.tabularByDefault,
@@ -261,6 +261,18 @@ const List<FontFeature> _tabularZero = [
   FontFeature.slashedZero(),
 ];
 const List<FontFeature> _zeroOnly = [FontFeature.slashedZero()];
+
+/// [css] (clamped to 100–900) as a [FontWeight]: exact on Flutter 3.38+,
+/// which has arbitrary weights (variable `wght`); the nearest of
+/// [FontWeight.values] on older Flutter. `FontWeight(int)` doesn't exist
+/// there, but [FontWeight.lerp] does, and is exact where weights are.
+FontWeight cssFontWeight(int css) {
+  final c = css.clamp(100, 900);
+  final below = FontWeight.values[(c - 100) ~/ 100];
+  if (below.value == c) return below;
+  final above = FontWeight.values[(c - 100) ~/ 100 + 1];
+  return FontWeight.lerp(below, above, (c - below.value) / 100)!;
+}
 
 /// The [FontWeight] closest to a CSS weight (clamped to 100–900).
 FontWeight nearestFontWeight(double weight) {

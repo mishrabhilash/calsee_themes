@@ -22,7 +22,7 @@ import 'package:flutter/painting.dart';
 
 /// The Retro LCD / VFD display face.
 final class LcdDisplayFace extends DisplayFace {
-  const new({
+  const LcdDisplayFace({
     required this.panel,
     required this.bezel,
     this.ghost,

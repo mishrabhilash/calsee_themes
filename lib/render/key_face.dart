@@ -22,7 +22,7 @@ export 'package:calsee_themes/key_face.dart';
 /// optional slashed zero.
 @immutable
 abstract class ThemedKeyFace extends KeyFaceRenderer {
-  const new({this.slashedZero = false});
+  const ThemedKeyFace({this.slashedZero = false});
 
   /// Draw `0` with a slash (fonts that support `zero`).
   final bool slashedZero;
@@ -137,7 +137,7 @@ void paintHoldFill(
 /// press depth (see [effectivePress]); repaints on [press] without
 /// rebuilding or relayout. NeoPOP moves the label with the face.
 class PressTranslate extends SingleChildRenderObjectWidget {
-  const new({
+  const PressTranslate({
     required this.press,
     required this.rest,
     required this.travel,
@@ -182,12 +182,15 @@ class PressTranslate extends SingleChildRenderObjectWidget {
 
 /// Render object of [PressTranslate].
 class RenderPressTranslate extends RenderProxyBox {
-  new({
-    required this._press,
-    required this._rest,
-    required this._travel,
-    this._reduceMotion = false,
-  });
+  RenderPressTranslate({
+    required Animation<double> press,
+    required Offset rest,
+    required Offset travel,
+    bool reduceMotion = false,
+  }) : _press = press,
+       _rest = rest,
+       _travel = travel,
+       _reduceMotion = reduceMotion;
 
   Animation<double> _press;
   Offset _rest;

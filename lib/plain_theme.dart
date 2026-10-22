@@ -1,5 +1,5 @@
 import 'package:calsee_themes/calc_theme_data.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/widgets.dart';
 
 /// The one M2 theme: quiet neutrals with a blue accent, light and dark,
 /// following the system brightness.
@@ -137,10 +137,4 @@ abstract final class PlainTheme {
     if (highContrast) return dark ? highContrastDark : highContrastLight;
     return dark ? PlainTheme.dark : light;
   }
-
-  /// Material chrome (app bars, sheets, settings) matching [of].
-  static ThemeData material(
-    Brightness brightness, {
-    bool highContrast = false,
-  }) => materialThemeFor(of(brightness, highContrast: highContrast));
 }

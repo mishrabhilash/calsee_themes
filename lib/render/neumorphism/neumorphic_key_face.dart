@@ -38,7 +38,7 @@ import 'package:flutter/widgets.dart';
 /// lerps colours and sizes ([LerpableKeyFace]); the outline kind follows
 /// the nearer end.
 final class NeumorphicKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const NeumorphicKeyFace({
     required this.surface,
     required this.highlight,
     required this.shadow,
@@ -243,8 +243,11 @@ SoftPressState softPressState(
 /// pressed layer), inner shadow pair, rim and long-press fill. Paints,
 /// shaders and geometry are cached per size; see the library docs.
 class NeumorphicKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  NeumorphicKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;
@@ -404,7 +407,7 @@ class NeumorphicKeyPainter extends CustomPainter {
 /// from the frame the tint snaps on (discrete under Reduce Motion) — with
 /// a `srcIn` colour filter, by repainting only.
 class SoftPressedLabel extends SingleChildRenderObjectWidget {
-  const new({
+  const SoftPressedLabel({
     required this.motion,
     required this.color,
     this.reduceMotion = false,
@@ -443,11 +446,13 @@ class SoftPressedLabel extends SingleChildRenderObjectWidget {
 
 /// Render object of [SoftPressedLabel].
 class RenderSoftPressedLabel extends RenderProxyBox {
-  new({
-    required this._motion,
-    required this._color,
-    this._reduceMotion = false,
-  });
+  RenderSoftPressedLabel({
+    required KeyFaceMotion motion,
+    required Color color,
+    bool reduceMotion = false,
+  }) : _motion = motion,
+       _color = color,
+       _reduceMotion = reduceMotion;
 
   KeyFaceMotion _motion;
   Color _color;

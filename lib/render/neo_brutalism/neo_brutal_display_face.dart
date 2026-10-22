@@ -14,7 +14,7 @@ import 'package:flutter/painting.dart';
 
 /// The Neo-brutalism display card.
 final class NeoBrutalDisplayFace extends DisplayFace {
-  const new({
+  const NeoBrutalDisplayFace({
     required this.panel,
     required this.ink,
     this.outlineWidth = 3,

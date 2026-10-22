@@ -55,7 +55,7 @@ const double ratioAccessible = 7;
 /// Label-solving policy: floors plus the two WCAG-2 blind-spot heuristics
 /// (research §4.5). Immutable; configurable per family or Accessible lock.
 final class ContrastPolicy {
-  const new({
+  const ContrastPolicy({
     this.minRatio = ratioText,
     this.darkFaceRatio = ratioAccessible,
     this.darkFaceY = yDarkFace,

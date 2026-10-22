@@ -26,20 +26,20 @@ import 'package:meta/meta.dart';
 @immutable
 final class FeedEntry {
   /// A generated theme.
-  const new generated({
+  const FeedEntry.generated({
     required int this.seed,
     required ThemeFamily this.family,
     this.engineVersion = currentEngineVersion,
   }) : heroId = null;
 
   /// A hand-crafted hero.
-  const new hero(int this.heroId)
+  const FeedEntry.hero(int this.heroId)
     : seed = null,
       family = null,
       engineVersion = currentEngineVersion;
 
   /// The entry for [spec] (heroes by id, everything else by recipe).
-  factory ofSpec(ThemeSpec spec) =>
+  factory FeedEntry.ofSpec(ThemeSpec spec) =>
       spec.variant == ThemeVariant.hero && spec.heroId != null
       ? FeedEntry.hero(spec.heroId!)
       : FeedEntry.generated(
@@ -148,10 +148,10 @@ final class FeedEntry {
 @immutable
 final class FeedFilter {
   /// Every enabled family.
-  const new surpriseMe() : _families = null;
+  const FeedFilter.surpriseMe() : _families = null;
 
   /// Only [families] (disabled ones are ignored; empty → surprise me).
-  factory only(Iterable<ThemeFamily> families) {
+  factory FeedFilter.only(Iterable<ThemeFamily> families) {
     final chosen = <ThemeFamily>{
       for (final f in families)
         if (f.enabled) f,
@@ -161,10 +161,10 @@ final class FeedFilter {
         : FeedFilter._(List.unmodifiable(chosen));
   }
 
-  const new _(this._families);
+  const FeedFilter._(this._families);
 
   /// Parses [toJson] output (unknown input → surprise me).
-  factory fromJson(Object? json) {
+  factory FeedFilter.fromJson(Object? json) {
     if (json is Map && json['families'] is List) {
       return FeedFilter.only([
         for (final id in json['families'] as List)
@@ -222,14 +222,15 @@ typedef PrefetchHook = void Function(List<FeedEntry> upcoming);
 final class ThemeFeed {
   /// A new feed for [feedSeed] (use [randomFeedSeed] on first launch and
   /// persist it). The first theme is [initial], or step 0 of the feed.
-  new({
+  ThemeFeed({
     required int feedSeed,
-    this._filter = const FeedFilter.surpriseMe(),
+    FeedFilter filter = const FeedFilter.surpriseMe(),
     FeedEntry? initial,
     this.maxHistory = defaultMaxHistory,
     this.prefetchCount = 3,
     this.onPrefetch,
-  }) : feedSeed = feedSeed & 0xFFFFFFFF {
+  }) : _filter = filter,
+       feedSeed = feedSeed & 0xFFFFFFFF {
     if (initial != null) {
       _history.add(initial);
     } else {
@@ -240,7 +241,7 @@ final class ThemeFeed {
 
   /// Restores [toJson] output. Entries this build cannot reproduce are
   /// dropped; an unusable state starts a fresh feed (same seed if known).
-  factory fromJson(
+  factory ThemeFeed.fromJson(
     Object? json, {
     int maxHistory = defaultMaxHistory,
     int prefetchCount = 3,
@@ -532,7 +533,7 @@ FeedEntry themeOfTheDay(DateTime localDate) {
 /// A small LRU of resolved specs, so prefetched themes are ready when the
 /// user swipes (generation is < 2 ms, but a commit frame should not pay it).
 final class ThemeCache {
-  new({this.capacity = 16, this.generator = const ThemeGenerator()});
+  ThemeCache({this.capacity = 16, this.generator = const ThemeGenerator()});
 
   final int capacity;
   final ThemeGenerator generator;

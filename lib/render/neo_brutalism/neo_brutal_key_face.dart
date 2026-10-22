@@ -26,7 +26,7 @@ import 'package:flutter/widgets.dart';
 /// lerps the shadow offset, outline width, corners and ink
 /// ([LerpableKeyFace]).
 final class NeoBrutalKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const NeoBrutalKeyFace({
     required this.shadowOffset,
     required this.outlineWidth,
     required this.ink,
@@ -185,8 +185,11 @@ final class NeoBrutalKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// pressed tint), its ink outline and the long-press fill. Repaints from
 /// the motion channels without rebuilds.
 class NeoBrutalKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  NeoBrutalKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;

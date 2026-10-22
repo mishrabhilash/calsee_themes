@@ -214,9 +214,9 @@ void main() {
 
     test('order does not matter (no hidden state)', () {
       final forward = [for (var s = 0; s < 50; s++) gen.generate(s, soft, 2)];
-      final backward = [for (var s = 49; s >= 0; s--) gen.generate(s, soft, 2)]
-          .reversed
-          .toList();
+      final backward = [
+        for (var s = 49; s >= 0; s--) gen.generate(s, soft, 2),
+      ].reversed.toList();
       expect(backward, forward);
     });
 

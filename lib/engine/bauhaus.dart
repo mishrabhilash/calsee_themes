@@ -87,7 +87,7 @@ enum BauhausPrimary { red, yellow, blue }
 /// How one primary is drawn: hue, lightness (standard and under the
 /// Accessible lock) and chroma relative to the gamut edge, capped.
 final class BauhausPrimaryRanges {
-  const new({
+  const BauhausPrimaryRanges({
     required this.hueTenths,
     required this.lMilli,
     required this.accessibleLMilli,
@@ -371,7 +371,7 @@ const FamilyDefinition bauhausDefinition = FamilyDefinition(
 /// a [Palette] and the scene colours without further draws. Public so the
 /// hero tool and the tests can build palettes from chosen values.
 final class BauhausDraw {
-  const new({
+  const BauhausDraw({
     required this.variant,
     required this.assignment,
     required this.neutralHue,

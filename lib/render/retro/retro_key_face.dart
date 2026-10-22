@@ -29,7 +29,7 @@ import 'package:flutter/widgets.dart';
 /// Retro keycap renderer for one theme. A same-family theme change lerps
 /// travel, corners, skirt tones and bevel strengths ([LerpableKeyFace]).
 final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const RetroKeyFace({
     required this.travel,
     required this.digitSkirt,
     required this.operatorSkirt,
@@ -194,8 +194,11 @@ final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 /// (swapped while pressed), the desktop hover layer, an optional outline
 /// and the long-press bar. Repaints from the motion channels only.
 class RetroKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  RetroKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   /// The key's animation channels.
   final KeyFaceMotion motion;

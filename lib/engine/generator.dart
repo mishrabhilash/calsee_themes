@@ -68,7 +68,7 @@ const Set<int> supportedEngineVersions = {1, 2, 3};
 /// Thrown for an `engineVersion` this build cannot reproduce (newer than
 /// [currentEngineVersion]): show "update the app to open this theme".
 final class UnsupportedEngineVersion implements Exception {
-  const new(this.engineVersion);
+  const UnsupportedEngineVersion(this.engineVersion);
 
   final int engineVersion;
 
@@ -79,7 +79,7 @@ final class UnsupportedEngineVersion implements Exception {
 /// Generates [ThemeSpec]s. Stateless and const; two instances always
 /// produce identical output.
 final class ThemeGenerator {
-  const new({this.maxAttempts = 4});
+  const ThemeGenerator({this.maxAttempts = 4});
 
   /// Palette attempts (attempt 0 plus `palette/retry/1…`) before the hero
   /// fallback.
@@ -438,7 +438,7 @@ int _wrapTenths(int t) => t % 3600;
 
 /// Per-role hues in tenths of a degree (research §5.2).
 final class _Hues {
-  const new({
+  const _Hues({
     required this.h0,
     required this.digit,
     required this.function,
@@ -449,7 +449,7 @@ final class _Hues {
   /// Draws h0 and the scheme's offsets, each with ±10° jitter. The h0
   /// draw is always consumed; [h0Override] (the wallpaper hue) replaces
   /// its value.
-  factory draw(HarmonyScheme scheme, Rng p, {int? h0Override}) {
+  factory _Hues.draw(HarmonyScheme scheme, Rng p, {int? h0Override}) {
     final drawn = p.nextHueTenths();
     final h0 = h0Override ?? drawn;
     int j() => p.nextJitterTenths(100);
@@ -525,7 +525,7 @@ double _chromaAt(ChromaRange r, int v, double l, double hDeg) {
 }
 
 final class _Faces {
-  const new({
+  const _Faces({
     required this.background,
     required this.surface,
     required this.digit,

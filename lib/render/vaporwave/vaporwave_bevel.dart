@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart';
 /// the raised top-left, two shades (outer = darker) for the bottom-right.
 @immutable
 final class VaporBevelTones {
-  const new({
+  const VaporBevelTones({
     required this.hiOuter,
     required this.hiInner,
     required this.shadeInner,

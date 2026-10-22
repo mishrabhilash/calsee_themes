@@ -44,10 +44,10 @@ import 'package:flutter/widgets.dart';
 /// One key group's glass colours.
 @immutable
 final class GlassTint {
-  const new({required this.tint, required this.rim});
+  const GlassTint({required this.tint, required this.rim});
 
   /// [a] → [b] at [t].
-  factory lerp(GlassTint a, GlassTint b, double t) => GlassTint(
+  factory GlassTint.lerp(GlassTint a, GlassTint b, double t) => GlassTint(
     tint: Color.lerp(a.tint, b.tint, t)!,
     rim: Color.lerp(a.rim, b.rim, t)!,
   );
@@ -91,7 +91,7 @@ final class GlassTint {
 /// lerps colours and sizes ([LerpableKeyFace]); the outline kind follows
 /// the nearer end.
 final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
-  const new({
+  const GlassKeyFace({
     required this.digit,
     required this.operator,
     required this.equals,
@@ -292,8 +292,11 @@ final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 
 /// Paints one Liquid Glass key (see the library docs).
 class GlassKeyPainter extends CustomPainter {
-  new({required this.motion, required this.spec, required this.face})
-    : super(repaint: motion.listenable);
+  GlassKeyPainter({
+    required this.motion,
+    required this.spec,
+    required this.face,
+  }) : super(repaint: motion.listenable);
 
   final KeyFaceMotion motion;
   final KeyFaceSpec spec;
@@ -412,14 +415,11 @@ class GlassKeyPainter extends CustomPainter {
     );
     // Specular band (top of the face, above the label zone) and glint.
     _band = Rect.fromLTWH(0, 0, w, h * glassLabelZoneTop);
-    _bandPaint.shader = ui.Gradient.linear(
-      Offset.zero,
-      Offset(0, h * glassLabelZoneTop),
-      [
-        const Color(0xFFFFFFFF).withValues(alpha: 0.30 * face.highlight),
-        const Color(0x00FFFFFF),
-      ],
-    );
+    _bandPaint.shader =
+        ui.Gradient.linear(Offset.zero, Offset(0, h * glassLabelZoneTop), [
+          const Color(0xFFFFFFFF).withValues(alpha: 0.30 * face.highlight),
+          const Color(0x00FFFFFF),
+        ]);
     _glint = Rect.fromCenter(
       center: Offset(w * 0.34, h * 0.13),
       width: w * 0.40,
@@ -452,8 +452,9 @@ class GlassKeyPainter extends CustomPainter {
       _caustic.center,
       _caustic.width / 2,
       [
-        const Color(0xFFFFFFFF)
-            .withValues(alpha: (light ? 0.42 : 0.24) * face.refraction),
+        const Color(
+          0xFFFFFFFF,
+        ).withValues(alpha: (light ? 0.42 : 0.24) * face.refraction),
         const Color(0x00FFFFFF),
       ],
       null,
@@ -637,7 +638,7 @@ class GlassKeyPainter extends CustomPainter {
 /// Inflates its child (the key label) with the glass jelly
 /// ([glassJelly]) by repainting on the press and scale channels.
 class GlassInflate extends SingleChildRenderObjectWidget {
-  const new({
+  const GlassInflate({
     required this.motion,
     required this.face,
     this.reduceMotion = false,
@@ -671,11 +672,13 @@ class GlassInflate extends SingleChildRenderObjectWidget {
 
 /// Render object of [GlassInflate].
 class RenderGlassInflate extends RenderProxyBox {
-  new({
-    required this._motion,
-    required this._face,
-    required this._reduceMotion,
-  });
+  RenderGlassInflate({
+    required KeyFaceMotion motion,
+    required GlassKeyFace face,
+    required bool reduceMotion,
+  }) : _motion = motion,
+       _face = face,
+       _reduceMotion = reduceMotion;
 
   KeyFaceMotion _motion;
   GlassKeyFace _face;
