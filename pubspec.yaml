@@ -1,7 +1,40 @@
 name: calsee_themes
-description: "Calsee's seeded theme engine and renderers, shared by Calsee apps."
-publish_to: 'none'
+description: >-
+  Endless generated themes for Flutter: swipe for a new look in twelve
+  families (Claymorphism, Liquid Glass, NeoPOP, Retro, Cyberpunk, ...),
+  with themed keys, backdrops and displays. From the Calsee calculator.
 version: 1.0.0
+homepage: https://calsee.tech
+repository: https://github.com/mishrabhilash/calsee_themes
+issue_tracker: https://github.com/mishrabhilash/calsee_themes/issues
+topics:
+  - theme
+  - ui
+  - design
+  - widgets
+  - animation
+
+screenshots:
+  - description: Twelve theme families on one payment screen.
+    path: doc/families.png
+  - description: Swiping between generated themes.
+    path: doc/swipe.gif
+  - description: Claymorphism.
+    path: doc/family_claymorphism.png
+  - description: Liquid Glass.
+    path: doc/family_liquidGlass.png
+  - description: Retro.
+    path: doc/family_retro.png
+  - description: Cyberpunk.
+    path: doc/family_cyberpunk.png
+  - description: Y2K Aero.
+    path: doc/family_y2kChrome.png
+  - description: Paper & Ink.
+    path: doc/family_paperInk.png
+  - description: Vaporwave.
+    path: doc/family_vaporwave.png
+  - description: Neo-brutalism.
+    path: doc/family_neoBrutalism.png
 
 environment:
   sdk: ^3.9.0

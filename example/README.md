@@ -1,16 +1,17 @@
-# calsee_themes_example
+# calsee_themes example
 
-Demo of calsee_themes: a themed payment keypad.
+A payment keypad themed by `calsee_themes`. Swipe the amount for a new
+theme; the keypad and the Pay button keep working the same in every
+theme.
 
-## Getting Started
+```bash
+flutter run
+```
 
-This project is a starting point for a Flutter application.
+`screenshots/` regenerates the illustrations in the package's `doc/`
+folder:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter test screenshots/screenshots_test.dart --update-goldens
+python3 screenshots/compose.py
+```

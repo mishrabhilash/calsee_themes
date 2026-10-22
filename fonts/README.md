@@ -7,7 +7,7 @@ repository (https://github.com/google/fonts, branch `main`) and renamed
 are unmodified; Noto Sans Devanagari (added 2026-10-04, M5) is subset, see
 below.
 
-| Family (pubspec) | File | Source | SHA-256 | Size |
+| Family (`packages/calsee_themes/…`) | File | Source | SHA-256 | Size |
 |---|---|---|---|---|
 | `RobotoFlex` | `roboto_flex/RobotoFlex.ttf` | https://raw.githubusercontent.com/google/fonts/main/ofl/robotoflex/RobotoFlex%5BGRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght%5D.ttf | `9b523f7d82593df0107173849ebb8c817471a1df4b4fb2c3cbf40cfd810c8281` | 1,787,292 B |
 | | `roboto_flex/OFL.txt` | https://raw.githubusercontent.com/google/fonts/main/ofl/robotoflex/OFL.txt | | |
