@@ -7,8 +7,6 @@ environment:
   sdk: ^3.9.0
   flutter: ">=3.35.0"
 
-# Fonts are app assets: every app bundles the families in
-# lib/render/fonts.dart under the same names (see README.md).
 dependencies:
   # 1.x on Flutter <3.38 (material_color_utilities 0.11), 2.x on newer.
   dynamic_color: ">=1.9.0 <3.0.0"
@@ -23,3 +21,42 @@ dev_dependencies:
   test: ">=1.26.2 <2.0.0"
   # The newest release the running SDK supports (11 needs Dart 3.13).
   very_good_analysis: ">=9.0.0 <12.0.0"
+
+# Bundled OFL fonts (fonts/README.md). Apps get them as
+# `packages/calsee_themes/<family>` (lib/render/fonts.dart) and declare
+# nothing themselves.
+flutter:
+  fonts:
+    - family: RobotoFlex
+      fonts:
+        - asset: fonts/roboto_flex/RobotoFlex.ttf
+    - family: SpaceGrotesk
+      fonts:
+        - asset: fonts/space_grotesk/SpaceGrotesk.ttf
+    - family: Nunito
+      fonts:
+        - asset: fonts/nunito/Nunito.ttf
+    - family: OpenSans
+      fonts:
+        - asset: fonts/open_sans/OpenSans.ttf
+    - family: Newsreader
+      fonts:
+        - asset: fonts/newsreader/Newsreader.ttf
+    - family: Oxanium
+      fonts:
+        - asset: fonts/oxanium/Oxanium.ttf
+    - family: Anybody
+      fonts:
+        - asset: fonts/anybody/Anybody.ttf
+    - family: Jost
+      fonts:
+        - asset: fonts/jost/Jost.ttf
+    - family: PatrickHand
+      fonts:
+        - asset: fonts/patrick_hand/PatrickHand.ttf
+    - family: NotoSansDevanagari
+      fonts:
+        - asset: fonts/NotoSansDevanagari/NotoSansDevanagari.ttf
+    - family: CalseeSymbols
+      fonts:
+        - asset: fonts/calsee_symbols/CalseeSymbols.ttf

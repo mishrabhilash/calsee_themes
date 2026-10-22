@@ -1,3 +1,9 @@
 .dart_tool/
 build/
 pubspec.lock
+.flutter-plugins*
+.packages
+*.iml
+.idea/
+.DS_Store
+example/**/ios/Flutter/ephemeral/

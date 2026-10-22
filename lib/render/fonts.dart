@@ -38,6 +38,11 @@ final class FontAxisRange {
   FontVariation variation(double value) => FontVariation(tag, clamp(value));
 }
 
+/// Fonts declared in a package's pubspec are registered under
+/// `packages/<package>/<family>`; every family name here carries it, so
+/// apps get the fonts with no `fonts:` section of their own.
+const String fontPackagePrefix = 'packages/calsee_themes/';
+
 /// Fonts a theme may use. [id] is the stable string stored in a ThemeSpec's
 /// TypeSpec; [family] is the pubspec family name (null = platform default).
 enum BundledFont {
@@ -49,7 +54,7 @@ enum BundledFont {
   /// has `pnum`, not `tnum`).
   robotoFlex(
     'roboto_flex',
-    'RobotoFlex',
+    '${fontPackagePrefix}RobotoFlex',
     tabularByDefault: true,
     weight: FontAxisRange('wght', 100, 400, 1000),
     width: FontAxisRange('wdth', 25, 100, 151),
@@ -61,7 +66,7 @@ enum BundledFont {
   /// and slashed `zero`).
   spaceGrotesk(
     'space_grotesk',
-    'SpaceGrotesk',
+    '${fontPackagePrefix}SpaceGrotesk',
     tabularByDefault: false,
     hasSlashedZero: true,
     weight: FontAxisRange('wght', 300, 300, 700),
@@ -72,7 +77,7 @@ enum BundledFont {
   /// always set).
   nunito(
     'nunito',
-    'Nunito',
+    '${fontPackagePrefix}Nunito',
     tabularByDefault: true,
     weight: FontAxisRange('wght', 200, 200, 1000),
   ),
@@ -82,7 +87,7 @@ enum BundledFont {
   /// slashed `zero`).
   openSans(
     'open_sans',
-    'OpenSans',
+    '${fontPackagePrefix}OpenSans',
     tabularByDefault: true,
     hasSlashedZero: true,
     weight: FontAxisRange('wght', 300, 400, 800),
@@ -92,7 +97,7 @@ enum BundledFont {
   /// size 6–72 follows the font size; tabular figures by default).
   newsreader(
     'newsreader',
-    'Newsreader',
+    '${fontPackagePrefix}Newsreader',
     tabularByDefault: true,
     weight: FontAxisRange('wght', 200, 400, 800),
     opticalSize: FontAxisRange('opsz', 6, 18, 72),
@@ -102,7 +107,7 @@ enum BundledFont {
   /// equal width by default, slashed `zero`).
   oxanium(
     'oxanium',
-    'Oxanium',
+    '${fontPackagePrefix}Oxanium',
     tabularByDefault: true,
     hasSlashedZero: true,
     weight: FontAxisRange('wght', 200, 200, 800),
@@ -112,7 +117,7 @@ enum BundledFont {
   /// 50–150; `tnum`, slashed `zero`).
   anybody(
     'anybody',
-    'Anybody',
+    '${fontPackagePrefix}Anybody',
     tabularByDefault: false,
     hasSlashedZero: true,
     weight: FontAxisRange('wght', 100, 100, 900),
@@ -122,7 +127,7 @@ enum BundledFont {
   /// Jost: Bauhaus's Futura-model geometric sans (weight 100–900, `tnum`).
   jost(
     'jost',
-    'Jost',
+    '${fontPackagePrefix}Jost',
     tabularByDefault: false,
     weight: FontAxisRange('wght', 100, 400, 900),
   ),
@@ -130,7 +135,7 @@ enum BundledFont {
   /// Patrick Hand: Paper & ink's handwritten chrome headings (settings and
   /// dialog titles, section headers). A static Regular with proportional
   /// figures, so it is never used for numbers or by the theme generator.
-  patrickHand('patrick_hand', 'PatrickHand', tabularByDefault: false);
+  patrickHand('patrick_hand', '${fontPackagePrefix}PatrickHand', tabularByDefault: false);
 
   const BundledFont(
     this.id,
@@ -285,7 +290,7 @@ FontWeight nearestFontWeight(double weight) {
 /// words at the same size and weight as the Latin text around them, instead
 /// of the platform's lighter Devanagari face. Not a theme font: it is only
 /// ever a [scriptFallbackFonts] entry.
-const String devanagariFontFamily = 'NotoSansDevanagari';
+const String devanagariFontFamily = '${fontPackagePrefix}NotoSansDevanagari';
 
 /// CalseeSymbols (m7-design D14; assets/fonts/README.md): the glyphs the
 /// theme fonts lack, from Noto Sans, Noto Sans Mono and Noto Sans Thai,
@@ -294,7 +299,7 @@ const String devanagariFontFamily = 'NotoSansDevanagari';
 /// (₹ ₨ ₩ ₽ ₺ ₫ ₦ ₱ ₪ …) plus ฿, and nothing else: no digits, letters or
 /// spaces. Not a theme font: it is a [scriptFallbackFonts] entry, and key
 /// labels draw their super- and subscript runs in it ([symbolRunStyle]).
-const String symbolsFontFamily = 'CalseeSymbols';
+const String symbolsFontFamily = '${fontPackagePrefix}CalseeSymbols';
 
 /// CalseeSymbols' `wght` axis (its only axis).
 const FontAxisRange symbolsFontWeight = FontAxisRange('wght', 100, 400, 900);
@@ -365,33 +370,34 @@ TextStyle withScriptFallback(TextStyle style) =>
     : style;
 
 /// Asset paths of the bundled fonts, keyed by pubspec family name.
-/// Mirrors pubspec.yaml `fonts:`; test/helpers/load_fonts.dart uses it.
+/// Mirrors this package's pubspec.yaml `fonts:`; widget tests load them
+/// with a FontLoader (see the README).
 const Map<String, String> bundledFontAssets = {
-  'RobotoFlex': 'assets/fonts/roboto_flex/RobotoFlex.ttf',
-  'SpaceGrotesk': 'assets/fonts/space_grotesk/SpaceGrotesk.ttf',
-  'Nunito': 'assets/fonts/nunito/Nunito.ttf',
-  'OpenSans': 'assets/fonts/open_sans/OpenSans.ttf',
-  'Newsreader': 'assets/fonts/newsreader/Newsreader.ttf',
-  'Oxanium': 'assets/fonts/oxanium/Oxanium.ttf',
-  'Anybody': 'assets/fonts/anybody/Anybody.ttf',
-  'Jost': 'assets/fonts/jost/Jost.ttf',
-  'PatrickHand': 'assets/fonts/patrick_hand/PatrickHand.ttf',
+  '${fontPackagePrefix}RobotoFlex': 'packages/calsee_themes/fonts/roboto_flex/RobotoFlex.ttf',
+  '${fontPackagePrefix}SpaceGrotesk': 'packages/calsee_themes/fonts/space_grotesk/SpaceGrotesk.ttf',
+  '${fontPackagePrefix}Nunito': 'packages/calsee_themes/fonts/nunito/Nunito.ttf',
+  '${fontPackagePrefix}OpenSans': 'packages/calsee_themes/fonts/open_sans/OpenSans.ttf',
+  '${fontPackagePrefix}Newsreader': 'packages/calsee_themes/fonts/newsreader/Newsreader.ttf',
+  '${fontPackagePrefix}Oxanium': 'packages/calsee_themes/fonts/oxanium/Oxanium.ttf',
+  '${fontPackagePrefix}Anybody': 'packages/calsee_themes/fonts/anybody/Anybody.ttf',
+  '${fontPackagePrefix}Jost': 'packages/calsee_themes/fonts/jost/Jost.ttf',
+  '${fontPackagePrefix}PatrickHand': 'packages/calsee_themes/fonts/patrick_hand/PatrickHand.ttf',
   devanagariFontFamily:
-      'assets/fonts/NotoSansDevanagari/NotoSansDevanagari.ttf',
-  symbolsFontFamily: 'assets/fonts/calsee_symbols/CalseeSymbols.ttf',
+      'packages/calsee_themes/fonts/NotoSansDevanagari/NotoSansDevanagari.ttf',
+  symbolsFontFamily: 'packages/calsee_themes/fonts/calsee_symbols/CalseeSymbols.ttf',
 };
 
 /// Licence files of the bundled fonts, keyed by pubspec family name.
 const Map<String, String> bundledFontLicenses = {
-  'RobotoFlex': 'assets/fonts/roboto_flex/OFL.txt',
-  'SpaceGrotesk': 'assets/fonts/space_grotesk/OFL.txt',
-  'Nunito': 'assets/fonts/nunito/OFL.txt',
-  'OpenSans': 'assets/fonts/open_sans/OFL.txt',
-  'Newsreader': 'assets/fonts/newsreader/OFL.txt',
-  'Oxanium': 'assets/fonts/oxanium/OFL.txt',
-  'Anybody': 'assets/fonts/anybody/OFL.txt',
-  'Jost': 'assets/fonts/jost/OFL.txt',
-  'PatrickHand': 'assets/fonts/patrick_hand/OFL.txt',
-  devanagariFontFamily: 'assets/fonts/NotoSansDevanagari/OFL.txt',
-  symbolsFontFamily: 'assets/fonts/calsee_symbols/OFL.txt',
+  '${fontPackagePrefix}RobotoFlex': 'packages/calsee_themes/fonts/roboto_flex/OFL.txt',
+  '${fontPackagePrefix}SpaceGrotesk': 'packages/calsee_themes/fonts/space_grotesk/OFL.txt',
+  '${fontPackagePrefix}Nunito': 'packages/calsee_themes/fonts/nunito/OFL.txt',
+  '${fontPackagePrefix}OpenSans': 'packages/calsee_themes/fonts/open_sans/OFL.txt',
+  '${fontPackagePrefix}Newsreader': 'packages/calsee_themes/fonts/newsreader/OFL.txt',
+  '${fontPackagePrefix}Oxanium': 'packages/calsee_themes/fonts/oxanium/OFL.txt',
+  '${fontPackagePrefix}Anybody': 'packages/calsee_themes/fonts/anybody/OFL.txt',
+  '${fontPackagePrefix}Jost': 'packages/calsee_themes/fonts/jost/OFL.txt',
+  '${fontPackagePrefix}PatrickHand': 'packages/calsee_themes/fonts/patrick_hand/OFL.txt',
+  devanagariFontFamily: 'packages/calsee_themes/fonts/NotoSansDevanagari/OFL.txt',
+  symbolsFontFamily: 'packages/calsee_themes/fonts/calsee_symbols/OFL.txt',
 };
