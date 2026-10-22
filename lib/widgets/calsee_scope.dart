@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:calsee_themes/calc_theme.dart';
 import 'package:calsee_themes/engine/theme_feed.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
@@ -82,6 +84,12 @@ class CalseeThemeController extends ChangeNotifier {
 
   /// The feed state, JSON-encodable, for `savedState`.
   Object toJson() => _feed.toJson();
+
+  /// The specs [next] would show, generated now (cached for the commit).
+  List<ThemeSpec> _upcoming(int count) => [
+    for (final entry in _feed.upcoming(count))
+      _cache.specFor(entry, accessible: _accessible),
+  ];
 }
 
 /// Themes everything below it with the current theme of a
@@ -146,6 +154,12 @@ class CalseeScope extends StatefulWidget {
 class _CalseeScopeState extends State<CalseeScope> {
   CalseeThemeController? _own;
 
+  /// Themes prepared ahead of a change: the next ones in the feed.
+  static const _prefetchCount = 2;
+
+  Timer? _prefetchTimer;
+  bool _highContrast = false;
+
   CalseeThemeController get _controller =>
       widget.controller ??
       (_own ??= CalseeThemeController(
@@ -158,6 +172,39 @@ class _CalseeScopeState extends State<CalseeScope> {
   void initState() {
     super.initState();
     _controller.addListener(_changed);
+    KeyCellSizes.instance.addListener(_schedulePrefetch);
+    _schedulePrefetch();
+  }
+
+  /// Prepares the next themes once the current transition has settled, so
+  /// the frame that shows a theme doesn't build its key art and shapes.
+  void _schedulePrefetch() {
+    _prefetchTimer?.cancel();
+    _prefetchTimer = Timer(
+      widget.duration + const Duration(milliseconds: 100),
+      () => _prefetchStep(0),
+    );
+  }
+
+  /// One theme per event-loop turn, so frames can run in between.
+  void _prefetchStep(int index) {
+    if (!mounted) return;
+    final upcoming = _controller._upcoming(_prefetchCount);
+    if (index >= upcoming.length) return;
+    final sizes = KeyCellSizes.instance.sizes;
+    final current = ThemeResolver.resolve(
+      _controller.spec,
+      highContrast: _highContrast,
+    );
+    final next = ThemeResolver.resolve(
+      upcoming[index],
+      highContrast: _highContrast,
+    );
+    next.keyFace.prepare(sizes);
+    if (current.keyFace case final LerpableKeyFace face) {
+      face.prepareLerp(next.keyFace, sizes);
+    }
+    _prefetchTimer = Timer(Duration.zero, () => _prefetchStep(index + 1));
   }
 
   @override
@@ -170,10 +217,15 @@ class _CalseeScopeState extends State<CalseeScope> {
     }
   }
 
-  void _changed() => widget.onChanged?.call(_controller.toJson());
+  void _changed() {
+    widget.onChanged?.call(_controller.toJson());
+    _schedulePrefetch();
+  }
 
   @override
   void dispose() {
+    _prefetchTimer?.cancel();
+    KeyCellSizes.instance.removeListener(_schedulePrefetch);
     _controller.removeListener(_changed);
     _own?.dispose();
     super.dispose();
@@ -187,7 +239,7 @@ class _CalseeScopeState extends State<CalseeScope> {
       builder: (context, child) => AnimatedCalcTheme(
         data: ThemeResolver.resolve(
           _controller.spec,
-          highContrast: MediaQuery.highContrastOf(context),
+          highContrast: _highContrast = MediaQuery.highContrastOf(context),
         ),
         duration: widget.duration,
         curve: widget.curve,

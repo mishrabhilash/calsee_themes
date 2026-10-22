@@ -200,6 +200,8 @@ class _CalseeKeyState extends State<CalseeKey> with TickerProviderStateMixin {
       builder: (context, constraints) {
         final shortest = constraints.biggest.shortestSide;
         final shortSide = shortest.isFinite ? shortest : 64.0;
+        // The scope prepares upcoming themes for the sizes keys use.
+        KeyCellSizes.instance.report(constraints.biggest);
         return RepaintBoundary(
           child: PressScale(
             press: _motion.scale,
@@ -275,6 +277,7 @@ class CalseeSurface extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final shortest = constraints.biggest.shortestSide;
+        KeyCellSizes.instance.report(constraints.biggest);
         return CustomPaint(
           painter: LiveKeyFacePainter(
             motion: const _RestMotion(),

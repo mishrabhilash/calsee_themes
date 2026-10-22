@@ -1,5 +1,9 @@
 ## Unreleased
 
+- `CalseeScope` prepares the next themes between changes (key art, shape
+  morphs and transitions for the key sizes on screen), so the frame that
+  shows a new theme no longer builds them. On the web, a theme change on
+  a busy screen went from up to 119 ms of build work to under 35 ms.
 - `CalseeKey.icon` with a `label` no longer overflows its key on faces
   that leave less room for content (some Material 3 Expressive shapes);
   the icon and label shrink to fit, as text labels do.

@@ -1,4 +1,5 @@
 import 'package:calsee_themes/calsee_themes.dart';
+import 'package:calsee_themes/key_face.dart' show KeyCellSizes;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -190,5 +191,33 @@ void main() {
         reason: '${controller.spec.name} (${controller.spec.family})',
       );
     }
+  });
+
+  testWidgets('keys report their size; the scope prepares themes after', (
+    tester,
+  ) async {
+    KeyCellSizes.instance.clear();
+    final controller = CalseeThemeController(seed: 3);
+    addTearDown(controller.dispose);
+    await tester.pumpWidget(
+      _app(
+        CalseeScope(
+          controller: controller,
+          child: Center(
+            child: SizedBox(
+              width: 120,
+              height: 60,
+              child: CalseeKey.text('7', role: KeyRole.digit, onPressed: () {}),
+            ),
+          ),
+        ),
+      ),
+    );
+    expect(KeyCellSizes.instance.sizes, contains(const Size(120, 60)));
+    controller.next();
+    // Past the transition: the next themes are prepared between frames.
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(tester.takeException(), isNull);
   });
 }
