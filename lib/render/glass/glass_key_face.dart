@@ -415,11 +415,14 @@ class GlassKeyPainter extends CustomPainter {
     );
     // Specular band (top of the face, above the label zone) and glint.
     _band = Rect.fromLTWH(0, 0, w, h * glassLabelZoneTop);
-    _bandPaint.shader =
-        ui.Gradient.linear(Offset.zero, Offset(0, h * glassLabelZoneTop), [
-          const Color(0xFFFFFFFF).withValues(alpha: 0.30 * face.highlight),
-          const Color(0x00FFFFFF),
-        ]);
+    _bandPaint.shader = ui.Gradient.linear(
+      Offset.zero,
+      Offset(0, h * glassLabelZoneTop),
+      [
+        const Color(0xFFFFFFFF).withValues(alpha: 0.30 * face.highlight),
+        const Color(0x00FFFFFF),
+      ],
+    );
     _glint = Rect.fromCenter(
       center: Offset(w * 0.34, h * 0.13),
       width: w * 0.40,

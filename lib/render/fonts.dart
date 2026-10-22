@@ -135,7 +135,11 @@ enum BundledFont {
   /// Patrick Hand: Paper & ink's handwritten chrome headings (settings and
   /// dialog titles, section headers). A static Regular with proportional
   /// figures, so it is never used for numbers or by the theme generator.
-  patrickHand('patrick_hand', '${fontPackagePrefix}PatrickHand', tabularByDefault: false);
+  patrickHand(
+    'patrick_hand',
+    '${fontPackagePrefix}PatrickHand',
+    tabularByDefault: false,
+  );
 
   const BundledFont(
     this.id,
@@ -373,31 +377,46 @@ TextStyle withScriptFallback(TextStyle style) =>
 /// Mirrors this package's pubspec.yaml `fonts:`; widget tests load them
 /// with a FontLoader (see the README).
 const Map<String, String> bundledFontAssets = {
-  '${fontPackagePrefix}RobotoFlex': 'packages/calsee_themes/fonts/roboto_flex/RobotoFlex.ttf',
-  '${fontPackagePrefix}SpaceGrotesk': 'packages/calsee_themes/fonts/space_grotesk/SpaceGrotesk.ttf',
-  '${fontPackagePrefix}Nunito': 'packages/calsee_themes/fonts/nunito/Nunito.ttf',
-  '${fontPackagePrefix}OpenSans': 'packages/calsee_themes/fonts/open_sans/OpenSans.ttf',
-  '${fontPackagePrefix}Newsreader': 'packages/calsee_themes/fonts/newsreader/Newsreader.ttf',
-  '${fontPackagePrefix}Oxanium': 'packages/calsee_themes/fonts/oxanium/Oxanium.ttf',
-  '${fontPackagePrefix}Anybody': 'packages/calsee_themes/fonts/anybody/Anybody.ttf',
+  '${fontPackagePrefix}RobotoFlex':
+      'packages/calsee_themes/fonts/roboto_flex/RobotoFlex.ttf',
+  '${fontPackagePrefix}SpaceGrotesk':
+      'packages/calsee_themes/fonts/space_grotesk/SpaceGrotesk.ttf',
+  '${fontPackagePrefix}Nunito':
+      'packages/calsee_themes/fonts/nunito/Nunito.ttf',
+  '${fontPackagePrefix}OpenSans':
+      'packages/calsee_themes/fonts/open_sans/OpenSans.ttf',
+  '${fontPackagePrefix}Newsreader':
+      'packages/calsee_themes/fonts/newsreader/Newsreader.ttf',
+  '${fontPackagePrefix}Oxanium':
+      'packages/calsee_themes/fonts/oxanium/Oxanium.ttf',
+  '${fontPackagePrefix}Anybody':
+      'packages/calsee_themes/fonts/anybody/Anybody.ttf',
   '${fontPackagePrefix}Jost': 'packages/calsee_themes/fonts/jost/Jost.ttf',
-  '${fontPackagePrefix}PatrickHand': 'packages/calsee_themes/fonts/patrick_hand/PatrickHand.ttf',
+  '${fontPackagePrefix}PatrickHand':
+      'packages/calsee_themes/fonts/patrick_hand/PatrickHand.ttf',
   devanagariFontFamily:
       'packages/calsee_themes/fonts/NotoSansDevanagari/NotoSansDevanagari.ttf',
-  symbolsFontFamily: 'packages/calsee_themes/fonts/calsee_symbols/CalseeSymbols.ttf',
+  symbolsFontFamily:
+      'packages/calsee_themes/fonts/calsee_symbols/CalseeSymbols.ttf',
 };
 
 /// Licence files of the bundled fonts, keyed by pubspec family name.
 const Map<String, String> bundledFontLicenses = {
-  '${fontPackagePrefix}RobotoFlex': 'packages/calsee_themes/fonts/roboto_flex/OFL.txt',
-  '${fontPackagePrefix}SpaceGrotesk': 'packages/calsee_themes/fonts/space_grotesk/OFL.txt',
+  '${fontPackagePrefix}RobotoFlex':
+      'packages/calsee_themes/fonts/roboto_flex/OFL.txt',
+  '${fontPackagePrefix}SpaceGrotesk':
+      'packages/calsee_themes/fonts/space_grotesk/OFL.txt',
   '${fontPackagePrefix}Nunito': 'packages/calsee_themes/fonts/nunito/OFL.txt',
-  '${fontPackagePrefix}OpenSans': 'packages/calsee_themes/fonts/open_sans/OFL.txt',
-  '${fontPackagePrefix}Newsreader': 'packages/calsee_themes/fonts/newsreader/OFL.txt',
+  '${fontPackagePrefix}OpenSans':
+      'packages/calsee_themes/fonts/open_sans/OFL.txt',
+  '${fontPackagePrefix}Newsreader':
+      'packages/calsee_themes/fonts/newsreader/OFL.txt',
   '${fontPackagePrefix}Oxanium': 'packages/calsee_themes/fonts/oxanium/OFL.txt',
   '${fontPackagePrefix}Anybody': 'packages/calsee_themes/fonts/anybody/OFL.txt',
   '${fontPackagePrefix}Jost': 'packages/calsee_themes/fonts/jost/OFL.txt',
-  '${fontPackagePrefix}PatrickHand': 'packages/calsee_themes/fonts/patrick_hand/OFL.txt',
-  devanagariFontFamily: 'packages/calsee_themes/fonts/NotoSansDevanagari/OFL.txt',
+  '${fontPackagePrefix}PatrickHand':
+      'packages/calsee_themes/fonts/patrick_hand/OFL.txt',
+  devanagariFontFamily:
+      'packages/calsee_themes/fonts/NotoSansDevanagari/OFL.txt',
   symbolsFontFamily: 'packages/calsee_themes/fonts/calsee_symbols/OFL.txt',
 };
