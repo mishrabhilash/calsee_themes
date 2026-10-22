@@ -219,3 +219,72 @@ Widget sharePreview(BuildContext context) {
       : encodeShareCode(entry.family!.id, entry.engineVersion, entry.seed!);
   return Center(child: _panel(CalseeReadout(code, size: 30)));
 }
+
+void _ignore(Object? _) {}
+
+Widget checkboxRadioPreview(BuildContext context) => const Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    CalseeRadio<int>(
+      value: 1,
+      groupValue: 1,
+      label: 'UPI',
+      onChanged: _ignore,
+    ),
+    SizedBox(height: 10),
+    CalseeRadio<int>(
+      value: 2,
+      groupValue: 1,
+      label: 'Card',
+      onChanged: _ignore,
+    ),
+    SizedBox(height: 10),
+    CalseeCheckbox(value: true, label: 'Save this card', onChanged: _ignore),
+  ],
+);
+
+Widget switchPreview(BuildContext context) => const Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    CalseeSwitch(value: true, label: 'Payment alerts', onChanged: _ignore),
+    SizedBox(height: 14),
+    CalseeSwitch(value: false, label: 'Sounds', onChanged: _ignore),
+  ],
+);
+
+Widget segmentedSliderPreview(BuildContext context) => const Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    CalseeSegmented<int>(
+      options: [(2, '2'), (3, '3'), (4, '4'), (5, '5')],
+      selected: 3,
+      onChanged: _ignore,
+    ),
+    SizedBox(height: 20),
+    CalseeSlider(value: 0.4, onChanged: _ignore),
+  ],
+);
+
+Widget dropdownExpandablePreview(BuildContext context) => const Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    CalseeDropdown<int>(
+      items: [(1, 'Savings ••4821')],
+      value: 1,
+      onChanged: _ignore,
+    ),
+    SizedBox(height: 12),
+    CalseeExpandable(title: 'Fees and limits', child: SizedBox.shrink()),
+  ],
+);
+
+Widget textFieldPreview(BuildContext context) => const Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    CalseeTextField(hint: 'Name or UPI ID', enabled: false),
+    SizedBox(height: 12),
+    CalseeTextField(hint: 'Add a note', enabled: false),
+  ],
+);

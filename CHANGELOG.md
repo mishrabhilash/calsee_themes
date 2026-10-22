@@ -1,5 +1,13 @@
 ## Unreleased
 
+New widgets, so the next release is 1.1.0.
+
+- Form controls drawn by the theme: `CalseeCheckbox`, `CalseeRadio`,
+  `CalseeSwitch`, `CalseeSegmented`, `CalseeSlider`, `CalseeDropdown`,
+  `CalseeExpandable` and `CalseeTextField`. Selected states wear the
+  accent face, unselected ones the plain face, and their marks use the
+  face's label colour (≥ 4.5:1). They have screen-reader semantics and
+  follow Reduce Motion and Bold Text.
 - `CalseeScope` prepares the next themes between changes (key art, shape
   morphs and transitions for the key sizes on screen), so the frame that
   shows a new theme no longer builds them. On the web, a theme change on

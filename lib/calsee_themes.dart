@@ -17,6 +17,7 @@ export 'engine/theme_feed.dart' show FeedEntry, themeOfTheDay;
 export 'engine/theme_spec.dart' show ThemeBrightness, ThemeSpec;
 export 'key_face.dart' show KeyStyle;
 export 'key_role.dart' show KeyRole;
+export 'widgets/calsee_controls.dart';
 export 'widgets/calsee_key.dart';
 export 'widgets/calsee_scope.dart';
 export 'widgets/calsee_surfaces.dart';

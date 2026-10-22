@@ -3,13 +3,18 @@ import 'dart:async';
 import 'package:calsee_themes/calsee_themes.dart';
 import 'package:calsee_themes_example/gallery/code_view.dart';
 import 'package:calsee_themes_example/gallery/examples/backdrop_example.dart';
+import 'package:calsee_themes_example/gallery/examples/checkbox_radio_example.dart';
 import 'package:calsee_themes_example/gallery/examples/custom_key_example.dart';
 import 'package:calsee_themes_example/gallery/examples/display_example.dart';
+import 'package:calsee_themes_example/gallery/examples/dropdown_expandable_example.dart';
 import 'package:calsee_themes_example/gallery/examples/icon_keys_example.dart';
 import 'package:calsee_themes_example/gallery/examples/keys_example.dart';
+import 'package:calsee_themes_example/gallery/examples/segmented_slider_example.dart';
 import 'package:calsee_themes_example/gallery/examples/share_example.dart';
 import 'package:calsee_themes_example/gallery/examples/surface_example.dart';
 import 'package:calsee_themes_example/gallery/examples/swipe_example.dart';
+import 'package:calsee_themes_example/gallery/examples/switch_example.dart';
+import 'package:calsee_themes_example/gallery/examples/text_field_example.dart';
 import 'package:calsee_themes_example/gallery/examples/theme_data_example.dart';
 import 'package:calsee_themes_example/gallery/previews.dart';
 import 'package:calsee_themes_example/main.dart';
@@ -110,6 +115,61 @@ final galleryEntries = <GalleryEntry>[
     builder: (_) => const SurfaceExample(),
     preview: surfacesPreview,
     height: 380,
+  ),
+  GalleryEntry(
+    route: '/checkbox-radio',
+    title: 'Checkboxes and radios',
+    summary:
+        'CalseeCheckbox and CalseeRadio: a ticked box or chosen option wears '
+        "the theme's accent face; tap the box or its label.",
+    source: '$_examples/checkbox_radio_example.dart',
+    builder: (_) => const CheckboxRadioExample(),
+    preview: checkboxRadioPreview,
+    height: 340,
+  ),
+  GalleryEntry(
+    route: '/switch',
+    title: 'Switches',
+    summary:
+        'CalseeSwitch: an accent track when on, a plain one when off, with a '
+        "thumb in the track's label colour.",
+    source: '$_examples/switch_example.dart',
+    builder: (_) => const SwitchExample(),
+    preview: switchPreview,
+    height: 280,
+  ),
+  GalleryEntry(
+    route: '/segmented-slider',
+    title: 'Segmented and slider',
+    summary:
+        'CalseeSegmented picks one of a few options; CalseeSlider picks a '
+        'value in a range, snapping to divisions.',
+    source: '$_examples/segmented_slider_example.dart',
+    builder: (_) => const SegmentedSliderExample(),
+    preview: segmentedSliderPreview,
+    height: 380,
+  ),
+  GalleryEntry(
+    route: '/dropdown-expandable',
+    title: 'Dropdowns and expandables',
+    summary:
+        'CalseeDropdown opens a themed list below a button; CalseeExpandable '
+        'opens a section under its header.',
+    source: '$_examples/dropdown_expandable_example.dart',
+    builder: (_) => const DropdownExpandableExample(),
+    preview: dropdownExpandablePreview,
+    height: 300,
+  ),
+  GalleryEntry(
+    route: '/text-field',
+    title: 'Text fields',
+    summary:
+        "CalseeTextField: input on the plain face in the theme's key font, "
+        "with the theme's focus ring.",
+    source: '$_examples/text_field_example.dart',
+    builder: (_) => const TextFieldExample(),
+    preview: textFieldPreview,
+    height: 260,
   ),
   GalleryEntry(
     route: '/swipe',
@@ -570,7 +630,7 @@ class _EntryPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 6),
               child: Text(
-                '← All elements',
+                '‹ All elements',
                 style: TextStyle(
                   color: palette.muted,
                   fontSize: 14,

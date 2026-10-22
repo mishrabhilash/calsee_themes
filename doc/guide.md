@@ -21,6 +21,9 @@ import 'package:calsee_themes/calsee_themes.dart';
 - [Custom key content](#custom-key-content): `CalseeKey`, `CalseeKeyLabel`
 - [Display and readout](#display-and-readout): `CalseeDisplayPanel`, `CalseeReadout`
 - [Surfaces](#surfaces): `CalseeSurface`, `calseeFaceInset`
+- [Form controls](#form-controls): `CalseeCheckbox`, `CalseeRadio`,
+  `CalseeSwitch`, `CalseeSegmented`, `CalseeSlider`, `CalseeDropdown`,
+  `CalseeExpandable`, `CalseeTextField`
 - [Swipe for a theme](#swipe-for-a-theme): `CalseeSwipeArea`
 - [Your own widgets](#your-own-widgets): `CalcTheme.of`, `calseeDisplayStyle`
 - [Share codes](#share-codes): `encodeShareCode`, `themeOfTheDay`
@@ -203,6 +206,119 @@ CalseeSurface(
 
 [▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/surfaces) ·
 [Source](../example/lib/gallery/examples/surface_example.dart)
+
+## Form controls
+
+Checkboxes, radios, switches, segmented buttons, sliders, dropdowns,
+expandable sections and text fields, drawn by the theme. They follow one
+rule, so they stay readable in every family: a selected control wears the
+theme's accent face (the `equals` key's), an unselected one the plain face
+(the `digit` key's), and every mark on it (tick, dot, thumb, chevron) is
+drawn in that face's own label colour, which the guardrails keep at 4.5:1
+or more against the face. The marks are painted, so your app needs no icon
+font. Pass `null` as `onChanged` to disable a control; it dims.
+
+Each control has screen-reader semantics (checked, toggled, selected, a
+slider's value) and follows Reduce Motion and Bold Text.
+
+### Checkboxes and radios
+
+```dart
+CalseeCheckbox(
+  value: saveCard,
+  label: 'Save this card',
+  onChanged: (value) => setState(() => saveCard = value),
+);
+
+CalseeRadio<Method>(
+  value: Method.upi,
+  groupValue: method,
+  label: 'UPI',
+  onChanged: (value) => setState(() => method = value),
+);
+```
+
+Tapping the label toggles or chooses too. `size` sets the box's side.
+
+[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/checkbox-radio) ·
+[Source](../example/lib/gallery/examples/checkbox_radio_example.dart)
+
+### Switches
+
+```dart
+CalseeSwitch(
+  value: alerts,
+  label: 'Payment alerts',
+  onChanged: (value) => setState(() => alerts = value),
+);
+```
+
+[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/switch) ·
+[Source](../example/lib/gallery/examples/switch_example.dart)
+
+### Segmented buttons and sliders
+
+```dart
+CalseeSegmented<int>(
+  options: const [(2, '2'), (3, '3'), (4, '4')],
+  selected: people,
+  onChanged: (value) => setState(() => people = value),
+);
+
+CalseeSlider(
+  value: tip,
+  max: 25,
+  divisions: 5, // snaps to 0, 5, 10, 15, 20, 25
+  semanticLabel: 'Tip',
+  onChanged: (value) => setState(() => tip = value),
+);
+```
+
+Each segment is a key, with the family's press. The slider fills its
+width; drag it or tap along it.
+
+[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/segmented-slider) ·
+[Source](../example/lib/gallery/examples/segmented_slider_example.dart)
+
+### Dropdowns and expandable sections
+
+```dart
+CalseeDropdown<String>(
+  items: const [('savings', 'Savings ••4821'), ('salary', 'Salary ••1290')],
+  value: account,
+  hint: 'Choose an account',
+  onChanged: (value) => setState(() => account = value),
+);
+
+CalseeExpandable(
+  title: 'Fees and limits',
+  child: Text('No fee for UPI payments.'),
+);
+```
+
+The dropdown's list opens in the app's `Overlay` (`WidgetsApp` and
+`MaterialApp` provide one) with the theme of where the dropdown sits, and
+closes on a choice or a tap outside.
+
+[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/dropdown-expandable) ·
+[Source](../example/lib/gallery/examples/dropdown_expandable_example.dart)
+
+### Text fields
+
+```dart
+CalseeTextField(
+  hint: 'Name or UPI ID',
+  onChanged: (value) => setState(() => payee = value),
+);
+```
+
+The text is in the theme's key font and the face's label colour, and the
+theme's focus ring shows while the field has focus. It takes the usual
+`EditableText` options: `controller`, `focusNode`, `keyboardType`,
+`textInputAction`, `obscureText` and `inputFormatters`.
+
+[▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/text-field) ·
+[Source](../example/lib/gallery/examples/text_field_example.dart)
 
 ## Swipe for a theme
 

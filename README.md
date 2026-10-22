@@ -8,6 +8,10 @@ The themes come from the [Calsee](https://calsee.tech) calculator. This
 package lets any app use them on any screen: your widgets and logic stay
 as they are, and the package handles how they look.
 
+Picture a kids' maths game where a swipe gives the number pad a new
+look. Each one passes the contrast checks, so every look stays easy to
+read.
+
 <p align="center"><img src="doc/swipe.gif" width="300" alt="Swiping between generated themes on a payment screen"></p>
 
 ![The same payment screen in twelve theme families](doc/families.png)
@@ -21,8 +25,10 @@ as they are, and the package handles how they look.
   Cyberpunk, Paper & Ink, Neumorphism, Y2K Aero, Vaporwave,
   Neo-brutalism, Material 3 Expressive and Bauhaus.
 - **Drop-in widgets.** Themed keys and buttons with each family's spring
-  press (Clay squishes, NeoPOP extrudes, Glass inflates), plus backdrops
-  with ambient artwork, display panels and display text.
+  press (Clay squishes, NeoPOP extrudes, Glass inflates), form controls
+  (checkboxes, radios, switches, segmented buttons, sliders, dropdowns,
+  expandable sections and text fields), plus backdrops with ambient
+  artwork, display panels and display text.
 - **Readable by construction.** Every generated theme passes contrast
   guardrails, including colour-blindness checks. There's an accessible
   mode with stricter contrast, and the widgets follow High Contrast,
@@ -89,6 +95,10 @@ Swap each visual piece for its themed version and keep your callbacks.
 | Secondary actions | `KeyRole.operator` or `KeyRole.function` |
 | Amount, score or timer | `CalseeDisplayPanel` + `CalseeReadout` |
 | Cards and tiles that aren't buttons | `CalseeSurface` |
+| Checkbox, radio button, switch | `CalseeCheckbox`, `CalseeRadio`, `CalseeSwitch` |
+| Segmented buttons, slider | `CalseeSegmented`, `CalseeSlider` |
+| Dropdown, expandable section | `CalseeDropdown`, `CalseeExpandable` |
+| Text input | `CalseeTextField` |
 | Other text | `CalseeTextColors.of(context)` (`primary`, `secondary`) |
 
 For any other colour, font or shape, read the theme directly with
