@@ -197,7 +197,7 @@ void main() {
       );
     });
 
-    for (final version in [2, 3]) {
+    for (final version in [2, 3, 4]) {
       test('golden JSON fixture (v$version)', () {
         Map<String, Object?> caseJson(({int seed, bool accessible}) c) {
           final spec = gen.generate(

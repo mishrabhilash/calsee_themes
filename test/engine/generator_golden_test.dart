@@ -12,6 +12,7 @@ library;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:calsee_themes/engine/families.dart';
 import 'package:calsee_themes/engine/generator.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
 import 'package:test/test.dart';
@@ -26,6 +27,32 @@ void main() {
   for (final version in supportedEngineVersions) {
     test('fixture v$version', () => checkFixture(gen, version));
   }
+
+  // Every family a version ships has literal output pinned at that
+  // version (generator_vN.json or <family>_vN.json), not only a derived
+  // equality: shipped apps persist and share those specs.
+  test('every supported version pins every family it ships', () {
+    final pinned = <int, Set<int>>{};
+    for (final f in Directory('test/engine/fixtures').listSync()) {
+      final name = f.uri.pathSegments.last;
+      if (f is! File || !name.endsWith('.json') || name.startsWith('steered')) {
+        continue;
+      }
+      final json = jsonDecode(f.readAsStringSync()) as Map<String, Object?>;
+      final version = json['engineVersion']! as int;
+      for (final c in (json['cases']! as List).cast<Map<String, Object?>>()) {
+        final spec = c['spec']! as Map<String, Object?>;
+        pinned.putIfAbsent(version, () => {}).add(spec['family']! as int);
+      }
+    }
+    for (final version in supportedEngineVersions) {
+      final shipped = {
+        for (final f in ThemeFamily.values)
+          if (familyShippedAt(f, version)) f.id,
+      };
+      expect(pinned[version], shipped, reason: 'v$version');
+    }
+  });
 }
 
 void checkFixture(ThemeGenerator gen, int version) {

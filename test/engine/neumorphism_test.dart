@@ -224,7 +224,7 @@ void main() {
       expect(() => gen.generate(1, soft, 1), throwsArgumentError);
     });
 
-    for (final version in [2, 3]) {
+    for (final version in [2, 3, 4]) {
       test('golden JSON fixture (v$version)', () {
         Map<String, Object?> caseJson(SoftCase c) {
           final spec = gen.generate(

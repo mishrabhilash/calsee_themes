@@ -29,7 +29,16 @@ Steering: generate themes that match a description.
 
 ### Migrating from 1.x
 
-1. Add `ThemeVariant.steered` to exhaustive switches.
+1. Add `ThemeVariant.steered` to exhaustive switches. A steered spec
+   rebuilds from its recipe like a generated one, for example to apply
+   the Accessible lock:
+
+   ```dart
+   case ThemeVariant.generated || ThemeVariant.steered:
+     return FeedEntry.ofSpec(spec).resolve(accessible: accessible);
+   ```
+
+   `FeedEntry.ofSpec` keeps a steered spec's intent and name.
 2. If you build share codes by hand with `encodeShareCode`, switch to
    `entry.shareCode`, and use `FeedEntry.fromSharePayload` to decode.
    Hand-built codes leave out a steered theme's intent.

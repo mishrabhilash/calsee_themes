@@ -155,6 +155,12 @@ void main() {
         );
         final spec = entry.resolve();
         expect(FeedEntry.ofSpec(spec).resolve(), spec);
+        // Re-resolving for the Accessible lock (the migration note).
+        expect(
+          FeedEntry.ofSpec(spec).resolve(accessible: true),
+          entry.resolve(accessible: true),
+        );
+        expect(entry.resolve(accessible: true).name, spec.name);
       }
     });
 

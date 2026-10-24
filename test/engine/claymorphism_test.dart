@@ -406,7 +406,7 @@ void main() {
       expect(gen.generate(decoded.seed, clay, decoded.engineVersion), spec);
     });
 
-    for (final version in [3]) {
+    for (final version in [3, 4]) {
       test('golden JSON fixture (v$version)', () {
         Map<String, Object?> caseJson(({int seed, bool accessible}) c) {
           final spec = gen.generate(
