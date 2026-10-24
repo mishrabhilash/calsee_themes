@@ -20,6 +20,7 @@ library;
 
 import 'dart:convert';
 
+import 'package:calsee_themes/engine/contrast.dart' show luminanceArgb;
 import 'package:calsee_themes/engine/families.dart';
 import 'package:calsee_themes/engine/heroes.dart';
 import 'package:calsee_themes/engine/oklab.dart';
@@ -29,10 +30,26 @@ import 'package:calsee_themes/engine/theme_spec.dart';
 
 /// One attempt's steering.
 final class Steering {
-  Steering(this.intent, {this.centred = false, this.tonal = false});
+  Steering(
+    this.intent, {
+    this.centred = false,
+    this.tonal = false,
+    this.v4Leans = false,
+  });
 
   final ThemeIntent intent;
   final bool centred;
+
+  /// Read colour leans the engine v4 way (any colour, not just the first).
+  final bool v4Leans;
+
+  /// The brightness the intent asks for, explicitly or by a colour's lean.
+  ThemeBrightness? get brightness =>
+      v4Leans ? intent.v4Brightness : intent.effectiveBrightness;
+
+  /// The chroma the intent asks for, explicitly or by a colour's lean.
+  IntentChroma? get chroma =>
+      v4Leans ? intent.v4Chroma : intent.effectiveChroma;
 
   /// Keep the drawn harmony tonal (monochrome or analogous) when the
   /// intent sets none, so one colour reads through the whole theme
@@ -42,7 +59,7 @@ final class Steering {
   /// The brightness to use instead of the drawn one, when [def] can draw
   /// it; null keeps the draw.
   ThemeBrightness? brightnessFor(FamilyDefinition def) {
-    final want = intent.effectiveBrightness;
+    final want = brightness;
     return want != null && brightnessAllowed(def, want) ? want : null;
   }
 
@@ -65,7 +82,7 @@ final class Steering {
   /// [def] with every role's chroma range narrowed to the intent's chroma
   /// level (and the base roles quietened for a neutral first colour).
   FamilyDefinition revise(FamilyDefinition def) {
-    final level = intent.effectiveChroma;
+    final level = chroma;
     final neutral = intent.colors.isNotEmpty && intent.colors.first.neutral;
     if (level == null && !neutral && !centred) return def;
     ChromaRange accent(ChromaRange r) => _narrow(r, level);
@@ -145,8 +162,8 @@ final class Steering {
   /// With [tonal], the harmony stays tonal while the intent sets none.
   Steering withoutHues({bool tonal = false}) => Steering(
     ThemeIntent(
-      brightness: intent.effectiveBrightness,
-      chroma: intent.effectiveChroma,
+      brightness: brightness,
+      chroma: chroma,
       harmony: intent.harmony,
       name: intent.name,
     ),
@@ -233,7 +250,7 @@ final class Steering {
     }
     var scale = 1000;
     if (scaleChroma) {
-      scale = switch (intent.effectiveChroma) {
+      scale = switch (chroma) {
         null => 1000,
         IntentChroma.muted => 500,
         IntentChroma.balanced => 850,
@@ -246,44 +263,91 @@ final class Steering {
     if (turn == 0 && equalsTurn == 0 && functionTurn == 0 && scale == 1000) {
       return spec;
     }
-    int roleTurn(String role, int t) => switch (role) {
-      'equals' => equalsTurn,
-      'function' => functionTurn,
-      _ => t,
+    // Each key role's turn and the hue it pulls towards.
+    (int, int?) of(String role) => switch (role) {
+      'equals' => (equalsTurn, equalsTarget),
+      'function' => (functionTurn, functionTarget),
+      _ => (turn, target),
     };
-    // The hue each turn pulls towards (the role's own colour).
-    final targets = <int, int?>{
-      turn: target,
-      equalsTurn: equalsTarget,
-      functionTurn: functionTarget,
+    // Roles a colour of the intent is meant for: their faces take it even
+    // when the family left them neutral.
+    final named = <String>{
+      if (target != null) 'operator',
+      if (equalsTarget != target) 'equals',
+      if (functionTarget != target) 'function',
+    };
+    final ownColour = <String>{
+      for (final role in named)
+        if (_neutralKey(p, role)) role,
     };
 
-    int compute(int argb, int t, {required bool key}) {
+    int compute(
+      int argb,
+      String role, {
+      required bool key,
+      bool lift = false,
+      bool face = false,
+    }) {
       final alpha = argb & 0xFF000000;
       final lch = argbToOklch(argb | 0xFF000000);
-      if (lch.c < 0.004) return argb;
-      var tenths = ((lch.h * 10).round() + t) % 3600;
-      final pullTo = targets[t];
-      if (pullTo != null && pullPermille < 1000) {
+      final (t, pullTo) = of(role);
+      if (lch.c < 0.004 && !lift) return argb;
+      var tenths = lift && pullTo != null
+          ? pullTo
+          : ((lch.h * 10).round() + t) % 3600;
+      if (pullTo != null && pullPermille < 1000 && !lift) {
         // Draw the palette's other hues towards the colour, so a one-colour
         // intent reads as that colour in families with several accents.
+        // Digits move less, keeping them apart from the operators.
+        final keep = role == 'digit'
+            ? pullPermille + (1000 - pullPermille) ~/ 2
+            : pullPermille;
         var off = (tenths - pullTo) % 3600;
         if (off > 1800) off -= 3600;
-        tenths = (pullTo + off * pullPermille ~/ 1000) % 3600;
+        tenths = (pullTo + off * keep ~/ 1000) % 3600;
+      }
+      if (face &&
+          key &&
+          tenths > _goldTenths &&
+          tenths <= _yellowHiTenths &&
+          !_wantsGreenYellow) {
+        // Yellow faces lean gold: a contrast repair that darkens them then
+        // lands on gold, not olive.
+        tenths = _goldTenths;
       }
       final h = tenths / 10;
-      var c = lch.c * scale / 1000;
-      final floor = keyChromaFloor;
-      if (key && floor != null && lch.c >= floor && c < floor) c = floor;
+      // A neutral key face the intent names a colour for takes real colour.
+      final source = lift ? _liftChroma : lch.c;
+      var c = source * scale / 1000;
+      if (key) {
+        // Colourful key colours stay visible when chroma scales down.
+        final floor = keyChromaFloor ?? _keyChromaFloor;
+        final keep = source < floor ? source : floor;
+        if (c < keep) c = keep;
+      }
+      if (face && named.contains(role)) {
+        // A key face a colour is named for shows it clearly (softly under
+        // a muted intent).
+        final least = chroma == IntentChroma.muted
+            ? _keyChromaFloor
+            : _namedFaceChroma;
+        if (c < least) c = least;
+      }
       var l = lch.l;
-      if (neon && key && lch.c >= _shiftMinChroma) {
+      if (neon && key && source >= _shiftMinChroma) {
         // Neon keys deepen towards where their hue is most saturated (its
         // cusp), never below 0.68 (slabs stay brighter than the plates and
         // visible on the dark scene).
         final cusp = _cuspL(h);
         final floor = cusp > _neonFloorL ? cusp : _neonFloorL;
         if (floor < l) l = floor;
-      } else if (key && !keepLightness && lch.c >= _shiftMinChroma) {
+      } else if (lift && !keepLightness) {
+        // A neutral face given a colour sits where that hue is most
+        // saturated (a black key turned orange would read brown), up to
+        // 0.3 from where the family put it.
+        final d = _cuspL(h) - l;
+        l += d > 0.3 ? 0.3 : (d < -0.3 ? -0.3 : d);
+      } else if (key && !keepLightness && source >= _shiftMinChroma) {
         // A key colour whose new hue can't hold its colour at this
         // lightness (a light neon turned red comes out pink) moves up to
         // 0.24 towards where it can; the repair re-solves its label.
@@ -303,26 +367,63 @@ final class Steering {
           }
           l = best;
         }
+        // Yellows go olive in the dark: keep them light.
+        if (tenths >= _yellowLoTenths &&
+            tenths <= _yellowHiTenths &&
+            l < _yellowMinL) {
+          l = l + 0.32 < _yellowMinL ? l + 0.32 : _yellowMinL;
+        }
+      }
+      if (!key) {
+        // Scene and backdrop colours keep their luminance, so every
+        // contrast against them (and each family's scene bands) holds.
+        l = _sameLuminance(argb | 0xFF000000, l, c, h);
       }
       // oklchToArgb maps out-of-gamut chroma to the gamut edge.
       return alpha | (oklchToArgb(l, c, h) & 0x00FFFFFF);
     }
 
     // Themes repeat colours (faces, edges, scene stops): convert each once.
-    final memo = <(int, int, bool), int>{};
-    int turned(int argb, int t, {required bool key}) =>
-        memo[(argb, t, key)] ??= compute(argb, t, key: key);
+    // The ink (the palette's shadow, which several families draw outlines
+    // with) always turns as the ink, so outlines stay that ink.
+    final ink = p.shadow;
+    final memo = <(int, String, bool, bool, bool), int>{};
+    int turned(
+      int argb,
+      String role, {
+      required bool key,
+      bool lift = false,
+      bool face = false,
+    }) {
+      final isInk = argb == ink && !lift;
+      final r = isInk ? '' : role;
+      final k = !isInk && key;
+      final f = !isInk && face;
+      return memo[(argb, r, k, lift, f)] ??= compute(
+        argb,
+        r,
+        key: k,
+        lift: lift,
+        face: f,
+      );
+    }
 
     const accentKeys = {'operator', 'equals', 'accent', 'caret', 'focusRing'};
-    // `inPalette`: a key or text colour (not the background or scene).
-    Object? walk(Object? v, String key, int t, {bool inPalette = false}) {
+    // [role]: the palette key role a colour belongs to; `inPalette`: a key
+    // or text colour (not the background or scene).
+    Object? walk(
+      Object? v,
+      String key,
+      String role, {
+      bool inPalette = false,
+    }) {
       if (v is Map) {
-        return {
+        return <String, Object?>{
           for (final e in v.entries)
-            e.key: walk(
+            e.key as String: walk(
               e.value,
               e.key as String,
-              key == 'palette' ? roleTurn(e.key as String, t) : t,
+              key == 'palette' ? e.key as String : role,
               inPalette:
                   inPalette ||
                   (key == 'palette' && !_sceneKeys.contains(e.key)),
@@ -330,10 +431,18 @@ final class Steering {
         };
       }
       if (v is List) {
-        return [for (final x in v) walk(x, key, t, inPalette: inPalette)];
+        return [for (final x in v) walk(x, key, role, inPalette: inPalette)];
       }
       if (v is String && key != 'name' && _hex.hasMatch(v)) {
-        return argbToHex(turned(argbFromHex(v), t, key: inPalette));
+        return argbToHex(
+          turned(
+            argbFromHex(v),
+            role,
+            key: inPalette,
+            lift: key == 'face' && ownColour.contains(role),
+            face: key == 'face',
+          ),
+        );
       }
       return v;
     }
@@ -344,12 +453,87 @@ final class Steering {
       json['palette'] = {
         for (final e in palette.entries)
           e.key: accentKeys.contains(e.key)
-              ? walk(e.value, e.key, roleTurn(e.key, turn), inPalette: true)
+              ? walk(e.value, e.key, e.key, inPalette: true)
               : e.value,
       };
       return ThemeSpec.fromJson(json);
     }
-    return ThemeSpec.fromJson(walk(json, '', turn));
+    final out = walk(json, '', '')! as Map<String, Object?>;
+    final palette = out['palette']! as Map<String, Object?>;
+    if (named.contains('equals') && !keepLightness) _separateEquals(palette);
+    _darkenLightLabels(palette);
+    return ThemeSpec.fromJson(out);
+  }
+
+  /// A `=` given its own colour that sits within 0.1 lightness of the
+  /// operators moves 0.1 away, towards its hue's saturated side (yellow
+  /// up, blue down), so the two stay apart for every kind of vision.
+  static void _separateEquals(Map<String, Object?> palette) {
+    final op = palette['operator'];
+    final eq = palette['equals'];
+    if (op is! Map || eq is! Map) return;
+    final o = argbToOklch(argbFromHex(op['face']) | 0xFF000000);
+    final eqFace = argbFromHex(eq['face']);
+    final e = argbToOklch(eqFace | 0xFF000000);
+    if ((e.l - o.l).abs() >= _equalsApartL) return;
+    final up = _cuspL(e.h) > o.l;
+    var l = up ? o.l + _equalsApartL : o.l - _equalsApartL;
+    if (l > 0.95 || l < 0.1) l = up ? o.l - _equalsApartL : o.l + _equalsApartL;
+    if (l > 0.95 || l < 0.1) return;
+    eq['face'] = argbToHex(
+      (eqFace & 0xFF000000) | (oklchToArgb(l, e.c, e.h) & 0x00FFFFFF),
+    );
+  }
+
+  /// A key whose face recolouring left light under a light label (a yellow
+  /// kept clear of olive) takes a dark label of the face's hue, so the
+  /// repair keeps the face light instead of darkening it.
+  static void _darkenLightLabels(Map<String, Object?> palette) {
+    for (final role in const ['digit', 'operator', 'equals', 'function']) {
+      final k = palette[role];
+      if (k is! Map) continue;
+      final face = argbToOklch(argbFromHex(k['face']) | 0xFF000000);
+      final label = argbFromHex(k['label']);
+      final l = argbToOklch(label | 0xFF000000);
+      if (face.l >= _lightFaceL && l.l >= _lightLabelL) {
+        k['label'] = argbToHex(
+          (label & 0xFF000000) | (oklchToArgb(0.2, 0.03, face.h) & 0x00FFFFFF),
+        );
+      }
+    }
+  }
+
+  /// The lightness near [l] at which (c, hDeg) has [original]'s relative
+  /// luminance (bisection; [l] when the hue keeps it already).
+  static double _sameLuminance(int original, double l, double c, double hDeg) {
+    final want = luminanceArgb(original);
+    double y(double x) => luminanceArgb(oklchToArgb(x, c, hDeg));
+    if ((y(l) - want).abs() < 0.0005) return l;
+    // Within 0.3 of where the family put it; 12 halvings reach 0.0002.
+    var lo = l - 0.3 < 0 ? 0.0 : l - 0.3;
+    var hi = l + 0.3 > 1 ? 1.0 : l + 0.3;
+    for (var i = 0; i < 12; i++) {
+      final mid = (lo + hi) / 2;
+      if (y(mid) < want) {
+        lo = mid;
+      } else {
+        hi = mid;
+      }
+    }
+    return (lo + hi) / 2;
+  }
+
+  /// Whether [role]'s key (face and label) carries no colour.
+  static bool _neutralKey(Palette p, String role) {
+    final k = switch (role) {
+      'operator' => p.operator,
+      'equals' => p.equals,
+      'function' => p.function,
+      _ => null,
+    };
+    if (k == null) return false;
+    double c(int argb) => argbToOklch(argb | 0xFF000000).c;
+    return c(k.face) < _neutralMaxChroma && c(k.label) < _labelColourChroma;
   }
 
   static final RegExp _hex = RegExp(r'^[0-9a-f]{8}$');
@@ -362,6 +546,43 @@ final class Steering {
     'highlight',
     'seedColor',
   };
+
+  /// How far apart in lightness a separately coloured `=` stays from the
+  /// operators.
+  static const double _equalsApartL = 0.1;
+
+  /// A face and label this light can't carry each other.
+  static const double _lightFaceL = 0.7;
+  static const double _lightLabelL = 0.62;
+
+  /// A key face below this chroma is neutral (white, grey, black).
+  static const double _neutralMaxChroma = 0.03;
+
+  /// A label at or above this chroma already shows a colour.
+  static const double _labelColourChroma = 0.05;
+
+  /// The hue (tenths) yellow key faces lean to.
+  static const int _goldTenths = 950;
+
+  /// Whether the intent asks for a green-yellow (olive, lime) itself.
+  bool get _wantsGreenYellow => intent.colors.any(
+    (c) => c == IntentColor.olive || c == IntentColor.lime,
+  );
+
+  /// The least chroma of a key face a colour is named for.
+  static const double _namedFaceChroma = 0.09;
+
+  /// The chroma a neutral key face takes for its colour.
+  static const double _liftChroma = 0.12;
+
+  /// The least chroma a colourful key colour keeps when chroma scales
+  /// down (or its own, if lower).
+  static const double _keyChromaFloor = 0.06;
+
+  /// Yellows (tenths of hue) on keys stay at least this light.
+  static const int _yellowLoTenths = 800;
+  static const int _yellowHiTenths = 1150;
+  static const double _yellowMinL = 0.72;
 
   /// The lowest lightness a neon key colour deepens to.
   static const double _neonFloorL = 0.68;
@@ -462,7 +683,7 @@ final class Steering {
   ThemeSpec closestHero(int seed, ThemeFamily family) {
     var pool = heroesFor(family);
     if (pool.isEmpty) pool = heroThemes;
-    final want = intent.effectiveBrightness;
+    final want = brightness;
     final range = _baseRange();
     final target = range == null ? null : (range.lo + range.span ~/ 2) % 3600;
     int score(ThemeSpec h) {

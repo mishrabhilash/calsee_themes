@@ -226,7 +226,11 @@ final class ThemeGenerator {
     if (seedHueTenths != null) {
       throw ArgumentError('a theme is either wallpaper or steered');
     }
-    return Steering(i, centred: centred);
+    return Steering(
+      i,
+      centred: centred,
+      v4Leans: engineVersion == firstSteerableEngineVersion,
+    );
   }
 
   /// One unvalidated attempt (tests and diagnostics; [generate] adds repair,
@@ -347,8 +351,9 @@ final class ThemeGenerator {
           ThemeFamily.bauhaus ||
           ThemeFamily.m3Expressive ||
           ThemeFamily.neoPop => 1000,
-          // Claymorphism's candy keys lean towards its body's colour.
-          ThemeFamily.claymorphism => 450,
+          // Claymorphism's candy keys take its body's colour (a part-way
+          // pull lands between hues: orange and teal make olive).
+          ThemeFamily.claymorphism => 0,
           _ => 200,
         },
         // Bauhaus accents stay strong under a muted or grey intent.

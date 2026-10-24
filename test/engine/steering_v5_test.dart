@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:calsee_themes/engine/bauhaus.dart' show bauhausNeutralMaxChroma;
+import 'package:calsee_themes/engine/contrast.dart' show luminanceArgb;
 import 'package:calsee_themes/engine/generator.dart';
 import 'package:calsee_themes/engine/guardrails.dart';
 import 'package:calsee_themes/engine/oklab.dart';
@@ -344,6 +345,136 @@ void main() {
     });
   });
 
+  group('places the colours', () {
+    const pairs = [
+      [IntentColor.red, IntentColor.blue],
+      [IntentColor.orange, IntentColor.teal],
+      [IntentColor.green, IntentColor.magenta],
+      [IntentColor.cyan, IntentColor.magenta],
+      [IntentColor.blue, IntentColor.gold],
+    ];
+    for (final f in ThemeFamily.enabledFamilies) {
+      test('${f.name}: first on the operators, second on =', () {
+        var first = 0;
+        var second = 0;
+        var made = 0;
+        for (final pair in pairs) {
+          for (var s = 0; s < 8; s++) {
+            final spec = gen.generate(
+              s * 977 + 1,
+              f,
+              5,
+              intent: ThemeIntent(colors: pair),
+            );
+            if (spec.variant == ThemeVariant.hero) continue;
+            made++;
+            final p = spec.palette;
+            bool on(int argb, IntentColor c, {double min = 0.04}) =>
+                chromaOf(argb) > min && inRange(hueOf(argb), c, slack: 80);
+            // Claymorphism wears the first colour on its body; Neumorphism's
+            // operators share the key surface and carry it in their labels.
+            final firstShown = switch (f) {
+              ThemeFamily.claymorphism => on(
+                p.background,
+                pair[0],
+                min: 0.02,
+              ),
+              ThemeFamily.neumorphism =>
+                on(p.operator.face, pair[0]) || on(p.operator.label, pair[0]),
+              _ => on(p.operator.face, pair[0]),
+            };
+            if (firstShown) first++;
+            if (on(p.equals.face, pair[1]) ||
+                (f == ThemeFamily.neumorphism && on(p.equals.label, pair[1]))) {
+              second++;
+            }
+          }
+        }
+        expect(first, greaterThanOrEqualTo(made * 9 ~/ 10), reason: 'first');
+        expect(second, greaterThanOrEqualTo(made * 85 ~/ 100), reason: '=');
+      });
+    }
+
+    test('a neutral key a colour is meant for takes it', () {
+      // Vaporwave's centred dark theme has a white `=`; Retro can draw
+      // near-black operators.
+      final vapor = gen.generate(
+        3,
+        ThemeFamily.vaporwave,
+        5,
+        intent: ThemeIntent.fromJson(const {
+          'brightness': 'dark',
+          'colors': ['cyan', 'magenta'],
+          'chroma': 'vivid',
+          'harmony': 'complementary',
+        }),
+        intentCentred: true,
+      );
+      expect(
+        inRange(
+          hueOf(vapor.palette.equals.face),
+          IntentColor.magenta,
+          slack: 100,
+        ),
+        isTrue,
+      );
+      expect(chromaOf(vapor.palette.equals.face), greaterThan(0.05));
+      for (var s = 0; s < 8; s++) {
+        final retro = gen.generate(
+          s * 31 + 3,
+          ThemeFamily.retro,
+          5,
+          intent: ThemeIntent.fromJson(const {
+            'brightness': 'light',
+            'colors': ['orange', 'brown', 'yellow'],
+          }),
+        );
+        expect(
+          chromaOf(retro.palette.operator.face),
+          greaterThan(0.04),
+          reason: '$s',
+        );
+        expect(
+          inRange(
+            hueOf(retro.palette.operator.face),
+            IntentColor.orange,
+            slack: 100,
+          ),
+          isTrue,
+          reason: '$s',
+        );
+      }
+    });
+
+    test('muted keeps the colour visible', () {
+      for (var s = 0; s < 8; s++) {
+        final paper = gen.generate(
+          s * 31 + 3,
+          ThemeFamily.paperInk,
+          5,
+          intent: ThemeIntent.fromJson(const {
+            'brightness': 'light',
+            'colors': ['blue', 'sand'],
+            'chroma': 'muted',
+          }),
+        );
+        expect(
+          chromaOf(paper.palette.operator.face),
+          greaterThan(0.025),
+          reason: '$s',
+        );
+      }
+    });
+
+    test('only the first colour leans brightness and chroma', () {
+      final intent = ThemeIntent(
+        colors: const [IntentColor.orange, IntentColor.brown],
+      );
+      expect(intent.effectiveChroma, isNull);
+      expect(intent.v4Chroma, IntentChroma.muted);
+    });
+  });
+
   group('keeps the family', () {
     test('"red cyberpunk" is red neon, mostly dark', () {
       var red = 0;
@@ -426,8 +557,13 @@ void main() {
       }
     });
 
-    test('lightness never moves: the family keeps its tones', () {
+    test('backgrounds keep their luminance: the family keeps its tones', () {
       for (final f in ThemeFamily.enabledFamilies) {
+        if (f == ThemeFamily.m3Expressive ||
+            f == ThemeFamily.neoPop ||
+            f == ThemeFamily.claymorphism) {
+          continue; // their own draws are steered first
+        }
         final plain = gen.buildCandidate(12, f, 5);
         final steered = gen.buildCandidate(
           12,
@@ -435,16 +571,12 @@ void main() {
           5,
           intent: ThemeIntent(colors: const [IntentColor.purple]),
         );
-        if (steered.brightness != plain.brightness) continue;
-        double l(int argb) => argbToOklch(argb | 0xFF000000).l;
-        if (f == ThemeFamily.m3Expressive ||
-            f == ThemeFamily.neoPop ||
-            f == ThemeFamily.claymorphism) {
-          continue; // their own draws are steered first
-        }
         expect(
-          (l(steered.palette.background) - l(plain.palette.background)).abs(),
-          lessThan(0.01),
+          (luminanceArgb(steered.palette.background) -
+                  luminanceArgb(plain.palette.background))
+              .abs(),
+          // 8-bit rounding of the turned colour.
+          lessThan(0.005),
           reason: f.name,
         );
       }

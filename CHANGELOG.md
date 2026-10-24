@@ -9,6 +9,11 @@ Every family now follows a `ThemeIntent`'s colours.
   and the rest of the palette turns with it. The second colour sets `=`,
   the third the function keys.
 - Claymorphism follows the colour fully, body included.
+- A key a colour is named for always shows it, even where the family
+  left it white, grey or black, and muted colours stay visible.
+- A colour's brightness and chroma lean (navy leans dark) now comes from
+  the first colour only. `effectiveBrightness` and `effectiveChroma`
+  follow suit; `v4Brightness` and `v4Chroma` keep the 2.0.0 reading.
 - `steerableFamilies` lists every family; `familySteerableAt` tells which
   followed colours at an older engine version.
 - Engine version 5. Unsteered themes are unchanged, and themes steered

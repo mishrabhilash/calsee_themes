@@ -447,8 +447,17 @@ final class ThemeIntent {
   /// Whether this intent changes anything at all.
   bool get isEmpty => !steersColour && name == null && families.isEmpty;
 
-  /// [brightness], or the lean of the first colour that has one.
-  ThemeBrightness? get effectiveBrightness {
+  /// [brightness], or the first colour's lean (navy leans dark).
+  ThemeBrightness? get effectiveBrightness =>
+      brightness ?? (colors.isEmpty ? null : colors.first.leanBrightness);
+
+  /// [chroma], or the first colour's lean (lavender leans muted).
+  IntentChroma? get effectiveChroma =>
+      chroma ?? (colors.isEmpty ? null : colors.first.leanChroma);
+
+  /// The leans as engine v4 (2.0.0) read them: the first colour that has
+  /// one, in any position. Kept so v4 themes reproduce.
+  ThemeBrightness? get v4Brightness {
     if (brightness != null) return brightness;
     for (final c in colors) {
       if (c.leanBrightness != null) return c.leanBrightness;
@@ -456,8 +465,8 @@ final class ThemeIntent {
     return null;
   }
 
-  /// [chroma], or the lean of the first colour that has one.
-  IntentChroma? get effectiveChroma {
+  /// See [v4Brightness].
+  IntentChroma? get v4Chroma {
     if (chroma != null) return chroma;
     for (final c in colors) {
       if (c.leanChroma != null) return c.leanChroma;
