@@ -448,6 +448,6 @@ void main() {
       final s = ThemeFeed.randomFeedSeed();
       expect(s, inInclusiveRange(1, 0xFFFFFFFF));
     }
-    expect(currentEngineVersion, 4);
+    expect(currentEngineVersion, 5);
   });
 }

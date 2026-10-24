@@ -28,6 +28,7 @@ export 'engine/theme_intent.dart'
         IntentParseResult,
         IntentValue,
         ThemeIntent,
+        familySteerableAt,
         steerableFamilies;
 export 'engine/theme_spec.dart' show ThemeBrightness, ThemeSpec, ThemeVariant;
 export 'key_face.dart' show KeyStyle;

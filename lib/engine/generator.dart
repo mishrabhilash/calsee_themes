@@ -69,10 +69,24 @@ import 'package:calsee_themes/engine/y2k_aero.dart';
 ///   honour it). Unsteered v4 output equals v3 apart from the version
 ///   number; pinned by fixtures/generator_v4.json and
 ///   fixtures/steered_v4.json.
-const int currentEngineVersion = 4;
+/// - v5: every family follows a `ThemeIntent`'s colours, brightness and
+///   chroma (families with their own palettes turn their hues to the
+///   intent; Claymorphism's body follows the colour fully). Unsteered and
+///   steered M3 Expressive / NeoPOP output equals v4 apart from the
+///   version number; pinned by fixtures/*_v5.json and
+///   fixtures/steered_v5.json.
+const int currentEngineVersion = 5;
 
 /// Generator versions this build can reproduce exactly.
-const Set<int> supportedEngineVersions = {1, 2, 3, 4};
+const Set<int> supportedEngineVersions = {1, 2, 3, 4, 5};
+
+/// Families whose own draws steering narrows (brightness, chroma and
+/// harmony) before their colours turn to the intent.
+const Set<ThemeFamily> steeredDrawFamilies = {
+  ThemeFamily.m3Expressive,
+  ThemeFamily.neoPop,
+  ThemeFamily.claymorphism,
+};
 
 /// Thrown for an `engineVersion` this build cannot reproduce (newer than
 /// [currentEngineVersion]): show "update the app to open this theme".
@@ -165,6 +179,25 @@ final class ThemeGenerator {
       final fixed = repairTheme(candidate);
       if (fixed != null) return fixed;
     }
+    if (steering != null && engineVersion >= 5) {
+      // Before a hero: the family's own theme with only its accents
+      // turned to the intent (the family's colour rules then hold).
+      for (var attempt = 0; attempt < maxAttempts; attempt++) {
+        final candidate = _candidate(
+          s,
+          family,
+          engineVersion,
+          attempt: attempt,
+          accessible: accessible,
+          seedHueTenths: seedHueTenths,
+          intent: steering.intent,
+          intentCentred: intentCentred,
+          accentsOnly: true,
+        );
+        final fixed = repairTheme(candidate);
+        if (fixed != null) return fixed;
+      }
+    }
     if (steering != null) {
       return heroForAccessible(
         steering.closestHero(s, family),
@@ -207,6 +240,29 @@ final class ThemeGenerator {
     int? seedHueTenths,
     ThemeIntent? intent,
     bool intentCentred = false,
+  }) => _candidate(
+    seed,
+    family,
+    engineVersion,
+    attempt: attempt,
+    accessible: accessible,
+    seedHueTenths: seedHueTenths,
+    intent: intent,
+    intentCentred: intentCentred,
+  );
+
+  /// [buildCandidate], or with [accentsOnly] the v5 fallback that turns
+  /// only the accents.
+  ThemeSpec _candidate(
+    int seed,
+    ThemeFamily family,
+    int engineVersion, {
+    required int attempt,
+    required bool accessible,
+    required int? seedHueTenths,
+    required ThemeIntent? intent,
+    required bool intentCentred,
+    bool accentsOnly = false,
   }) {
     final shipped =
         familyDefinitionAt(family, engineVersion) ??
@@ -221,11 +277,24 @@ final class ThemeGenerator {
       engineVersion,
       seedHueTenths,
     );
-    if (steering != null && !steerableFamilies.contains(family)) {
-      // Not steerable yet: the family's own theme, with the intent's name.
-      final spec = buildCandidate(
+    if (steering == null) {
+      return _build(
         seed,
         family,
+        shipped,
+        engineVersion,
+        attempt: attempt,
+        accessible: accessible,
+        seedHueTenths: seedHueTenths,
+      );
+    }
+    if (!familySteerableAt(family, engineVersion)) {
+      // Not steerable at this version: the family's own theme, with the
+      // intent's name.
+      final spec = _build(
+        seed,
+        family,
+        shipped,
         engineVersion,
         attempt: attempt,
         accessible: accessible,
@@ -237,7 +306,101 @@ final class ThemeGenerator {
         name: steering.nameOr(() => spec.name),
       );
     }
-    final def = steering == null ? shipped : steering.revise(shipped);
+    final paletteTag = attempt == 0
+        ? RngTag.palette
+        : RngTag.sub(RngTag.palette, 'retry', attempt);
+    if (engineVersion >= 5) {
+      // Engine v5: the family builds its own theme, then turns to the
+      // intent's colours (the first on the accent, the second on `=`).
+      // M3 Expressive, NeoPOP and Claymorphism first steer their own draws
+      // (brightness, chroma, harmony) without the hues; the others take
+      // the intent's brightness and scale chroma afterwards.
+      final drawSteered = steeredDrawFamilies.contains(family);
+      // A colour without a harmony keeps M3 Expressive tonal (its digits
+      // and surfaces then share the colour's hue family).
+      final base = steering.withoutHues(
+        tonal:
+            family == ThemeFamily.m3Expressive &&
+            (steering.intent.colors.isNotEmpty ||
+                steering.intent.hueRange != null),
+      );
+      final spec = _build(
+        seed,
+        family,
+        drawSteered ? base.revise(shipped) : steering.withBrightness(shipped),
+        engineVersion,
+        attempt: attempt,
+        accessible: accessible,
+        steering: drawSteered ? base : null,
+      );
+      final turned = steering.recolour(
+        spec,
+        Rng.stream(seed, recolourTag(paletteTag)),
+        bodyAnchor: family == ThemeFamily.claymorphism,
+        scaleChroma: !drawSteered,
+        accentsOnly: accentsOnly,
+        honoursHarmony: drawSteered && family != ThemeFamily.claymorphism,
+        // Families with their own palettes read as the colour: their other
+        // accents keep 20 % of their distance from it. Bauhaus keeps its
+        // two accents a full primary apart.
+        pullPermille: switch (family) {
+          ThemeFamily.bauhaus ||
+          ThemeFamily.m3Expressive ||
+          ThemeFamily.neoPop => 1000,
+          // Claymorphism's candy keys lean towards its body's colour.
+          ThemeFamily.claymorphism => 450,
+          _ => 200,
+        },
+        // Bauhaus accents stay strong under a muted or grey intent.
+        keyChromaFloor: family == ThemeFamily.bauhaus ? 0.1 : null,
+        // Its operator and `=` stay two different colours.
+        // Y2K gels keep their lightness (the gel floor and rims rely on
+        // it).
+        keepLightness: family == ThemeFamily.y2kChrome,
+        // Cyberpunk's neon stays neon in any colour.
+        neon: family == ThemeFamily.cyberpunk,
+        minEqualsApartTenths: family == ThemeFamily.bauhaus
+            ? bauhausSteeredEqualsApartTenths
+            : 0,
+      );
+      return turned.copyWith(
+        variant: ThemeVariant.steered,
+        intent: steering.intent.forSpec,
+        intentCentred: steering.centred,
+        name: steering.nameOr(
+          () => generateThemeName(
+            rng: Rng.stream(seed, RngTag.name),
+            accentArgb: turned.palette.operator.face,
+            family: family,
+            dark: turned.isDark,
+          ),
+        ),
+      );
+    }
+    return _build(
+      seed,
+      family,
+      steering.revise(shipped),
+      engineVersion,
+      attempt: attempt,
+      accessible: accessible,
+      steering: steering,
+    );
+  }
+
+  /// One attempt from [def] (the shipped definition, or its steered
+  /// revision); [steering] reaches only the builders that steer their own
+  /// draws (M3 Expressive, NeoPOP, Claymorphism).
+  ThemeSpec _build(
+    int seed,
+    ThemeFamily family,
+    FamilyDefinition def,
+    int engineVersion, {
+    required int attempt,
+    required bool accessible,
+    int? seedHueTenths,
+    Steering? steering,
+  }) {
     // The six families of the 2026-10 round each build their own palette,
     // background scene, shape, style, type and motion from the same named
     // streams (their own files).
@@ -353,7 +516,8 @@ final class ThemeGenerator {
     final dark = brightness == ThemeBrightness.dark;
     final ranges = def.ranges(brightness);
     final drawnScheme = pickWeightedValue(p, def.schemes);
-    final scheme = steering?.schemeFor(def.schemes) ?? drawnScheme;
+    final scheme =
+        steering?.schemeFor(def.schemes, drawn: drawnScheme) ?? drawnScheme;
     final ir = steering == null
         ? null
         : Rng.stream(seed, intentTag(paletteTag));

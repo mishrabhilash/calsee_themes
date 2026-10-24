@@ -84,8 +84,9 @@ class CalseeThemeController extends ChangeNotifier {
   /// it (back returns to the theme before). Null or an empty intent goes
   /// back to the ordinary feed without changing the current theme.
   ///
-  /// Only some families honour steering (`steerableFamilies`); with no
-  /// families in the intent, the feed draws from those.
+  /// Every family follows the intent's colours; `ThemeIntent.reportFor`
+  /// lists what a family can't follow (a dark-only family asked for
+  /// light, say).
   set intent(ThemeIntent? value) {
     final empty = value == null || value.isEmpty;
     if (empty ? _feed.intent == null : value == _feed.intent) return;

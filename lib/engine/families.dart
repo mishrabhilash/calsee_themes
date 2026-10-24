@@ -495,15 +495,17 @@ final class FamilyDefinition {
   RoleRanges ranges(ThemeBrightness brightness) =>
       brightness == ThemeBrightness.dark ? dark : light;
 
-  /// This definition with [dark], [light] or [bile] replaced (a later
-  /// engine version's revision of a family).
+  /// This definition with [dark], [light], [bile] or [brightnessWeights]
+  /// replaced (a later engine version's revision of a family, or a
+  /// steered draw).
   FamilyDefinition revise({
     RoleRanges? dark,
     RoleRanges? light,
     BileRule? bile,
+    List<int>? brightnessWeights,
   }) => FamilyDefinition(
     family: family,
-    brightnessWeights: brightnessWeights,
+    brightnessWeights: brightnessWeights ?? this.brightnessWeights,
     schemes: schemes,
     shapes: shapes,
     cornerPermille: cornerPermille,
@@ -1054,9 +1056,13 @@ final Map<int, Map<ThemeFamily, FamilyDefinition>> familyDefinitionsByVersion =
       // v3's: unsteered v4 output equals v3 apart from the version number
       // (pinned by fixtures/generator_v4.json and the v3/v4 parity test).
       4: _v3Definitions,
+      // v5: every family follows ThemeIntent colours (steering.dart);
+      // definitions unchanged, so unsteered v5 equals v4 apart from the
+      // version number.
+      5: _v3Definitions,
     };
 
-/// The v3 (and v4) definitions.
+/// The v3 definitions (also v4 and v5).
 final Map<ThemeFamily, FamilyDefinition> _v3Definitions = {
   ThemeFamily.m3Expressive: m3ExpressiveDefinition.revise(
     light: standardLightRangesV2,

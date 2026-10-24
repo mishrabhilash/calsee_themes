@@ -82,9 +82,9 @@ void main() {
       for (var i = 0; i < 10; i++) {
         expect(feed.next()!.family, ThemeFamily.bauhaus);
       }
-      // No intent families: the filter's steerable ones.
+      // No intent families: the filter's steerable ones (all, from v5).
       feed.steer(ThemeIntent(colors: const [IntentColor.red]));
-      expect(feed.steeredFamilies, [ThemeFamily.neoPop]);
+      expect(feed.steeredFamilies, [ThemeFamily.neoPop, ThemeFamily.bauhaus]);
     });
 
     test('a name-only intent steers names, not colours', () {

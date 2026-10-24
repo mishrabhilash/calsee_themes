@@ -20,23 +20,52 @@ library;
 
 import 'dart:convert';
 
-import 'package:calsee_themes/engine/claymorphism.dart'
-    show
-        clayAccentFallbackTenths,
-        clayAnchorFor,
-        clayLightBodyHues,
-        clayNightBodyHues;
+import 'package:calsee_themes/engine/bauhaus.dart'
+    show bauhausSteeredEqualsApartTenths;
 import 'package:calsee_themes/engine/families.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
 import 'package:meta/meta.dart';
 
-/// The families that honour steering in this build (phase 1). Other
-/// families accept an intent but only take its name; [ThemeIntent.reportFor]
-/// says so.
+/// The families that honour steering at the newest engine version: every
+/// enabled family (engine v5). [ThemeIntent.reportFor] lists the hints a
+/// family can't follow.
 const Set<ThemeFamily> steerableFamilies = {
+  ThemeFamily.m3Expressive,
+  ThemeFamily.liquidGlass,
+  ThemeFamily.neoPop,
+  ThemeFamily.neumorphism,
+  ThemeFamily.retro,
+  ThemeFamily.neoBrutalism,
+  ThemeFamily.claymorphism,
+  ThemeFamily.y2kChrome,
+  ThemeFamily.paperInk,
+  ThemeFamily.cyberpunk,
+  ThemeFamily.vaporwave,
+  ThemeFamily.bauhaus,
+};
+
+/// The families that honoured steering at engine v4 (2.0.0); the others
+/// took only the intent's name.
+const Set<ThemeFamily> _steerableAtV4 = {
   ThemeFamily.m3Expressive,
   ThemeFamily.neoPop,
   ThemeFamily.claymorphism,
+};
+
+/// Whether [family] follows an intent's colours at [engineVersion]
+/// (otherwise it takes only the name).
+bool familySteerableAt(ThemeFamily family, int engineVersion) {
+  if (engineVersion < firstSteerableEngineVersion) return false;
+  if (engineVersion == firstSteerableEngineVersion) {
+    return _steerableAtV4.contains(family);
+  }
+  return steerableFamilies.contains(family);
+}
+
+/// The families that honour an intent's harmony.
+const Set<ThemeFamily> _harmonyFamilies = {
+  ThemeFamily.m3Expressive,
+  ThemeFamily.neoPop,
 };
 
 /// The first engine version that understands a [ThemeIntent].
@@ -384,8 +413,11 @@ final class ThemeIntent {
   /// Light or dark; null for either.
   final ThemeBrightness? brightness;
 
-  /// Up to [maxColors] colours. The first picks the base hue; with no
-  /// [harmony], the second and third pick the operator and `=` hues.
+  /// Up to [maxColors] colours. The first is the theme's accent (the
+  /// operators; Claymorphism's body), and the rest of the palette turns
+  /// with it; with no [harmony], the second colours the `=` key and the
+  /// third the function keys (engine v5; at v4 the first set the base hue
+  /// and the others the operator and `=` hues).
   final List<IntentColor> colors;
 
   /// How colourful; null for the family's usual range.
@@ -517,8 +549,9 @@ final class ThemeIntent {
       );
     }
     final h = harmony;
+    final honoursHarmony = _harmonyFamilies.contains(family);
     if (h != null) {
-      if (family == ThemeFamily.claymorphism) {
+      if (!honoursHarmony) {
         notes.add(
           IntentNote(
             'harmony',
@@ -532,28 +565,35 @@ final class ThemeIntent {
         );
       }
     }
-    if (family == ThemeFamily.claymorphism) {
-      final base = _baseHueRange();
-      if (base != null) {
-        final checks = want == null ? ThemeBrightness.values : [want];
-        final far = checks.every((b) {
-          final anchors = b == ThemeBrightness.dark
-              ? clayNightBodyHues
-              : clayLightBodyHues;
-          return clayAnchorFor(anchors, base.$1, base.$2).distance >
-              clayAccentFallbackTenths;
-        });
-        if (far) {
-          notes.add(
-            IntentNote(
-              hueRange != null ? 'hueRange' : 'colors',
-              hueRange != null
-                  ? '${hueRange!.$1}–${hueRange!.$2}'
-                  : colors.first.word,
-              'clay bodies keep their own hues; used for the operators',
-            ),
-          );
-        }
+    if (family == ThemeFamily.bauhaus &&
+        colors.length >= 2 &&
+        !colors[0].neutral &&
+        !colors[1].neutral &&
+        h == null) {
+      int mid(IntentColor c) =>
+          (c.loTenths + ((c.hiTenths - c.loTenths) % 3600) ~/ 2) % 3600;
+      final d = (mid(colors[0]) - mid(colors[1])).abs() % 3600;
+      if ((d > 1800 ? 3600 - d : d) < bauhausSteeredEqualsApartTenths) {
+        notes.add(
+          IntentNote(
+            'colors',
+            colors[1].word,
+            'too close to ${colors[0].word} for a second Bauhaus accent',
+          ),
+        );
+      }
+    }
+    if (family == ThemeFamily.bauhaus) {
+      final level = effectiveChroma;
+      final grey = colors.isNotEmpty && colors.first.neutral;
+      if (level == IntentChroma.muted || grey) {
+        notes.add(
+          IntentNote(
+            grey ? 'colors' : 'chroma',
+            grey ? colors.first.word : level!.word,
+            'Bauhaus accents stay strong',
+          ),
+        );
       }
     }
     for (final c in colors.skip(1)) {
@@ -561,22 +601,13 @@ final class ThemeIntent {
         notes.add(
           IntentNote('colors', c.word, 'neutrals only quiet the base colour'),
         );
-      } else if (h != null) {
+      } else if (h != null && honoursHarmony) {
         notes.add(
           IntentNote('colors', c.word, 'harmony picks the accent colours'),
         );
       }
     }
     return notes;
-  }
-
-  /// The base hue range as (lo tenths, clockwise span tenths), or null.
-  (int, int)? _baseHueRange() {
-    final hr = hueRange;
-    if (hr != null) return (hr.$1 * 10, (hr.$2 * 10 - hr.$1 * 10) % 3600);
-    if (colors.isEmpty || colors.first.neutral) return null;
-    final c = colors.first;
-    return (c.loTenths, (c.hiTenths - c.loTenths) % 3600);
   }
 
   @override

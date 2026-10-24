@@ -1,3 +1,19 @@
+## 2.1.0
+
+Every family now follows a `ThemeIntent`'s colours.
+
+- Liquid Glass, Neumorphism, Retro, Neo-brutalism, Y2K Aero, Paper & ink,
+  Cyberpunk, Vaporwave and Bauhaus follow colours, brightness and chroma,
+  and keep their own look: "red" Cyberpunk is red neon.
+- The first colour goes on the operators (Claymorphism: on its body),
+  and the rest of the palette turns with it. The second colour sets `=`,
+  the third the function keys.
+- Claymorphism follows the colour fully, body included.
+- `steerableFamilies` lists every family; `familySteerableAt` tells which
+  followed colours at an older engine version.
+- Engine version 5. Unsteered themes are unchanged, and themes steered
+  with 2.0.0 (engine v4) reproduce exactly.
+
 ## 2.0.0
 
 Steering: generate themes that match a description.

@@ -973,6 +973,15 @@ const double bauhausAccentDeltaE = 0.10;
 
 // ------------------------------------------------------------- guardrails --
 
+/// Steered Bauhaus (engine v5): the least chroma of an operator or `=`
+/// accent, and how far apart (degrees) their hues must sit.
+const double bauhausSteeredAccentMinChroma = 0.08;
+const double bauhausSteeredAccentApartDeg = 40;
+
+/// How far (tenths) a steered second colour must sit from the first to
+/// colour Bauhaus's `=` key (a margin over [bauhausSteeredAccentApartDeg]).
+const int bauhausSteeredEqualsApartTenths = 500;
+
 /// The Bauhaus rules (called from `validateTheme` for Bauhaus specs only):
 ///
 /// - [GuardrailRule.bauhausOperatorCue]: the recorded shape cue is real —
@@ -1031,22 +1040,48 @@ List<GuardrailViolation> validateBauhaus(
       detail,
     ),
   );
+  // A steered theme (engine v5) takes its accents from the intent: two
+  // strong accents of different hues stand in for two primaries.
+  final steered = spec.variant == ThemeVariant.steered;
   final op = bauhausPrimaryOf(p.operator.face);
   final eq = bauhausPrimaryOf(p.equals.face);
-  if (op == null) {
-    primaries(argbToOklch(p.operator.face).c, 0.08, 'operator primary');
+  final opLch = argbToOklch(p.operator.face);
+  final eqLch = argbToOklch(p.equals.face);
+  if (steered) {
+    if (opLch.c < bauhausSteeredAccentMinChroma) {
+      primaries(opLch.c, bauhausSteeredAccentMinChroma, 'operator accent');
+    }
+    if (eqLch.c < bauhausSteeredAccentMinChroma) {
+      primaries(eqLch.c, bauhausSteeredAccentMinChroma, '= accent');
+    }
+    final d = (opLch.h - eqLch.h).abs() % 360;
+    final apart = d > 180 ? 360 - d : d;
+    if (apart < bauhausSteeredAccentApartDeg) {
+      primaries(
+        apart,
+        bauhausSteeredAccentApartDeg,
+        'operator and = share a hue',
+      );
+    }
+  } else {
+    if (op == null) {
+      primaries(opLch.c, 0.08, 'operator primary');
+    }
+    if (eq == null) {
+      primaries(eqLch.c, 0.08, '= primary');
+    }
+    if (op != null && op == eq) {
+      primaries(0, 1, 'operator and = share a hue');
+    }
   }
-  if (eq == null) {
-    primaries(argbToOklch(p.equals.face).c, 0.08, '= primary');
-  }
-  if (op != null && op == eq) primaries(0, 1, 'operator and = share a hue');
   final digitC = argbToOklch(p.digit.face).c;
   if (digitC >= bauhausNeutralMaxChroma) {
     primaries(digitC, bauhausNeutralMaxChroma, 'digit not neutral');
   }
   final fnC = argbToOklch(p.function.face).c;
   if (fnC >= bauhausNeutralMaxChroma &&
-      bauhausPrimaryOf(p.function.face) == null) {
+      bauhausPrimaryOf(p.function.face) == null &&
+      !(steered && fnC >= bauhausSteeredAccentMinChroma)) {
     primaries(fnC, bauhausNeutralMaxChroma, 'function neither');
   }
   final accent = p.function.edge;

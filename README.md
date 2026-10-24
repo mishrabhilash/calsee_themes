@@ -176,8 +176,10 @@ final themes = CalseeThemeController(
 
 The feed then shows endless variations on the intent, starting with the
 one closest to its centre. Every theme still passes the contrast
-guardrails. Material 3 Expressive, NeoPOP and Claymorphism honour
-steering (`steerableFamilies`). Other families take only the name.
+guardrails. Every family follows the colours and keeps its own look:
+"red" Cyberpunk is red neon, "green" Bauhaus has green and a second
+strong accent. The first colour goes on the operators (Claymorphism: its
+body), the second on `=`, the third on the function keys.
 `intent.reportFor(family)` lists the hints a family can't follow, for
 example "light" for NeoPOP, which is dark-only.
 

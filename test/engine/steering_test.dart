@@ -608,7 +608,9 @@ void main() {
     }
 
     final file = File(path);
-    if (Platform.environment['UPDATE_STEERED_GOLDENS'] == '1') {
+    // Frozen: v4 is released (2.0.0); only the current version rewrites.
+    if (Platform.environment['UPDATE_STEERED_GOLDENS'] == '1' &&
+        currentEngineVersion == 4) {
       file.writeAsStringSync(
         '${const JsonEncoder.withIndent('  ').convert({
           'engineVersion': 4,

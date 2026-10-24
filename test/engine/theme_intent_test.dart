@@ -325,31 +325,71 @@ void main() {
       );
     });
 
-    test('Claymorphism keeps its schemes and body hues', () {
+    test('Claymorphism follows colours but keeps its own schemes', () {
       final notes = ThemeIntent(
         colors: const [IntentColor.yellow],
         brightness: ThemeBrightness.dark,
         harmony: HarmonyScheme.triadic,
       ).reportFor(ThemeFamily.claymorphism);
-      expect(notes.map((n) => n.field), ['harmony', 'colors']);
+      expect(notes, [
+        const IntentNote(
+          'harmony',
+          'triad',
+          'family uses its own colour schemes',
+        ),
+      ]);
+    });
+
+    test('every family follows colours, brightness and chroma', () {
+      final intent = ThemeIntent(
+        colors: const [IntentColor.red, IntentColor.teal],
+        brightness: ThemeBrightness.dark,
+        chroma: IntentChroma.vivid,
+        name: 'Rust',
+      );
+      for (final f in ThemeFamily.enabledFamilies) {
+        if (f == ThemeFamily.neoPop) continue;
+        expect(intent.reportFor(f), isEmpty, reason: f.name);
+      }
+    });
+
+    test('families with their own palettes keep their own schemes', () {
       expect(
         ThemeIntent(
-          colors: const [IntentColor.lavender],
-        ).reportFor(ThemeFamily.claymorphism),
-        isEmpty,
+          colors: const [IntentColor.red],
+          harmony: HarmonyScheme.triadic,
+        ).reportFor(ThemeFamily.cyberpunk),
+        [
+          const IntentNote(
+            'harmony',
+            'triad',
+            'family uses its own colour schemes',
+          ),
+        ],
       );
     });
 
-    test('other families report every hint', () {
-      final notes = ThemeIntent(
-        colors: const [IntentColor.red],
-        chroma: IntentChroma.muted,
-        name: 'Rust',
-      ).reportFor(ThemeFamily.cyberpunk);
-      expect(notes, [
-        const IntentNote('colors', 'red', 'family not steerable yet'),
-        const IntentNote('chroma', 'muted', 'family not steerable yet'),
-      ]);
+    test('Bauhaus keeps strong, distinct accents', () {
+      expect(
+        ThemeIntent(
+          colors: const [IntentColor.green, IntentColor.lime],
+          chroma: IntentChroma.muted,
+        ).reportFor(ThemeFamily.bauhaus),
+        [
+          const IntentNote(
+            'colors',
+            'lime',
+            'too close to green for a second Bauhaus accent',
+          ),
+          const IntentNote('chroma', 'muted', 'Bauhaus accents stay strong'),
+        ],
+      );
+      expect(
+        ThemeIntent(
+          colors: const [IntentColor.green, IntentColor.purple],
+        ).reportFor(ThemeFamily.bauhaus),
+        isEmpty,
+      );
     });
 
     test('accent colours give way to an explicit harmony', () {

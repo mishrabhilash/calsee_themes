@@ -66,7 +66,7 @@ Prefix commands with `export PATH=~/flutter-3.47.6/bin:$PATH && ...`
 ## Commands
 
 ```bash
-flutter test                                    # 653 tests, run on both toolchains
+flutter test                                    # 682 tests, run on both toolchains
 flutter analyze                                 # must be "No issues found" on 3.47.6
 dart format --output=none --set-exit-if-changed lib test example/lib example/screenshots
 (cd example && flutter analyze)
@@ -120,7 +120,7 @@ pana --no-warning --flutter-sdk ~/flutter-3.47.6 .   # pub.dev score, expect 160
   accessible, intent, centred): identical `toJson` and `hashCode` on
   every run and platform.
 - **Any change to generator output needs an engine version bump**
-  (`currentEngineVersion` in `generator.dart`, now 4) and a golden JSON
+  (`currentEngineVersion` in `generator.dart`, now 5) and a golden JSON
   fixture (`test/engine/fixtures/`) proving older versions still reproduce
   exactly. Saved feeds, favourites and share codes in shipped apps depend
   on this.
@@ -144,13 +144,23 @@ pana --no-warning --flutter-sdk ~/flutter-3.47.6 .   # pub.dev score, expect 160
   the harmony scheme are drawn and then overridden, chroma ranges are
   narrowed before sampling, and steered hues come from the
   `palette…/intent` sub-stream. Without an intent, output is unchanged.
+- From engine v5 every family is steered by `Steering.recolour`: the
+  family builds its own theme (M3 Expressive, NeoPOP and Claymorphism
+  first steer their own draws without hues), then every colour turns so
+  the operators (Claymorphism: the body) sit on the first colour. Only
+  key colours may move in lightness. Per-family settings live in
+  `ThemeGenerator._candidate` (pull, Bauhaus's chroma floor and accent
+  spacing, Y2K's fixed lightness, Cyberpunk's neon). If every attempt
+  fails, a pass that turns only the accents runs before the hero.
 - Steering exists from engine v4 on. Changing how an intent is applied
   changes steered output: bump the engine version and keep
-  `fixtures/steered_v4.json` reproducing.
+  `fixtures/steered_v4.json` and `steered_v5.json` reproducing. v4
+  logic stays behind `engineVersion` checks.
 - `ThemeIntent.vocabulary` is append-only, and a test pins it: hosts
   generate prompts and schemas from it. `steerableFamilies` lists the
-  families that honour steering. To add one, steer its builder, add it to
-  the set, and teach `reportFor` what it can't honour.
+  families that honour steering at the newest version (all of them);
+  `familySteerableAt` answers per version. A new family must be steered
+  and taught to `reportFor` before it ships.
 - `ThemeVariant` values are only ever added, and each addition breaks
   hosts with exhaustive switches (2.0.0 added `steered`): it's a major
   version.

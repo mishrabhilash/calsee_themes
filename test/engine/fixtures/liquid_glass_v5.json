@@ -1,0 +1,1124 @@
+{
+  "engineVersion": 5,
+  "cases": [
+    {
+      "seed": 0,
+      "family": 2,
+      "accessible": false,
+      "hash": "43c855ff",
+      "spec": {
+        "format": 1,
+        "seed": 0,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff161933",
+          "surface": "a2090c19",
+          "displayText": "fff6f8ff",
+          "previewText": "ffb8bdd2",
+          "error": "ffff7e77",
+          "caret": "ffeab3f9",
+          "focusRing": "ffeab3f9",
+          "accent": "ffeab3f9",
+          "digit": {
+            "face": "5b020304",
+            "label": "fff6f8ff",
+            "edge": "90fbfcff"
+          },
+          "operator": {
+            "face": "d1d668f5",
+            "label": "ff131014",
+            "edge": "90fefaff"
+          },
+          "equals": {
+            "face": "ef62c2ff",
+            "label": "ff0e1216",
+            "edge": "90f9fcff"
+          },
+          "function": {
+            "face": "6d24283c",
+            "label": "fff6f8ff",
+            "edge": "90fbfcff"
+          },
+          "shadow": "60010105",
+          "highlight": "3bffffff",
+          "seedColor": "ffd668f5"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 330,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 300,
+          "shadowBlurCdp": 700,
+          "opacityPermille": 356,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "frostPermille": 100,
+          "highlightPermille": 600,
+          "refractionPermille": 750
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "roboto_flex",
+          "displayWeight": 250,
+          "keyWeight": 400,
+          "operatorWeight": 650,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "ff161933",
+            "ff4440d5",
+            "ff771e8e",
+            "ff066797"
+          ],
+          "angleTenths": 2149,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 45000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            439,
+            693
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Gentle Peony",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 3,
+      "family": 2,
+      "accessible": false,
+      "hash": "7cce8272",
+      "spec": {
+        "format": 1,
+        "seed": 3,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff2c0604",
+          "surface": "8e241310",
+          "displayText": "fffff6f5",
+          "previewText": "ffd0b7b3",
+          "error": "ffff7e77",
+          "caret": "ff63def5",
+          "focusRing": "ff63def5",
+          "accent": "ff63def5",
+          "digit": {
+            "face": "47040000",
+            "label": "fffdf7f6",
+            "edge": "80fffbfa"
+          },
+          "operator": {
+            "face": "c240bed4",
+            "label": "ff0e1213",
+            "edge": "80f6fdff"
+          },
+          "equals": {
+            "face": "edfbb592",
+            "label": "ff14110f",
+            "edge": "80fffbf9"
+          },
+          "function": {
+            "face": "7a342725",
+            "label": "fffdf7f6",
+            "edge": "80fffbfa"
+          },
+          "shadow": "60050101",
+          "highlight": "3cffffff",
+          "seedColor": "ff40bed4"
+        },
+        "keyShape": {
+          "kind": "circle",
+          "cornerPermille": 360,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 100,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 800,
+          "opacityPermille": 278,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "frostPermille": 50,
+          "highlightPermille": 650,
+          "refractionPermille": 600
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "roboto_flex",
+          "displayWeight": 250,
+          "keyWeight": 450,
+          "operatorWeight": 650,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "ff2c0604",
+            "ff841d13",
+            "ff256874",
+            "ff93491e"
+          ],
+          "angleTenths": 3367,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 55000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            482,
+            640
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Tide Halo",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 5,
+      "family": 2,
+      "accessible": false,
+      "hash": "8c9ac196",
+      "spec": {
+        "format": 1,
+        "seed": 5,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": false,
+        "palette": {
+          "background": "fff0f2df",
+          "surface": "a9fcfdf4",
+          "displayText": "ff0d0e08",
+          "previewText": "ff4d4f3c",
+          "error": "ffac3031",
+          "caret": "ff295f77",
+          "focusRing": "ff295f77",
+          "accent": "ff295f77",
+          "digit": {
+            "face": "76fcfcfc",
+            "label": "ff121305",
+            "edge": "ebfcfdf5"
+          },
+          "operator": {
+            "face": "f50e6e91",
+            "label": "fff1faff",
+            "edge": "ebf8fdff"
+          },
+          "equals": {
+            "face": "f1860d69",
+            "label": "fffff5fb",
+            "edge": "ebfffafd"
+          },
+          "function": {
+            "face": "bedbdec7",
+            "label": "ff121305",
+            "edge": "ebfcfdf5"
+          },
+          "shadow": "2e2e3107",
+          "highlight": "28ffffff",
+          "seedColor": "ff0e6e91"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 410,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 125,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 300,
+          "shadowBlurCdp": 600,
+          "opacityPermille": 462,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "frostPermille": 250,
+          "highlightPermille": 600,
+          "refractionPermille": 350
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "space_grotesk",
+          "displayWeight": 300,
+          "keyWeight": 450,
+          "operatorWeight": 700,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "fff0f2df",
+            "ffc3cb55",
+            "ff67bce3",
+            "fff4b0db"
+          ],
+          "angleTenths": 537,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 50000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            395,
+            682
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Sapphire Prism",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 7,
+      "family": 2,
+      "accessible": false,
+      "hash": "ccb41bd8",
+      "spec": {
+        "format": 1,
+        "seed": 7,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "light",
+        "accessible": false,
+        "palette": {
+          "background": "fffdf7ef",
+          "surface": "affffaf5",
+          "displayText": "ff110c08",
+          "previewText": "ff584a3b",
+          "error": "ffac3031",
+          "caret": "ff206078",
+          "focusRing": "ff206078",
+          "accent": "ff206078",
+          "digit": {
+            "face": "9bffffff",
+            "label": "ff171009",
+            "edge": "cffffbf7"
+          },
+          "operator": {
+            "face": "e7046e8e",
+            "label": "fff0faff",
+            "edge": "cff8fdff"
+          },
+          "equals": {
+            "face": "f47080ff",
+            "label": "ff101116",
+            "edge": "cffbfcff"
+          },
+          "function": {
+            "face": "a0e0c7aa",
+            "label": "ff171009",
+            "edge": "cffffbf7"
+          },
+          "shadow": "2e412805",
+          "highlight": "3affffff",
+          "seedColor": "ff046e8e"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 390,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 150,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 300,
+          "shadowBlurCdp": 600,
+          "opacityPermille": 607,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "frostPermille": 250,
+          "highlightPermille": 650,
+          "refractionPermille": 500
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "roboto_flex",
+          "displayWeight": 350,
+          "keyWeight": 450,
+          "operatorWeight": 650,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "fffdf7ef",
+            "ffeab16f",
+            "ff9ddefa",
+            "ffafbaeb"
+          ],
+          "angleTenths": 1402,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 60000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            439,
+            644
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Azure Sheen",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 10,
+      "family": 2,
+      "accessible": false,
+      "hash": "f2cd40d2",
+      "spec": {
+        "format": 1,
+        "seed": 10,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff0e1524",
+          "surface": "a5050913",
+          "displayText": "fff5f8ff",
+          "previewText": "ffb4bed2",
+          "error": "ffff7e77",
+          "caret": "ffe5b6f6",
+          "focusRing": "ffeec1ff",
+          "accent": "ffe5b6f6",
+          "digit": {
+            "face": "5b020306",
+            "label": "fff6f8fe",
+            "edge": "9dfafcff"
+          },
+          "operator": {
+            "face": "cbd272f2",
+            "label": "ff131114",
+            "edge": "9dfefaff"
+          },
+          "equals": {
+            "face": "ee9edaf6",
+            "label": "ff0e1214",
+            "edge": "9df8fdff"
+          },
+          "function": {
+            "face": "6b273249",
+            "label": "fff6f8fe",
+            "edge": "9dfafcff"
+          },
+          "shadow": "60010205",
+          "highlight": "2effffff",
+          "seedColor": "ffd272f2"
+        },
+        "keyShape": {
+          "kind": "circle",
+          "cornerPermille": 410,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 125,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 300,
+          "shadowBlurCdp": 600,
+          "opacityPermille": 356,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "frostPermille": 100,
+          "highlightPermille": 550,
+          "refractionPermille": 650
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "roboto_flex",
+          "displayWeight": 300,
+          "keyWeight": 400,
+          "operatorWeight": 600,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "ff0e1524",
+            "ff0d37c4",
+            "ff9d30be",
+            "ff1f7ea1"
+          ],
+          "angleTenths": 1176,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 40000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            395,
+            649
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Raspberry Prism",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 3735928559,
+      "family": 2,
+      "accessible": false,
+      "hash": "4b38da3a",
+      "spec": {
+        "format": 1,
+        "seed": 3735928559,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": false,
+        "palette": {
+          "background": "ff151031",
+          "surface": "b00e0e18",
+          "displayText": "fff8f8ff",
+          "previewText": "ffbcbbd1",
+          "error": "ffff7e77",
+          "caret": "fff9bb92",
+          "focusRing": "fff9bb92",
+          "accent": "fff9bb92",
+          "digit": {
+            "face": "41010104",
+            "label": "fff8f8ff",
+            "edge": "72fbfbff"
+          },
+          "operator": {
+            "face": "c0df7e30",
+            "label": "ff060302",
+            "edge": "72fffbf8"
+          },
+          "equals": {
+            "face": "eb7ee867",
+            "label": "ff0f130f",
+            "edge": "72f8fef7"
+          },
+          "function": {
+            "face": "792f2e40",
+            "label": "fff8f8ff",
+            "edge": "72fbfbff"
+          },
+          "shadow": "60020105",
+          "highlight": "37ffffff",
+          "seedColor": "ffdf7e30"
+        },
+        "keyShape": {
+          "kind": "circle",
+          "cornerPermille": 340,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 125,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 300,
+          "shadowBlurCdp": 900,
+          "opacityPermille": 254,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "highlightPermille": 450,
+          "refractionPermille": 700
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "roboto_flex",
+          "displayWeight": 300,
+          "keyWeight": 500,
+          "operatorWeight": 700,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "ff151031",
+            "ff613dd6",
+            "ff96521a",
+            "ff2c6020"
+          ],
+          "angleTenths": 2064,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 50000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            395,
+            685
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Marmalade Halo",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 12345,
+      "family": 2,
+      "accessible": true,
+      "hash": "d77f5bd5",
+      "spec": {
+        "format": 1,
+        "seed": 12345,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": true,
+        "palette": {
+          "background": "ff1e0d1a",
+          "surface": "a6110a0f",
+          "displayText": "fffef6fb",
+          "previewText": "ffcbb7c5",
+          "error": "ffff8e86",
+          "caret": "fff9b5c5",
+          "focusRing": "fff9b5c5",
+          "accent": "fff9b5c5",
+          "digit": {
+            "face": "5d040204",
+            "label": "fffef6fb",
+            "edge": "fff8eaf3"
+          },
+          "operator": {
+            "face": "ceffb1c4",
+            "label": "ff160f11",
+            "edge": "fffbe9ed"
+          },
+          "equals": {
+            "face": "fa554a7c",
+            "label": "fff8f7ff",
+            "edge": "ffefecfb"
+          },
+          "function": {
+            "face": "7c392934",
+            "label": "fffef6fb",
+            "edge": "fff8eaf3"
+          },
+          "shadow": "60040103",
+          "highlight": "38ffffff",
+          "seedColor": "ffffb1c4"
+        },
+        "keyShape": {
+          "kind": "roundedRect",
+          "cornerPermille": 360,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 150,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 200,
+          "shadowBlurCdp": 900,
+          "opacityPermille": 364,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "frostPermille": 200,
+          "highlightPermille": 700,
+          "refractionPermille": 350
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "space_grotesk",
+          "displayWeight": 250,
+          "keyWeight": 500,
+          "operatorWeight": 750,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "ff1e0d1a",
+            "ff771c66",
+            "ff7f2444",
+            "ff652dc5"
+          ],
+          "angleTenths": 2560,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 40000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            482,
+            698
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Garnet Harbour",
+        "nonColourOperatorCue": "weight"
+      }
+    },
+    {
+      "seed": 4294967295,
+      "family": 2,
+      "accessible": true,
+      "hash": "c1d67775",
+      "spec": {
+        "format": 1,
+        "seed": 4294967295,
+        "family": 2,
+        "engineVersion": 5,
+        "variant": "generated",
+        "heroId": null,
+        "brightness": "dark",
+        "accessible": true,
+        "palette": {
+          "background": "ff161002",
+          "surface": "ad150f03",
+          "displayText": "fffbf8f0",
+          "previewText": "ffc5bda8",
+          "error": "ffff978f",
+          "caret": "ffa7e055",
+          "focusRing": "ffa7e055",
+          "accent": "ffa7e055",
+          "digit": {
+            "face": "58050403",
+            "label": "fffaf8f5",
+            "edge": "fff4eee0"
+          },
+          "operator": {
+            "face": "ce9bd541",
+            "label": "ff111210",
+            "edge": "ffeaf1e3"
+          },
+          "equals": {
+            "face": "e6ffb28a",
+            "label": "ff141111",
+            "edge": "fffbebe3"
+          },
+          "function": {
+            "face": "6d32290f",
+            "label": "fffaf8f5",
+            "edge": "fff4eee0"
+          },
+          "shadow": "60030200",
+          "highlight": "37ffffff",
+          "seedColor": "ff9bd541"
+        },
+        "keyShape": {
+          "kind": "circle",
+          "cornerPermille": 330,
+          "m3eShape": null,
+          "morphTo": null,
+          "morphCornerPermille": null,
+          "operatorKind": null,
+          "operatorM3eShape": null
+        },
+        "keyStyle": {
+          "kind": "glass",
+          "outlineWidthCdp": 175,
+          "extrudeDepthCdp": 0,
+          "shadowOffsetCdp": 250,
+          "shadowBlurCdp": 600,
+          "opacityPermille": 345,
+          "edgeShadePermille": 0,
+          "stateLayerPermille": 80,
+          "frostPermille": 100,
+          "highlightPermille": 550,
+          "refractionPermille": 650
+        },
+        "type": {
+          "displayFont": "roboto_flex",
+          "keyFont": "roboto_flex",
+          "displayWeight": 300,
+          "keyWeight": 500,
+          "operatorWeight": 750,
+          "widthPermille": 1000,
+          "tabular": true,
+          "slashedZero": false,
+          "lcd": false
+        },
+        "background": {
+          "kind": "meshGradient",
+          "colors": [
+            "ff161002",
+            "ff7e4005",
+            "ff4b6525",
+            "ff743307"
+          ],
+          "angleTenths": 1895,
+          "pattern": "none",
+          "patternColor": "00000000",
+          "patternScaleCdp": 0,
+          "patternOpacityPermille": 0,
+          "driftPeriodMs": 55000
+        },
+        "motion": {
+          "verb": "inflate",
+          "scheme": "standard",
+          "pressIn": [
+            1755,
+            850
+          ],
+          "release": [
+            439,
+            656
+          ],
+          "releaseAlt": [
+            439,
+            800
+          ],
+          "depthCdp": 0,
+          "scalePermille": 1080,
+          "cornerPermille": 0,
+          "squishPermille": 0,
+          "stateLayerSnap": false,
+          "entry": "rise",
+          "entryScalePermille": 1000,
+          "entryOffsetCdp": 600,
+          "entrySpring": [
+            1600,
+            1000
+          ],
+          "fx": "glow",
+          "stepMs": 0,
+          "impact": "soft",
+          "impactPermille": 700,
+          "releaseHaptic": false,
+          "releaseImpactPermille": 0
+        },
+        "effects": {
+          "kind": "none",
+          "intensityPermille": 0,
+          "color": "00000000",
+          "densityPermille": 0
+        },
+        "sound": "glass",
+        "name": "Gentle Citron",
+        "nonColourOperatorCue": "weight"
+      }
+    }
+  ]
+}
