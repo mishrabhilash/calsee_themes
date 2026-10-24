@@ -500,6 +500,34 @@ void main() {
       expect(dark, greaterThan(15));
     });
 
+    test('a warm Cyberpunk keeps its outlines in the warm hues', () {
+      final intent = ThemeIntent.fromJson(const {
+        'brightness': 'dark',
+        'colors': ['red', 'coral', 'orange'],
+        'harmony': 'analogous',
+      });
+      // Red 22° through orange 65°, with slack: no cyan or purple.
+      bool warm(int argb) {
+        final h = hueOf(argb);
+        return h >= 3300 || h <= 950;
+      }
+
+      for (var s = 0; s < 12; s++) {
+        final spec = gen.generate(
+          s * 13 + 5,
+          ThemeFamily.cyberpunk,
+          5,
+          intent: intent,
+        );
+        if (spec.variant == ThemeVariant.hero) continue;
+        final p = spec.palette;
+        for (final c in [p.digit.edge, p.function.edge, p.accent]) {
+          if (chromaOf(c) < 0.05) continue;
+          expect(warm(c), isTrue, reason: 'seed ${s * 13 + 5}: ${hueOf(c)}');
+        }
+      }
+    });
+
     test('Bauhaus keeps neutral digits and two distinct accents', () {
       for (var s = 0; s < 30; s++) {
         final spec = gen.generate(

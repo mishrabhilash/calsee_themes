@@ -11,7 +11,7 @@
       },
       "accessible": false,
       "centred": true,
-      "hash": "1e5d6042",
+      "hash": "7fdb1b21",
       "spec": {
         "format": 1,
         "seed": 1,
@@ -38,8 +38,8 @@
           "accent": "ffff4395",
           "digit": {
             "face": "ff212516",
-            "label": "fff6f1ff",
-            "edge": "ffb783ff"
+            "label": "ffffeff3",
+            "edge": "ffff67a2"
           },
           "operator": {
             "face": "fffb594d",
@@ -157,7 +157,7 @@
       },
       "accessible": false,
       "centred": false,
-      "hash": "a0b32d27",
+      "hash": "2a876673",
       "spec": {
         "format": 1,
         "seed": 3735928559,
@@ -184,7 +184,7 @@
           "accent": "ff90f5db",
           "digit": {
             "face": "ffa3cfe6",
-            "label": "ff00212d",
+            "label": "ff002322",
             "edge": "ff000606"
           },
           "operator": {
@@ -311,7 +311,7 @@
       },
       "accessible": true,
       "centred": false,
-      "hash": "aca2f1cd",
+      "hash": "655bd84e",
       "spec": {
         "format": 1,
         "seed": 2,
@@ -338,8 +338,8 @@
           "accent": "ff176934",
           "digit": {
             "face": "a0fcfdff",
-            "label": "ff15100e",
-            "edge": "ff442c21"
+            "label": "ff11120d",
+            "edge": "ff32351d"
           },
           "operator": {
             "face": "eb005726",
@@ -463,7 +463,7 @@
       },
       "accessible": false,
       "centred": false,
-      "hash": "080b2d8e",
+      "hash": "033b2c83",
       "spec": {
         "format": 1,
         "seed": 3,
@@ -489,8 +489,8 @@
           "accent": "ff5c597e",
           "digit": {
             "face": "ffdadfe8",
-            "label": "ff171a22",
-            "edge": "ff787e8d"
+            "label": "ff191a21",
+            "edge": "ff7c7d8d"
           },
           "operator": {
             "face": "ffd8dcff",
@@ -606,7 +606,7 @@
       },
       "accessible": false,
       "centred": false,
-      "hash": "80eef55f",
+      "hash": "2798198a",
       "spec": {
         "format": 1,
         "seed": 4,
@@ -633,7 +633,7 @@
           "accent": "ff88c3fe",
           "digit": {
             "face": "ff2f2f2f",
-            "label": "ffe6fafa",
+            "label": "ffeaf8ff",
             "edge": "ff151515"
           },
           "operator": {
@@ -894,7 +894,7 @@
       },
       "accessible": false,
       "centred": true,
-      "hash": "1a58d1bf",
+      "hash": "edb5dbf4",
       "spec": {
         "format": 1,
         "seed": 6,
@@ -921,8 +921,8 @@
           "accent": "ff471802",
           "digit": {
             "face": "ffd8e0dc",
-            "label": "ff0f1c16",
-            "edge": "ff5a575d"
+            "label": "ff1c180c",
+            "edge": "ff5e5655"
           },
           "operator": {
             "face": "ffff9946",

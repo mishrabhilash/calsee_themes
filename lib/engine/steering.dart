@@ -298,8 +298,9 @@ final class Steering {
       if (pullTo != null && pullPermille < 1000 && !lift) {
         // Draw the palette's other hues towards the colour, so a one-colour
         // intent reads as that colour in families with several accents.
-        // Digits move less, keeping them apart from the operators.
-        final keep = role == 'digit'
+        // Digit faces move less, keeping them apart from the operators
+        // (their labels and outlines are accents, and pull fully).
+        final keep = role == 'digit' && face
             ? pullPermille + (1000 - pullPermille) ~/ 2
             : pullPermille;
         var off = (tenths - pullTo) % 3600;
@@ -460,15 +461,21 @@ final class Steering {
     }
     final out = walk(json, '', '')! as Map<String, Object?>;
     final palette = out['palette']! as Map<String, Object?>;
-    if (named.contains('equals') && !keepLightness) _separateEquals(palette);
+    if (named.contains('equals') && !keepLightness) {
+      _separateEquals(palette, minL: neon ? _neonFloorL : 0.1);
+    }
     _darkenLightLabels(palette);
     return ThemeSpec.fromJson(out);
   }
 
   /// A `=` given its own colour that sits within 0.1 lightness of the
   /// operators moves 0.1 away, towards its hue's saturated side (yellow
-  /// up, blue down), so the two stay apart for every kind of vision.
-  static void _separateEquals(Map<String, Object?> palette) {
+  /// up, blue down), so the two stay apart for every kind of vision; never
+  /// below [minL] (Cyberpunk's slabs stay neon-bright).
+  static void _separateEquals(
+    Map<String, Object?> palette, {
+    required double minL,
+  }) {
     final op = palette['operator'];
     final eq = palette['equals'];
     if (op is! Map || eq is! Map) return;
@@ -478,8 +485,10 @@ final class Steering {
     if ((e.l - o.l).abs() >= _equalsApartL) return;
     final up = _cuspL(e.h) > o.l;
     var l = up ? o.l + _equalsApartL : o.l - _equalsApartL;
-    if (l > 0.95 || l < 0.1) l = up ? o.l - _equalsApartL : o.l + _equalsApartL;
-    if (l > 0.95 || l < 0.1) return;
+    if (l > 0.95 || l < minL) {
+      l = up ? o.l - _equalsApartL : o.l + _equalsApartL;
+    }
+    if (l > 0.95 || l < minL) return;
     eq['face'] = argbToHex(
       (eqFace & 0xFF000000) | (oklchToArgb(l, e.c, e.h) & 0x00FFFFFF),
     );

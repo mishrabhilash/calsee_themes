@@ -66,7 +66,7 @@ Prefix commands with `export PATH=~/flutter-3.47.6/bin:$PATH && ...`
 ## Commands
 
 ```bash
-flutter test                                    # 697 tests, run on both toolchains
+flutter test                                    # 698 tests, run on both toolchains
 flutter analyze                                 # must be "No issues found" on 3.47.6
 dart format --output=none --set-exit-if-changed lib test example/lib example/screenshots
 (cd example && flutter analyze)
