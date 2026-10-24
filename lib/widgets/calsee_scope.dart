@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:calsee_themes/calc_theme.dart';
 import 'package:calsee_themes/engine/theme_feed.dart';
+import 'package:calsee_themes/engine/theme_intent.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
 import 'package:calsee_themes/render/theme_resolver.dart';
 import 'package:flutter/widgets.dart';
@@ -19,16 +20,27 @@ class CalseeThemeController extends ChangeNotifier {
   ///
   /// [accessible] keeps only themes that also pass the stricter contrast
   /// checks (the Accessible themes setting in Calsee).
+  ///
+  /// [intent] steers new themes (see [intent]); a fresh feed then starts
+  /// on the intent's centred theme. A restored feed already steered by an
+  /// equal intent stays where it was.
   CalseeThemeController({
     Iterable<ThemeFamily>? families,
     Object? savedState,
     int? seed,
     bool accessible = false,
+    ThemeIntent? intent,
   }) : _feed = savedState == null
-           ? ThemeFeed(feedSeed: seed ?? ThemeFeed.randomFeedSeed())
+           ? ThemeFeed(
+               feedSeed: seed ?? ThemeFeed.randomFeedSeed(),
+               intent: intent,
+             )
            : ThemeFeed.fromJson(savedState),
        _accessible = accessible {
     if (families != null) this.families = families;
+    if (savedState != null && intent != null && intent != _feed.intent) {
+      _feed.steer(intent);
+    }
   }
 
   final ThemeFeed _feed;
@@ -62,6 +74,22 @@ class CalseeThemeController extends ChangeNotifier {
   set accessible(bool value) {
     if (value == _accessible) return;
     _accessible = value;
+    notifyListeners();
+  }
+
+  /// The intent new themes are steered by; null for the ordinary feed.
+  ThemeIntent? get intent => _feed.intent;
+
+  /// Steers new themes by [value] and shows the first of them, centred on
+  /// it (back returns to the theme before). Null or an empty intent goes
+  /// back to the ordinary feed without changing the current theme.
+  ///
+  /// Only some families honour steering (`steerableFamilies`); with no
+  /// families in the intent, the feed draws from those.
+  set intent(ThemeIntent? value) {
+    final empty = value == null || value.isEmpty;
+    if (empty ? _feed.intent == null : value == _feed.intent) return;
+    _feed.steer(value);
     notifyListeners();
   }
 
@@ -106,6 +134,7 @@ class CalseeScope extends StatefulWidget {
     this.families,
     this.savedState,
     this.seed,
+    this.intent,
     this.onChanged,
     this.duration = const Duration(milliseconds: 420),
     this.curve = Curves.easeInOutCubic,
@@ -129,6 +158,10 @@ class CalseeScope extends StatefulWidget {
   /// Where a fresh feed starts (random when null); ignored with
   /// [controller].
   final int? seed;
+
+  /// Steers the feed ([CalseeThemeController.intent]); ignored with
+  /// [controller]. Later changes are applied too.
+  final ThemeIntent? intent;
 
   /// Called with the feed state after every theme change, to persist it.
   final ValueChanged<Object>? onChanged;
@@ -166,6 +199,7 @@ class _CalseeScopeState extends State<CalseeScope> {
         families: widget.families,
         savedState: widget.savedState,
         seed: widget.seed,
+        intent: widget.intent,
       ));
 
   @override
@@ -214,6 +248,9 @@ class _CalseeScopeState extends State<CalseeScope> {
     if (old != _controller) {
       old?.removeListener(_changed);
       _controller.addListener(_changed);
+    }
+    if (widget.controller == null && widget.intent != oldWidget.intent) {
+      _controller.intent = widget.intent;
     }
   }
 

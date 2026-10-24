@@ -29,6 +29,9 @@ read.
   (checkboxes, radios, switches, segmented buttons, sliders, dropdowns,
   expandable sections and text fields), plus backdrops with ambient
   artwork, display panels and display text.
+- **Steerable.** Describe a look (colours, light or dark, how colourful)
+  and the feed generates endless variations on it. Pair it with an
+  on-device model to turn "playful greenery" into themes.
 - **Readable by construction.** Every generated theme passes contrast
   guardrails, including colour-blindness checks. There's an accessible
   mode with stricter contrast, and the widgets follow High Contrast,
@@ -154,6 +157,44 @@ pentagon shapes) and **Bauhaus** (circles and triangles). On screens where
 one button must always look like a plain button, such as a checkout or
 sign-in button, leave those two out.
 
+## Steering themes from words
+
+A `ThemeIntent` describes the look you want. Every field is optional:
+
+```dart
+final themes = CalseeThemeController(
+  intent: ThemeIntent(
+    brightness: ThemeBrightness.light,
+    colors: const [IntentColor.green, IntentColor.lime],
+    chroma: IntentChroma.vivid,
+    harmony: HarmonyScheme.analogous,
+    name: 'Playful Greenery',
+  ),
+);
+// Later: themes.intent = …; or null for the normal feed.
+```
+
+The feed then shows endless variations on the intent, starting with the
+one closest to its centre. Every theme still passes the contrast
+guardrails. Material 3 Expressive, NeoPOP and Claymorphism honour
+steering (`steerableFamilies`). Other families take only the name.
+`intent.reportFor(family)` lists the hints a family can't follow, for
+example "light" for NeoPOP, which is dark-only.
+
+To turn a user's words into an intent, give a model the format and parse
+what it returns:
+
+```dart
+final prompt = ThemeIntent.promptFragment(); // or ThemeIntent.jsonSchema()
+final result = ThemeIntent.parse(modelOutput); // never throws
+themes.intent = result.intent; // result.dropped lists what was ignored
+```
+
+`ThemeIntent.vocabulary` has every field and value, each with a one-line
+description, so you can build your own prompt or schema. The package
+never sees the user's words, and nothing leaves the device unless your
+app sends it.
+
 ## Accessibility
 
 - Every theme passes contrast guardrails for text, keys and the display.
@@ -169,8 +210,9 @@ sign-in button, leave those two out.
 
 - `themeOfTheDay(DateTime.now())` gives every user the same theme on a
   given day. Show it with `controller.jumpTo(...)`.
-- Share codes (`encodeShareCode`, `decodeShareCode`) let users send
-  each other a theme.
+- Share codes (`FeedEntry.shareCode`, `decodeShareCode`,
+  `FeedEntry.fromSharePayload`) let users send each other a theme.
+  Steered themes get a longer code that carries the intent.
 - `CalcThemeData` (from `CalcTheme.of`) exposes the colours, fonts,
   springs and renderers behind every widget here.
 

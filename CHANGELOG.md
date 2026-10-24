@@ -1,3 +1,36 @@
+## 2.0.0
+
+Steering: generate themes that match a description.
+
+- `ThemeIntent` describes the look a host wants: colours (26 named, such
+  as green, navy or lavender), light or dark, how colourful, colour
+  harmony and an optional name. A host builds one from the user's words
+  however it likes (an on-device model, mood chips) and passes it to
+  `CalseeThemeController(intent: …)`, `CalseeScope(intent: …)`,
+  `ThemeFeed.steer` or `ThemeGenerator.generate(intent: …)`. The package
+  never sees the words.
+- Steered themes are endless variations on the intent, and the first one
+  sits at its centre. Every contrast guardrail still runs.
+- Material 3 Expressive, NeoPOP and Claymorphism honour steering
+  (`steerableFamilies`). Other families take only the name. Use
+  `ThemeIntent.reportFor(family)` to see which hints a family can't
+  follow.
+- For model output: `ThemeIntent.parse` reads loose JSON and never throws.
+  `ThemeIntent.vocabulary` gives every field and value with a one-line
+  description, and `ThemeIntent.jsonSchema()` and
+  `ThemeIntent.promptFragment()` are generated from it.
+- Engine version 4. Unsteered themes are the same as version 3 apart
+  from the version number, and versions 1 to 3 still reproduce exactly.
+- Steered themes have a longer, 25-symbol share code that carries the
+  intent. `shareCodeStatus` tells an invalid code apart from one made by
+  a newer app. Links can carry a theme name (`?name=`). Builds before
+  2.0.0 reject steered codes as invalid.
+- `FeedEntry.shareCode` and `FeedEntry.fromSharePayload` turn feed
+  entries into share codes and back.
+
+**Breaking:** `ThemeVariant` has a new value, `steered`. A `switch` over
+`ThemeVariant` without a default needs a `case ThemeVariant.steered`.
+
 ## 1.1.1
 
 - Vaporwave's π and its maths operator glyphs (+ − × ÷ = ±) now draw in

@@ -8,6 +8,11 @@
 /// (feed seed, k, filter at the time), so [ThemeFeed.upcoming] can predict
 /// exactly what [ThemeFeed.next] will return. State round-trips through
 /// [ThemeFeed.toJson] / [ThemeFeed.fromJson] for persistence.
+///
+/// Engine v4 adds steering: [ThemeFeed.steer] sets a `ThemeIntent`, and
+/// every new theme after it is generated under it (no heroes), the first
+/// one centred on the intent. Entries carry their intent, so history keeps
+/// working after the intent changes.
 library;
 
 import 'dart:math' show Random;
@@ -16,29 +21,38 @@ import 'package:calsee_themes/engine/families.dart';
 import 'package:calsee_themes/engine/generator.dart';
 import 'package:calsee_themes/engine/heroes.dart';
 import 'package:calsee_themes/engine/rng.dart';
+import 'package:calsee_themes/engine/share_code.dart';
+import 'package:calsee_themes/engine/theme_intent.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
 import 'package:meta/meta.dart';
 
 // ---------------------------------------------------------------- entries --
 
 /// A reproducible recipe for one theme: a generated (seed, family,
-/// engineVersion) or a hero id.
+/// engineVersion [, intent, centred]) or a hero id.
 @immutable
 final class FeedEntry {
-  /// A generated theme.
+  /// A generated theme; [intent] (engine v4+) steers it, [centred] puts
+  /// it at the middle of the intent's ranges.
   const FeedEntry.generated({
     required int this.seed,
     required ThemeFamily this.family,
     this.engineVersion = currentEngineVersion,
+    this.intent,
+    this.centred = false,
   }) : heroId = null;
 
   /// A hand-crafted hero.
   const FeedEntry.hero(int this.heroId)
     : seed = null,
       family = null,
-      engineVersion = currentEngineVersion;
+      engineVersion = currentEngineVersion,
+      intent = null,
+      centred = false;
 
-  /// The entry for [spec] (heroes by id, everything else by recipe).
+  /// The entry for [spec] (heroes by id, everything else by recipe). A
+  /// steered spec's entry takes [ThemeSpec.name] as its intent's name, so
+  /// it regenerates the same spec.
   factory FeedEntry.ofSpec(ThemeSpec spec) =>
       spec.variant == ThemeVariant.hero && spec.heroId != null
       ? FeedEntry.hero(spec.heroId!)
@@ -46,6 +60,10 @@ final class FeedEntry {
           seed: spec.seed,
           family: spec.family,
           engineVersion: spec.engineVersion,
+          intent: spec.variant == ThemeVariant.steered && spec.intent != null
+              ? spec.intent!.withName(spec.name)
+              : null,
+          centred: spec.intentCentred,
         );
 
   /// Parses [toJson] output; null for entries this build cannot reproduce
@@ -70,13 +88,63 @@ final class FeedEntry {
       // A recipe for a family that version never shipped cannot be
       // reproduced (placeholder definitions change when it ships).
       if (!familyShippedAt(family, version)) return null;
+      final rawIntent = json['intent'];
+      final intent = rawIntent == null
+          ? null
+          : ThemeIntent.fromJson(rawIntent).forEntry;
+      if (intent != null && version < firstSteerableEngineVersion) {
+        return null;
+      }
       return FeedEntry.generated(
         seed: seed & 0xFFFFFFFF,
         family: family,
         engineVersion: version,
+        intent: intent == null || intent.isEmpty ? null : intent,
+        centred: intent != null && json['centred'] == true,
       );
     }
     return null;
+  }
+
+  /// The entry a decoded share code (or link) names, or null when this
+  /// build cannot reproduce it (unknown family or hero, unshipped family,
+  /// newer engine version). A link's name becomes the steered intent's.
+  static FeedEntry? fromSharePayload(SharePayload payload) {
+    if (payload.isHero) {
+      return heroById(payload.seed) == null
+          ? null
+          : FeedEntry.hero(payload.seed);
+    }
+    final intent = payload.intent;
+    return fromJson({
+      'kind': 'generated',
+      'seed': payload.seed,
+      'family': payload.familyId,
+      'engineVersion': payload.engineVersion,
+      'intent':
+          ?(payload.name == null ? intent : intent?.withName(payload.name))
+              ?.toJson(),
+      'centred': payload.centred,
+    });
+  }
+
+  /// This entry's share code: plain for heroes and unsteered themes, the
+  /// longer steered form for steered ones (its name is not in the code;
+  /// pass it to `formatThemeDeepLink`).
+  String get shareCode {
+    if (heroId != null) {
+      return encodeShareCode(shareFamilyHero, engineVersion, heroId!);
+    }
+    final i = intent;
+    return i == null
+        ? encodeShareCode(family!.id, engineVersion, seed!)
+        : encodeSteeredShareCode(
+            family!.id,
+            engineVersion,
+            seed!,
+            i,
+            centred: centred,
+          );
   }
 
   /// 32-bit seed (generated entries).
@@ -90,6 +158,13 @@ final class FeedEntry {
 
   /// Hero id (hero entries).
   final int? heroId;
+
+  /// The steering intent (generated entries, engine v4+), without
+  /// families; null when unsteered.
+  final ThemeIntent? intent;
+
+  /// Whether a steered entry is generated centred on its intent.
+  final bool centred;
 
   bool get isHero => heroId != null;
 
@@ -111,6 +186,8 @@ final class FeedEntry {
       family!,
       engineVersion,
       accessible: accessible,
+      intent: intent,
+      intentCentred: centred,
     );
   }
 
@@ -121,6 +198,8 @@ final class FeedEntry {
           'seed': seed,
           'family': family!.id,
           'engineVersion': engineVersion,
+          'intent': ?intent?.toJson(),
+          if (intent != null && centred) 'centred': true,
         };
 
   @override
@@ -129,16 +208,20 @@ final class FeedEntry {
       other.seed == seed &&
       other.family == family &&
       other.engineVersion == engineVersion &&
-      other.heroId == heroId;
+      other.heroId == heroId &&
+      other.intent == intent &&
+      other.centred == centred;
 
   @override
-  int get hashCode => Object.hash(seed, family, engineVersion, heroId);
+  int get hashCode =>
+      Object.hash(seed, family, engineVersion, heroId, intent, centred);
 
   @override
   String toString() => heroId != null
       ? 'FeedEntry.hero($heroId)'
       : 'FeedEntry(${family!.name}, 0x${seed!.toRadixString(16)}, '
-            'v$engineVersion)';
+            'v$engineVersion${intent == null ? '' : ', $intent'}'
+            '${centred ? ', centred' : ''})';
 }
 
 // ----------------------------------------------------------------- filter --
@@ -222,15 +305,23 @@ typedef PrefetchHook = void Function(List<FeedEntry> upcoming);
 final class ThemeFeed {
   /// A new feed for [feedSeed] (use [randomFeedSeed] on first launch and
   /// persist it). The first theme is [initial], or step 0 of the feed.
+  ///
+  /// With [intent], the feed starts steered: step 0 is the intent's
+  /// centred theme.
   ThemeFeed({
     required int feedSeed,
     FeedFilter filter = const FeedFilter.surpriseMe(),
     FeedEntry? initial,
+    ThemeIntent? intent,
     this.maxHistory = defaultMaxHistory,
     this.prefetchCount = 3,
     this.onPrefetch,
   }) : _filter = filter,
        feedSeed = feedSeed & 0xFFFFFFFF {
+    if (intent != null && !intent.isEmpty) {
+      _intent = intent;
+      _intentStep = 0;
+    }
     if (initial != null) {
       _history.add(initial);
     } else {
@@ -281,6 +372,15 @@ final class ThemeFeed {
       feed._trim();
     }
     feed.locked = j['locked'] == true;
+    final intent = j['intent'] == null
+        ? null
+        : ThemeIntent.fromJson(j['intent']);
+    final intentStep = j['intentStep'];
+    if (intent != null && !intent.isEmpty && intentStep is int) {
+      feed
+        .._intent = intent
+        .._intentStep = intentStep;
+    }
     return feed;
   }
 
@@ -305,7 +405,8 @@ final class ThemeFeed {
   static const int heroGapMin = 8;
   static const int heroGapMax = 12;
 
-  /// JSON layout version.
+  /// JSON layout version. Steering added optional keys (`intent`,
+  /// `intentStep`) without a bump: older builds ignore them.
   static const int jsonFormat = 1;
 
   final int feedSeed;
@@ -327,6 +428,8 @@ final class ThemeFeed {
   final List<FeedEntry> _history = [];
   int _cursor = 0;
   int _steps = 0;
+  ThemeIntent? _intent;
+  int _intentStep = 0;
   final List<int> _heroSteps = [];
   Rng? _heroGaps;
   List<int>? _heroOrder;
@@ -351,6 +454,55 @@ final class ThemeFeed {
     if (value == _filter) return;
     _filter = value;
     _notify();
+  }
+
+  /// The steering intent new themes follow; null when unsteered.
+  ThemeIntent? get intent => _intent;
+
+  /// Steers new themes by [intent] (engine v4) and moves to the first of
+  /// them, centred on the intent (forward history is dropped, as with
+  /// [jumpTo]; back returns to where the user was). Steered steps have no
+  /// heroes and draw from [steeredFamilies]. A null or empty intent stops
+  /// steering without moving. Works while [locked] (an explicit apply).
+  FeedEntry steer(ThemeIntent? intent) {
+    if (intent == null || intent.isEmpty) {
+      if (_intent != null) {
+        _intent = null;
+        _notify();
+      }
+      return current;
+    }
+    _intent = intent;
+    _intentStep = _steps;
+    _history
+      ..removeRange(_cursor + 1, _history.length)
+      ..add(entryAt(_steps));
+    _steps++;
+    _cursor++;
+    _trim();
+    _notify();
+    return current;
+  }
+
+  /// The families steered steps draw from: the intent's families allowed
+  /// by the filter (the intent's own when none is); with no intent
+  /// families, the filter's [steerableFamilies] (the whole filter when
+  /// none is steerable).
+  List<ThemeFamily> get steeredFamilies {
+    final base = _filter.families;
+    final asked = _intent?.families ?? const <ThemeFamily>[];
+    if (asked.isNotEmpty) {
+      final both = [
+        for (final f in base)
+          if (asked.contains(f)) f,
+      ];
+      return both.isNotEmpty ? both : asked;
+    }
+    final steerable = [
+      for (final f in base)
+        if (steerableFamilies.contains(f)) f,
+    ];
+    return steerable.isNotEmpty ? steerable : base;
   }
 
   bool get canGoBack => !locked && _cursor > 0;
@@ -409,7 +561,27 @@ final class ThemeFeed {
   /// The entry for new-theme step [step] under the current filter: a hero
   /// on hero steps (every 8–12 steps, seeded), otherwise a generated theme
   /// whose seed and family come from `Rng.stream(feedSeed, 'feed/step/k')`.
+  ///
+  /// While steering, steps from the one [steer] started at are generated
+  /// under the intent from [steeredFamilies] (that first step centred),
+  /// with no heroes.
   FeedEntry entryAt(int step) {
+    final intent = _intent;
+    if (intent != null && step >= _intentStep) {
+      final families = steeredFamilies;
+      final r = Rng.stream(feedSeed, RngTag.sub(RngTag.feed, 'step', step));
+      final seed = r.nextU32();
+      final family = families[r.nextInt(families.length)];
+      final recipe = intent.forEntry;
+      return recipe.isEmpty
+          ? FeedEntry.generated(seed: seed, family: family)
+          : FeedEntry.generated(
+              seed: seed,
+              family: family,
+              intent: recipe,
+              centred: step == _intentStep,
+            );
+    }
     final families = _filter.families;
     final heroIndex = _heroIndexAt(step);
     if (heroIndex != null) {
@@ -490,6 +662,8 @@ final class ThemeFeed {
     'history': [for (final e in _history) e.toJson()],
     'filter': _filter.toJson(),
     'locked': locked,
+    if (_intent != null) 'intent': _intent!.toJson(),
+    if (_intent != null) 'intentStep': _intentStep,
   };
 }
 

@@ -2,7 +2,7 @@ name: calsee_themes
 description: >-
   Endless generated themes for Flutter apps: swipe for a new look in twelve
   families, with themed keys, backdrops and displays. From Calsee.
-version: 1.1.1
+version: 2.0.0
 homepage: https://calsee.tech
 repository: https://github.com/mishrabhilash/calsee_themes
 issue_tracker: https://github.com/mishrabhilash/calsee_themes/issues

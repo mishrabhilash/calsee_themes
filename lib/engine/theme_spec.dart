@@ -1,7 +1,7 @@
 /// The theme data model (spec §5.1; docs/m3-theme-engine-design.md).
 ///
 /// A [ThemeSpec] is a pure function of (seed, family, engineVersion
-/// [, accessible]). Every field is an integer, a bool, a string or an enum,
+/// [, accessible] [, intent, centred]). Every field is an integer, a bool, a string or an enum,
 /// so `toJson` and [ThemeSpec.stableHash] are identical on every run and
 /// platform. Colours are opaque-or-translucent `int` ARGB (`0xAARRGGBB`).
 /// Dimensions are integers in hundredths of a dp (`…Cdp`), fractions in
@@ -15,6 +15,7 @@ import 'dart:convert';
 
 import 'package:calsee_themes/engine/families.dart';
 import 'package:calsee_themes/engine/rng.dart' show mul32;
+import 'package:calsee_themes/engine/theme_intent.dart';
 import 'package:meta/meta.dart';
 
 export 'package:calsee_themes/engine/families.dart' show ThemeFamily;
@@ -197,7 +198,10 @@ enum OperatorCue {
   pattern,
 }
 
-/// Generated, hand-crafted hero, or device-derived variant.
+/// Generated, hand-crafted hero, device-derived or steered variant.
+///
+/// Values are only ever added (2.0.0 added [steered]): switch over them
+/// with a default, or expect new cases in major releases.
 enum ThemeVariant {
   generated,
   hero,
@@ -205,6 +209,10 @@ enum ThemeVariant {
   /// M3E "Match my wallpaper" (device-dependent; not share-code
   /// reproducible).
   wallpaper,
+
+  /// Generated under a `ThemeIntent` (engine v4+); [ThemeSpec.intent]
+  /// holds it.
+  steered,
 }
 
 T _enumByName<T extends Enum>(List<T> values, Object? name, String field) {
@@ -1428,6 +1436,8 @@ final class ThemeSpec {
     this.variant = ThemeVariant.generated,
     this.heroId,
     this.seedHueTenths,
+    this.intent,
+    this.intentCentred = false,
     this.accessible = false,
     this.effects = EffectsSpec.none,
     this.nonColourOperatorCue = OperatorCue.none,
@@ -1449,6 +1459,8 @@ final class ThemeSpec {
       variant: _enumByName(ThemeVariant.values, j['variant'], 'variant'),
       heroId: _intOrNull(j, 'heroId'),
       seedHueTenths: _intOrNull(j, 'seedHueTenths'),
+      intent: j['intent'] == null ? null : ThemeIntent.fromJson(j['intent']),
+      intentCentred: j['intentCentred'] == true,
       brightness: _enumByName(
         ThemeBrightness.values,
         j['brightness'],
@@ -1498,6 +1510,15 @@ final class ThemeSpec {
   /// JSON and stable hash are unchanged.
   final int? seedHueTenths;
 
+  /// The steering intent of a [ThemeVariant.steered] theme (without its
+  /// families and name: the name is [name]); null otherwise. Serialised
+  /// only when set, like [seedHueTenths].
+  final ThemeIntent? intent;
+
+  /// Whether a steered theme was generated centred (the first theme of a
+  /// steered feed: every narrowed choice at the middle of its range).
+  final bool intentCentred;
+
   final ThemeBrightness brightness;
 
   /// Generated under the Accessible lock (labels ≥ 7:1, rims ≥ 3:1).
@@ -1532,6 +1553,8 @@ final class ThemeSpec {
     ThemeVariant? variant,
     int? heroId,
     int? seedHueTenths,
+    ThemeIntent? intent,
+    bool? intentCentred,
     ThemeBrightness? brightness,
     bool? accessible,
     Palette? palette,
@@ -1551,6 +1574,8 @@ final class ThemeSpec {
     variant: variant ?? this.variant,
     heroId: heroId ?? this.heroId,
     seedHueTenths: seedHueTenths ?? this.seedHueTenths,
+    intent: intent ?? this.intent,
+    intentCentred: intentCentred ?? this.intentCentred,
     brightness: brightness ?? this.brightness,
     accessible: accessible ?? this.accessible,
     palette: palette ?? this.palette,
@@ -1574,6 +1599,8 @@ final class ThemeSpec {
     'variant': variant.name,
     'heroId': heroId,
     'seedHueTenths': ?seedHueTenths,
+    'intent': ?intent?.toJson(),
+    if (intentCentred) 'intentCentred': true,
     'brightness': brightness.name,
     'accessible': accessible,
     'palette': palette.toJson(),
@@ -1607,6 +1634,8 @@ final class ThemeSpec {
           other.variant == variant &&
           other.heroId == heroId &&
           other.seedHueTenths == seedHueTenths &&
+          other.intent == intent &&
+          other.intentCentred == intentCentred &&
           other.brightness == brightness &&
           other.accessible == accessible &&
           other.palette == palette &&

@@ -23,6 +23,9 @@
 /// 4. `background` stream: solid / gradient / pattern; then display,
 ///    preview, error and accent colours solved against every backdrop.
 /// 5. `shape`, `style`, `type`, `motion` and `name` streams.
+///
+/// Engine v4 adds steering: a `ThemeIntent` narrows the palette draws of
+/// the steerable families (steering.dart) without removing any draw.
 library;
 
 import 'package:calsee_themes/engine/bauhaus.dart';
@@ -41,6 +44,8 @@ import 'package:calsee_themes/engine/oklab.dart';
 import 'package:calsee_themes/engine/paper_ink.dart';
 import 'package:calsee_themes/engine/retro.dart';
 import 'package:calsee_themes/engine/rng.dart';
+import 'package:calsee_themes/engine/steering.dart';
+import 'package:calsee_themes/engine/theme_intent.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
 import 'package:calsee_themes/engine/vaporwave.dart';
 import 'package:calsee_themes/engine/y2k_aero.dart';
@@ -60,10 +65,14 @@ import 'package:calsee_themes/engine/y2k_aero.dart';
 /// - v3: one pocket Retro theme in three plays the 8-bit chiptune pack
 ///   (sound stream only; no visual change). Pinned by
 ///   fixtures/retro_v3.json.
-const int currentEngineVersion = 3;
+/// - v4: steering (`ThemeIntent`; M3 Expressive, NeoPOP and Claymorphism
+///   honour it). Unsteered v4 output equals v3 apart from the version
+///   number; pinned by fixtures/generator_v4.json and
+///   fixtures/steered_v4.json.
+const int currentEngineVersion = 4;
 
 /// Generator versions this build can reproduce exactly.
-const Set<int> supportedEngineVersions = {1, 2, 3};
+const Set<int> supportedEngineVersions = {1, 2, 3, 4};
 
 /// Thrown for an `engineVersion` this build cannot reproduce (newer than
 /// [currentEngineVersion]): show "update the app to open this theme".
@@ -99,12 +108,21 @@ final class ThemeGenerator {
   /// base-hue draw (every other draw is unchanged), the result is marked
   /// [ThemeVariant.wallpaper], and every guardrail runs exactly as for a
   /// generated theme.
+  ///
+  /// [intent] (engine v4+) steers the theme: steerable families narrow
+  /// their palette draws to it, every family takes its name, and the result
+  /// is marked [ThemeVariant.steered]. [intentCentred] puts each narrowed
+  /// choice at the middle of its range (the first theme of a steered
+  /// feed). An empty intent is no intent. When every attempt fails, the
+  /// fallback is the hero closest to the intent.
   ThemeSpec generate(
     int seed,
     ThemeFamily family,
     int engineVersion, {
     bool accessible = false,
     int? seedHueTenths,
+    ThemeIntent? intent,
+    bool intentCentred = false,
   }) {
     if (!supportedEngineVersions.contains(engineVersion)) {
       throw UnsupportedEngineVersion(engineVersion);
@@ -126,6 +144,12 @@ final class ThemeGenerator {
         'only Material 3 Expressive has a wallpaper variant',
       );
     }
+    final steering = _steering(
+      intent,
+      intentCentred,
+      engineVersion,
+      seedHueTenths,
+    );
     final s = seed & 0xFFFFFFFF;
     for (var attempt = 0; attempt < maxAttempts; attempt++) {
       final candidate = buildCandidate(
@@ -135,11 +159,41 @@ final class ThemeGenerator {
         attempt: attempt,
         accessible: accessible,
         seedHueTenths: seedHueTenths,
+        intent: steering?.intent,
+        intentCentred: intentCentred,
       );
       final fixed = repairTheme(candidate);
       if (fixed != null) return fixed;
     }
+    if (steering != null) {
+      return heroForAccessible(
+        steering.closestHero(s, family),
+        accessible: accessible,
+      );
+    }
     return heroFallback(s, family, accessible: accessible);
+  }
+
+  /// The steering for [intent], or null for no (or an empty) intent.
+  static Steering? _steering(
+    ThemeIntent? intent,
+    bool centred,
+    int engineVersion,
+    int? seedHueTenths,
+  ) {
+    final i = intent?.forEntry;
+    if (i == null || i.isEmpty) return null;
+    if (engineVersion < firstSteerableEngineVersion) {
+      throw ArgumentError.value(
+        engineVersion,
+        'engineVersion',
+        'steering needs engine version $firstSteerableEngineVersion+',
+      );
+    }
+    if (seedHueTenths != null) {
+      throw ArgumentError('a theme is either wallpaper or steered');
+    }
+    return Steering(i, centred: centred);
   }
 
   /// One unvalidated attempt (tests and diagnostics; [generate] adds repair,
@@ -151,14 +205,39 @@ final class ThemeGenerator {
     int attempt = 0,
     bool accessible = false,
     int? seedHueTenths,
+    ThemeIntent? intent,
+    bool intentCentred = false,
   }) {
-    final def =
+    final shipped =
         familyDefinitionAt(family, engineVersion) ??
         (throw ArgumentError.value(
           family,
           'family',
           'not shipped at engine version $engineVersion',
         ));
+    final steering = _steering(
+      intent,
+      intentCentred,
+      engineVersion,
+      seedHueTenths,
+    );
+    if (steering != null && !steerableFamilies.contains(family)) {
+      // Not steerable yet: the family's own theme, with the intent's name.
+      final spec = buildCandidate(
+        seed,
+        family,
+        engineVersion,
+        attempt: attempt,
+        accessible: accessible,
+      );
+      return spec.copyWith(
+        variant: ThemeVariant.steered,
+        intent: steering.intent.forSpec,
+        intentCentred: steering.centred,
+        name: steering.nameOr(() => spec.name),
+      );
+    }
+    final def = steering == null ? shipped : steering.revise(shipped);
     // The six families of the 2026-10 round each build their own palette,
     // background scene, shape, style, type and motion from the same named
     // streams (their own files).
@@ -169,6 +248,7 @@ final class ThemeGenerator {
         engineVersion,
         attempt: attempt,
         accessible: accessible,
+        steering: steering,
       );
     }
     if (family == ThemeFamily.y2kChrome) {
@@ -266,17 +346,31 @@ final class ThemeGenerator {
       );
     }
     final p = Rng.stream(seed, paletteTag);
-    final brightness = p.pickWeighted(def.brightnessWeights) == 0
+    final drawnBrightness = p.pickWeighted(def.brightnessWeights) == 0
         ? ThemeBrightness.dark
         : ThemeBrightness.light;
+    final brightness = steering?.brightnessFor(def) ?? drawnBrightness;
     final dark = brightness == ThemeBrightness.dark;
     final ranges = def.ranges(brightness);
-    final scheme = pickWeightedValue(p, def.schemes);
-    final hues = _Hues.draw(
+    final drawnScheme = pickWeightedValue(p, def.schemes);
+    final scheme = steering?.schemeFor(def.schemes) ?? drawnScheme;
+    final ir = steering == null
+        ? null
+        : Rng.stream(seed, intentTag(paletteTag));
+    final steeredH0 = ir == null ? null : steering!.baseHue(ir);
+    var hues = _Hues.draw(
       scheme,
       p,
-      h0Override: seedHueTenths == null ? null : _wrapTenths(seedHueTenths),
+      h0Override: seedHueTenths == null
+          ? steeredH0
+          : _wrapTenths(seedHueTenths),
     );
+    if (ir != null) {
+      hues = hues.withAccents(
+        steering!.accentHue(ir, 0),
+        steering.accentHue(ir, 1),
+      );
+    }
     final lim = accessible
         ? GuardrailLimits.accessible
         : GuardrailLimits.standard;
@@ -402,21 +496,24 @@ final class ThemeGenerator {
     final (keyShape, cue) = _shape(Rng.stream(seed, RngTag.shape), def);
     final keyStyle = _style(Rng.stream(seed, RngTag.style), def, motion);
     final type = _type(Rng.stream(seed, RngTag.type), def);
-    final name = generateThemeName(
+    String generatedName() => generateThemeName(
       rng: Rng.stream(seed, RngTag.name),
       accentArgb: operator.face,
       family: family,
       dark: dark,
     );
+    final name = steering?.nameOr(generatedName) ?? generatedName();
 
     return ThemeSpec(
       seed: seed,
       family: family,
       engineVersion: engineVersion,
-      variant: seedHueTenths == null
-          ? ThemeVariant.generated
-          : ThemeVariant.wallpaper,
+      variant: seedHueTenths != null
+          ? ThemeVariant.wallpaper
+          : (steering != null ? ThemeVariant.steered : ThemeVariant.generated),
       seedHueTenths: seedHueTenths == null ? null : _wrapTenths(seedHueTenths),
+      intent: steering?.intent.forSpec,
+      intentCentred: steering?.centred ?? false,
       brightness: brightness,
       accessible: accessible,
       palette: palette,
@@ -486,6 +583,19 @@ final class _Hues {
   final int function;
   final int operator;
   final int equals;
+
+  /// These hues with the operator and `=` hues replaced where given (the
+  /// steered accent colours).
+  _Hues withAccents(int? operator, int? equals) =>
+      operator == null && equals == null
+      ? this
+      : _Hues(
+          h0: h0,
+          digit: digit,
+          function: function,
+          operator: operator ?? this.operator,
+          equals: equals ?? this.equals,
+        );
 }
 
 /// Whether operator and `=` share (roughly) one hue under [scheme].

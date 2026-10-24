@@ -109,6 +109,43 @@ void main() {
     }
   });
 
+  test('an intent steers the controller and survives a restore', () {
+    final intent = ThemeIntent(
+      colors: const [IntentColor.teal],
+      brightness: ThemeBrightness.dark,
+      name: 'Deep Lagoon',
+    );
+    final controller = CalseeThemeController(seed: 3, intent: intent);
+    addTearDown(controller.dispose);
+    expect(controller.intent, intent);
+    expect(controller.spec.variant, ThemeVariant.steered);
+    expect(controller.spec.name, 'Deep Lagoon');
+    expect(controller.canGoBack, isFalse);
+
+    var changes = 0;
+    controller.addListener(() => changes++);
+    controller.intent = intent; // unchanged: no move
+    expect(changes, 0);
+    final first = controller.spec;
+    controller.next();
+    expect(controller.spec.variant, ThemeVariant.steered);
+
+    final restored = CalseeThemeController(
+      savedState: controller.toJson(),
+      intent: intent,
+    );
+    addTearDown(restored.dispose);
+    expect(restored.spec, controller.spec);
+    restored.previous();
+    expect(restored.spec, first);
+
+    controller.intent = null;
+    expect(controller.intent, isNull);
+    expect(changes, 2);
+    controller.next();
+    expect(controller.spec.variant, isNot(ThemeVariant.steered));
+  });
+
   testWidgets('display text follows where it sits', (tester) async {
     late CalseeTextColors outside;
     late CalseeTextColors inside;

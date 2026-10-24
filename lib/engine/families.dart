@@ -1049,52 +1049,59 @@ final Map<int, Map<ThemeFamily, FamilyDefinition>> familyDefinitionsByVersion =
       // instead of the calculator beep (buildRetroCandidate, on the sound
       // stream, so the look of every theme is unchanged). Other families'
       // output is the same as v2 apart from the version number.
-      3: {
-        ThemeFamily.m3Expressive: m3ExpressiveDefinition.revise(
-          light: standardLightRangesV2,
-          bile: BileRule.v2,
-        ),
-        ThemeFamily.neoPop: neoPopDefinition.revise(
-          dark: neoPopDarkRangesV2,
-          light: standardLightRangesV2,
-          bile: BileRule.v2,
-        ),
-        ThemeFamily.neumorphism: neumorphismDefinition,
-        ThemeFamily.retro: retroDefinition,
-        ThemeFamily.liquidGlass: liquidGlassDefinition,
-        ThemeFamily.neoBrutalism: neoBrutalismDefinition,
-        // Claymorphism ships at v3 the same way — additive, no other
-        // family's v3 output changes; its palette is built by
-        // `buildClaymorphismCandidate` (claymorphism.dart), pinned by
-        // fixtures/claymorphism_v3.json.
-        ThemeFamily.claymorphism: claymorphismDefinition,
-        // Y2K / Frutiger Aero ships at v3 the same way — additive, no other
-        // family's v3 output changes; its palette is built by
-        // `buildY2kAeroCandidate` (y2k_aero.dart), pinned by
-        // fixtures/y2k_aero_v3.json.
-        ThemeFamily.y2kChrome: y2kAeroDefinition,
-        // Paper & ink ships at v3 the same way — additive, no other
-        // family's v3 output changes; its palette and sheet are built by
-        // `buildPaperInkCandidate` (paper_ink.dart), pinned by
-        // fixtures/paper_ink_v3.json.
-        ThemeFamily.paperInk: paperInkDefinition,
-        // Cyberpunk ships at v3 the same way — additive, no other family's
-        // v3 output changes; its palette is built by
-        // `buildCyberpunkCandidate` (cyberpunk.dart), pinned by
-        // fixtures/cyberpunk_v3.json.
-        ThemeFamily.cyberpunk: cyberpunkDefinition,
-        // Vaporwave ships at v3 the same way — additive, no other family's
-        // v3 output changes; its palette and sunset scene are built by
-        // `buildVaporwaveCandidate` (vaporwave.dart), pinned by
-        // fixtures/vaporwave_v3.json.
-        ThemeFamily.vaporwave: vaporwaveDefinition,
-        // Bauhaus ships at v3 the same way — additive, no other family's
-        // v3 output changes; its palette is built by
-        // `buildBauhausCandidate` (bauhaus.dart), pinned by
-        // fixtures/bauhaus_v3.json.
-        ThemeFamily.bauhaus: bauhausDefinition,
-      },
+      3: _v3Definitions,
+      // v4: steering (ThemeIntent, steering.dart). Every definition is
+      // v3's: unsteered v4 output equals v3 apart from the version number
+      // (pinned by fixtures/generator_v4.json and the v3/v4 parity test).
+      4: _v3Definitions,
     };
+
+/// The v3 (and v4) definitions.
+final Map<ThemeFamily, FamilyDefinition> _v3Definitions = {
+  ThemeFamily.m3Expressive: m3ExpressiveDefinition.revise(
+    light: standardLightRangesV2,
+    bile: BileRule.v2,
+  ),
+  ThemeFamily.neoPop: neoPopDefinition.revise(
+    dark: neoPopDarkRangesV2,
+    light: standardLightRangesV2,
+    bile: BileRule.v2,
+  ),
+  ThemeFamily.neumorphism: neumorphismDefinition,
+  ThemeFamily.retro: retroDefinition,
+  ThemeFamily.liquidGlass: liquidGlassDefinition,
+  ThemeFamily.neoBrutalism: neoBrutalismDefinition,
+  // Claymorphism ships at v3 the same way — additive, no other
+  // family's v3 output changes; its palette is built by
+  // `buildClaymorphismCandidate` (claymorphism.dart), pinned by
+  // fixtures/claymorphism_v3.json.
+  ThemeFamily.claymorphism: claymorphismDefinition,
+  // Y2K / Frutiger Aero ships at v3 the same way — additive, no other
+  // family's v3 output changes; its palette is built by
+  // `buildY2kAeroCandidate` (y2k_aero.dart), pinned by
+  // fixtures/y2k_aero_v3.json.
+  ThemeFamily.y2kChrome: y2kAeroDefinition,
+  // Paper & ink ships at v3 the same way — additive, no other
+  // family's v3 output changes; its palette and sheet are built by
+  // `buildPaperInkCandidate` (paper_ink.dart), pinned by
+  // fixtures/paper_ink_v3.json.
+  ThemeFamily.paperInk: paperInkDefinition,
+  // Cyberpunk ships at v3 the same way — additive, no other family's
+  // v3 output changes; its palette is built by
+  // `buildCyberpunkCandidate` (cyberpunk.dart), pinned by
+  // fixtures/cyberpunk_v3.json.
+  ThemeFamily.cyberpunk: cyberpunkDefinition,
+  // Vaporwave ships at v3 the same way — additive, no other family's
+  // v3 output changes; its palette and sunset scene are built by
+  // `buildVaporwaveCandidate` (vaporwave.dart), pinned by
+  // fixtures/vaporwave_v3.json.
+  ThemeFamily.vaporwave: vaporwaveDefinition,
+  // Bauhaus ships at v3 the same way — additive, no other family's
+  // v3 output changes; its palette is built by
+  // `buildBauhausCandidate` (bauhaus.dart), pinned by
+  // fixtures/bauhaus_v3.json.
+  ThemeFamily.bauhaus: bauhausDefinition,
+};
 
 /// The newest engine version with definitions.
 int get latestDefinedEngineVersion =>

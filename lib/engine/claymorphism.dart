@@ -53,6 +53,7 @@ import 'package:calsee_themes/engine/guardrails.dart';
 import 'package:calsee_themes/engine/names.dart';
 import 'package:calsee_themes/engine/oklab.dart';
 import 'package:calsee_themes/engine/rng.dart';
+import 'package:calsee_themes/engine/steering.dart';
 import 'package:calsee_themes/engine/theme_spec.dart';
 
 // ------------------------------------------------------------- constants --
@@ -100,6 +101,65 @@ const List<Weighted<IntRange>> clayNightBodyHues = [
   Weighted(IntRange(2550, 2650), 1), // midnight blue
   Weighted(IntRange(3450, 3550), 1), // berry
 ];
+
+/// How far (tenths) a steered base hue may sit from every body anchor
+/// before it colours the operators instead of the body (engine v4).
+const int clayAccentFallbackTenths = 300;
+
+/// The body anchor nearest the clockwise hue range (lo, span) in tenths:
+/// its index, the overlap with it (null when none) and the gap (0 when
+/// they overlap). Ties go to the lower index.
+({int index, int? overlapLo, int? overlapSpan, int distance}) clayAnchorFor(
+  List<Weighted<IntRange>> anchors,
+  int lo,
+  int span,
+) {
+  int d(int x, int y) {
+    final v = (x - y).abs() % 3600;
+    return v > 1800 ? 3600 - v : v;
+  }
+
+  bool inside(int h, int from, int width) => (h - from) % 3600 <= width;
+  var best = 0;
+  var bestDistance = 1 << 30;
+  int? bestLo;
+  int? bestSpan;
+  for (var i = 0; i < anchors.length; i++) {
+    final a = anchors[i].value;
+    final aLo = a.lo % 3600;
+    final aSpan = a.hi - a.lo;
+    int? oLo;
+    if (inside(lo, aLo, aSpan)) {
+      oLo = lo;
+    } else if (inside(aLo, lo, span)) {
+      oLo = aLo;
+    }
+    final int distance;
+    int? oSpan;
+    if (oLo != null) {
+      final endA = (aLo + aSpan - oLo) % 3600;
+      final endB = (lo + span - oLo) % 3600;
+      oSpan = endA < endB ? endA : endB;
+      distance = 0;
+    } else {
+      final x = d((lo + span) % 3600, aLo);
+      final y = d((aLo + aSpan) % 3600, lo);
+      distance = x < y ? x : y;
+    }
+    if (distance < bestDistance) {
+      best = i;
+      bestDistance = distance;
+      bestLo = oLo;
+      bestSpan = oSpan;
+    }
+  }
+  return (
+    index: best,
+    overlapLo: bestLo,
+    overlapSpan: bestSpan,
+    distance: bestDistance,
+  );
+}
 
 /// (operator, function, `=`) hue offsets from the body hue (tenths): candy
 /// and night themes.
@@ -496,9 +556,11 @@ int clayEqualsDullHue(int hue, int opHue, {int? nightBodyHue}) {
   return downFirst ? down : up;
 }
 
-/// [range]'s point at [num] / [den] of the way (integer tenths).
-int _spread(IntRange range, int num, int den) =>
-    range.lo + num * (range.hi - range.lo) ~/ den;
+/// [range]'s point at [num] / [den] of the way (integer tenths); its
+/// middle for an empty source range ([den] 0: a centred steered draw).
+int _spread(IntRange range, int num, int den) => den == 0
+    ? range.lo + (range.hi - range.lo) ~/ 2
+    : range.lo + num * (range.hi - range.lo) ~/ den;
 
 /// The full `=` hue rule after the scheme draw: the candy band
 /// ([clayEqualsBand], leaving on the side of [pivot], or the other side
@@ -801,6 +863,7 @@ ThemeSpec buildClaymorphismCandidate(
   int engineVersion, {
   int attempt = 0,
   bool accessible = false,
+  Steering? steering,
 }) {
   final lim = accessible
       ? GuardrailLimits.accessible
@@ -821,7 +884,11 @@ ThemeSpec buildClaymorphismCandidate(
       ? RngTag.palette
       : RngTag.sub(RngTag.palette, 'retry', attempt);
   final p = Rng.stream(seed, paletteTag);
-  final dark = p.pickWeighted(def.brightnessWeights) == 0;
+  final drawnDark = p.pickWeighted(def.brightnessWeights) == 0;
+  final steeredBrightness = steering?.brightnessFor(def);
+  final dark = steeredBrightness == null
+      ? drawnDark
+      : steeredBrightness == ThemeBrightness.dark;
   final brightness = dark ? ThemeBrightness.dark : ThemeBrightness.light;
   final ranges = def.ranges(brightness);
   final variant = dark
@@ -829,8 +896,34 @@ ThemeSpec buildClaymorphismCandidate(
       : ClayVariant.values[p.pickWeighted(clayLightVariantWeights)];
   final tonal = variant == ClayVariant.tonal;
   final anchors = dark ? clayNightBodyHues : clayLightBodyHues;
-  final anchor = p.pickWeighted([for (final a in anchors) a.weight]);
-  final bodyHue = _wrap(anchors[anchor].value.sample(p));
+  final drawnAnchor = p.pickWeighted([for (final a in anchors) a.weight]);
+  final drawnBodyHue = _wrap(anchors[drawnAnchor].value.sample(p));
+  // Steering (engine v4): the body stays on one of the family's anchors —
+  // the one nearest the intent's base hue, inside their overlap. A base
+  // hue far from every anchor colours the operators instead. Steered hues
+  // come from their own sub-stream.
+  final ir = steering == null ? null : Rng.stream(seed, intentTag(paletteTag));
+  final baseDraw = ir?.nextU32();
+  var anchor = drawnAnchor;
+  var bodyHue = drawnBodyHue;
+  int? baseAsAccent;
+  final target = steering?.baseRange;
+  if (steering != null && target != null) {
+    final m = clayAnchorFor(anchors, target.lo, target.span);
+    anchor = m.index;
+    final a = anchors[anchor].value;
+    if (m.overlapSpan != null) {
+      bodyHue = _wrap(steering.pickIn(m.overlapLo!, m.overlapSpan!, baseDraw!));
+    } else {
+      bodyHue = _wrap(steering.pickIn(a.lo, a.hi - a.lo, baseDraw!));
+      if (m.distance > clayAccentFallbackTenths) {
+        baseAsAccent = steering.pickIn(target.lo, target.span, baseDraw);
+      }
+    }
+  }
+  final steeredOpHue =
+      (ir == null ? null : steering!.accentHue(ir, 0)) ?? baseAsAccent;
+  final steeredEqHue = ir == null ? null : steering!.accentHue(ir, 1);
   final butter = !dark && anchor == clayButterAnchor;
   final warmBody = !dark && (anchor == 1 || butter);
   var baseLMilli = ranges.background.lMilli.sample(p);
@@ -856,9 +949,11 @@ ThemeSpec buildClaymorphismCandidate(
   final jOp = tonal ? clayTonalJitter : clayOpJitter;
   final jFn = tonal ? clayTonalJitter : clayFnJitter;
   final jEq = tonal ? clayTonalJitter : clayEqJitter;
-  final rawOpHue = _wrap(bodyHue + scheme.$1 + p.nextJitterTenths(jOp));
+  final drawnOpHue = _wrap(bodyHue + scheme.$1 + p.nextJitterTenths(jOp));
   final rawFnHue = _wrap(bodyHue + scheme.$2 + p.nextJitterTenths(jFn));
-  final rawEqHue = _wrap(bodyHue + scheme.$3 + p.nextJitterTenths(jEq));
+  final drawnEqHue = _wrap(bodyHue + scheme.$3 + p.nextJitterTenths(jEq));
+  final rawOpHue = steeredOpHue ?? drawnOpHue;
+  final rawEqHue = steeredEqHue ?? drawnEqHue;
   final opSign = scheme.$1 >= 0 ? 1 : -1;
   final srcA = tonal ? _wrap(bodyHue + 300 * opSign) : rawOpHue;
   final srcB = tonal ? _wrap(bodyHue - 300 * opSign) : rawFnHue;
@@ -1364,17 +1459,21 @@ ThemeSpec buildClaymorphismCandidate(
     edgeShadePermille: shadePermille,
   );
   final type = _type(Rng.stream(seed, RngTag.type), def);
-  final name = generateThemeName(
+  String generatedName() => generateThemeName(
     rng: Rng.stream(seed, RngTag.name),
     accentArgb: palette.operator.face,
     family: ThemeFamily.claymorphism,
     dark: dark,
   );
+  final name = steering?.nameOr(generatedName) ?? generatedName();
 
   return ThemeSpec(
     seed: seed,
     family: ThemeFamily.claymorphism,
     engineVersion: engineVersion,
+    variant: steering == null ? ThemeVariant.generated : ThemeVariant.steered,
+    intent: steering?.intent.forSpec,
+    intentCentred: steering?.centred ?? false,
     brightness: brightness,
     accessible: accessible,
     palette: palette,

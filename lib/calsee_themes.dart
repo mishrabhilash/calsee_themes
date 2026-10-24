@@ -7,14 +7,29 @@
 /// `CalseeKey`, `CalseeDisplayPanel` and `CalseeReadout`, and let users
 /// swipe a `CalseeSwipeArea` for the next theme. Read colours and fonts
 /// anywhere below with `CalcTheme.of`.
+///
+/// Steer the feed with a `ThemeIntent` (colours, brightness, chroma,
+/// harmony) that a host builds from the user's words, for example with an
+/// on-device model: `CalseeThemeController(intent: …)`.
 library;
 
 export 'calc_theme.dart' show AnimatedCalcTheme, CalcTheme;
 export 'calc_theme_data.dart' show CalcThemeData;
-export 'engine/families.dart' show ThemeFamily;
+export 'engine/families.dart' show HarmonyScheme, ThemeFamily;
 export 'engine/share_code.dart';
 export 'engine/theme_feed.dart' show FeedEntry, themeOfTheDay;
-export 'engine/theme_spec.dart' show ThemeBrightness, ThemeSpec;
+export 'engine/theme_intent.dart'
+    show
+        IntentChroma,
+        IntentColor,
+        IntentField,
+        IntentFieldKind,
+        IntentNote,
+        IntentParseResult,
+        IntentValue,
+        ThemeIntent,
+        steerableFamilies;
+export 'engine/theme_spec.dart' show ThemeBrightness, ThemeSpec, ThemeVariant;
 export 'key_face.dart' show KeyStyle;
 export 'key_role.dart' show KeyRole;
 export 'widgets/calsee_controls.dart';

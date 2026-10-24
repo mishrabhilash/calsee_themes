@@ -10,10 +10,10 @@ Read this before changing anything. The hard rules are in "Rules".
 ## What it is
 
 - **Engine** (`lib/engine/`): pure Dart. It turns (seed, family,
-  engineVersion, accessible) into a `ThemeSpec`, bit-exact on every
-  platform. It also holds the feed (`ThemeFeed`: endless history, back and
-  forward, heroes every 8–12 steps, family filter), share codes, names and
-  the contrast guardrails.
+  engineVersion, accessible[, intent]) into a `ThemeSpec`, bit-exact on
+  every platform. It also holds the feed (`ThemeFeed`: endless history,
+  back and forward, heroes every 8–12 steps, family filter, steering),
+  share codes, names and the contrast guardrails.
 - **Renderers** (`lib/render/`, one folder per family): key faces, display
   faces and ambient backdrops. `ThemeResolver.resolve(spec)` turns a spec
   into `CalcThemeData`.
@@ -66,7 +66,7 @@ Prefix commands with `export PATH=~/flutter-3.47.6/bin:$PATH && ...`
 ## Commands
 
 ```bash
-flutter test                                    # 559 tests, run on both toolchains
+flutter test                                    # 639 tests, run on both toolchains
 flutter analyze                                 # must be "No issues found" on 3.47.6
 dart format --output=none --set-exit-if-changed lib test example/lib example/screenshots
 (cd example && flutter analyze)
@@ -117,10 +117,10 @@ pana --no-warning --flutter-sdk ~/flutter-3.47.6 .   # pub.dev score, expect 160
   `Random(seed)` in generation, and never `sin`/`cos`/`atan2`/`pow` from
   `dart:math` in generator outputs.
 - `ThemeSpec` is a pure function of (seed, family, engineVersion,
-  accessible): identical `toJson` and `hashCode` on every run and
-  platform.
+  accessible, intent, centred): identical `toJson` and `hashCode` on
+  every run and platform.
 - **Any change to generator output needs an engine version bump**
-  (`currentEngineVersion` in `generator.dart`, now 3) and a golden JSON
+  (`currentEngineVersion` in `generator.dart`, now 4) and a golden JSON
   fixture (`test/engine/fixtures/`) proving older versions still reproduce
   exactly. Saved feeds, favourites and share codes in shipped apps depend
   on this.
@@ -134,8 +134,26 @@ pana --no-warning --flutter-sdk ~/flutter-3.47.6 .   # pub.dev score, expect 160
 
   Repairs use OKLCH lightness bisection. A failing theme never ships: the
   generator retries the next sub-seed and finally falls back to a hero.
-- Stable ids (family ids, font ids, hero ids) are stored data. Never
-  renumber them.
+- Stable ids (family ids, font ids, hero ids, `IntentColor.code`, the
+  `steeredHarmonies` order) are stored data. Never renumber them.
+
+### Steering (`theme_intent.dart`, `steering.dart`)
+- A host turns words into a `ThemeIntent`. The package never sees text
+  and takes no AI dependency.
+- Steering narrows existing draws; it never removes one. Brightness and
+  the harmony scheme are drawn and then overridden, chroma ranges are
+  narrowed before sampling, and steered hues come from the
+  `palette…/intent` sub-stream. Without an intent, output is unchanged.
+- Steering exists from engine v4 on. Changing how an intent is applied
+  changes steered output: bump the engine version and keep
+  `fixtures/steered_v4.json` reproducing.
+- `ThemeIntent.vocabulary` is append-only, and a test pins it: hosts
+  generate prompts and schemas from it. `steerableFamilies` lists the
+  families that honour steering. To add one, steer its builder, add it to
+  the set, and teach `reportFor` what it can't honour.
+- `ThemeVariant` values are only ever added, and each addition breaks
+  hosts with exhaustive switches (2.0.0 added `steered`): it's a major
+  version.
 
 ### Rendering
 - Fonts are declared in this package's pubspec. Every family name carries
