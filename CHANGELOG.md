@@ -2,82 +2,43 @@
 
 Steering: generate themes that match a description.
 
-### Breaking changes
+### Breaking
 
-- `ThemeVariant` has a new value, `steered`. A `switch` over
-  `ThemeVariant` without a default no longer compiles: add
-  `case ThemeVariant.steered` (a generated theme shaped by a
-  `ThemeIntent`; treat it like `generated`).
+- `ThemeVariant` has a new value, `steered`. Add it to exhaustive
+  switches. A steered spec rebuilds like a generated one:
 
-### Compatibility
-
-- New themes are made with engine version 4. Unsteered v4 themes look
-  exactly like v3 (only the version number differs), and themes saved
-  or shared from versions 1 to 3 still open and reproduce exactly.
-- Apps on 1.x can't open what 2.0.0 makes. Share codes of new themes
-  carry engine version 4, which 1.x decodes but can't generate (it
-  throws `UnsupportedEngineVersion`, the "update the app" case), and
-  steered codes (25 symbols) read as invalid. A feed saved by 2.0.0 and
-  restored by 1.x drops its v4 themes. Nothing ever opens as a
-  different theme.
-- `normalizeShareCode` and `decodeShareCode` now also accept 25-symbol
-  steered codes. Code that assumed exactly 10 symbols, such as a text
-  field length limit, should allow 25 plus hyphens (29 characters).
-- `SharePayload`, `FeedEntry` and `ThemeSpec` have new optional fields
-  (intent, centred, link name), included in `==` and in JSON only when
-  set. Existing JSON and hashes are unchanged.
-
-### Migrating from 1.x
-
-1. Add `ThemeVariant.steered` to exhaustive switches. A steered spec
-   rebuilds from its recipe like a generated one, for example to apply
-   the Accessible lock:
-
-   ```dart
-   case ThemeVariant.generated || ThemeVariant.steered:
-     return FeedEntry.ofSpec(spec).resolve(accessible: accessible);
-   ```
-
-   `FeedEntry.ofSpec` keeps a steered spec's intent and name.
-2. If you build share codes by hand with `encodeShareCode`, switch to
-   `entry.shareCode`, and use `FeedEntry.fromSharePayload` to decode.
-   Hand-built codes leave out a steered theme's intent.
-3. Optionally, show `shareCodeStatus(code) == ShareCodeStatus.needsUpdate`
-   as "update the app" rather than "invalid code".
-
-Nothing else needs to change: without an intent, the feed behaves as in
-1.x.
+  ```dart
+  case ThemeVariant.generated || ThemeVariant.steered:
+    return FeedEntry.ofSpec(spec).resolve(accessible: accessible);
+  ```
 
 ### New
 
-- `ThemeIntent` describes the look a host wants: colours (26 named, such
-  as green, navy or lavender), light or dark, how colourful, colour
-  harmony and an optional name. A host builds one from the user's words
-  however it likes (an on-device model, mood chips) and passes it to
-  `CalseeThemeController(intent: …)`, `CalseeScope(intent: …)`,
-  `ThemeFeed.steer` or `ThemeGenerator.generate(intent: …)`. The package
-  never sees the words.
-- Steered themes are endless variations on the intent, and the first one
-  sits at its centre. Every contrast guardrail still runs.
+- `ThemeIntent`: colours (26 named), light or dark, chroma, harmony and
+  a name. Pass it to `CalseeThemeController(intent:)`,
+  `CalseeScope(intent:)`, `ThemeFeed.steer` or
+  `ThemeGenerator.generate(intent:)`. The feed shows endless variations,
+  starting at the intent's centre, and every guardrail still runs.
 - Material 3 Expressive, NeoPOP and Claymorphism honour steering
-  (`steerableFamilies`). Other families take only the name. Use
-  `ThemeIntent.reportFor(family)` to see which hints a family can't
-  follow.
-- For model output: `ThemeIntent.parse` reads loose JSON and never throws.
-  `ThemeIntent.vocabulary` gives every field and value with a one-line
-  description, and `ThemeIntent.jsonSchema()` and
-  `ThemeIntent.promptFragment()` are generated from it.
-- Steered themes have a longer share code that carries the intent, and
-  `shareCodeStatus` tells an invalid code apart from one made by a newer
-  app. Links can carry a theme name (`?name=`).
-- `FeedEntry.shareCode` and `FeedEntry.fromSharePayload` turn feed
-  entries into share codes and back.
-- The package now exports `HarmonyScheme` and `ThemeVariant` from
-  `calsee_themes.dart`.
+  (`steerableFamilies`); other families take only the name.
+  `intent.reportFor(family)` lists what a family can't follow.
+- For on-device models: `ThemeIntent.parse` (lenient, never throws),
+  `ThemeIntent.vocabulary`, `ThemeIntent.jsonSchema()` and
+  `ThemeIntent.promptFragment()`.
+- Steered themes share as 25-symbol codes. Use `entry.shareCode` and
+  `FeedEntry.fromSharePayload` instead of encoding codes by hand;
+  `shareCodeStatus` tells an invalid code from one made by a newer app.
+- Includes the 1.1.1 Vaporwave font fix.
 
-### Fixes
+### Compatibility
 
-- Includes 1.1.1: Vaporwave's π and maths glyphs draw in Roboto Flex.
+- New themes use engine version 4. Unsteered themes look the same as in
+  1.x, and saved or shared 1.x themes reproduce exactly.
+- Apps on 1.x can't open share codes or saved feeds made by 2.0.0: they
+  report an unsupported engine version or an invalid code, never a
+  different theme.
+- `decodeShareCode` also accepts 25-symbol codes (29 characters with
+  hyphens).
 
 ## 1.1.1
 
