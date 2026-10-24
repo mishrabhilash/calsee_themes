@@ -17,25 +17,15 @@ class ShareExample extends StatefulWidget {
 class _ShareExampleState extends State<ShareExample> {
   String? _copied;
 
-  /// The share code of [entry].
-  static String codeOf(FeedEntry entry) => entry.heroId != null
-      ? encodeShareCode(shareFamilyHero, entry.engineVersion, entry.heroId!)
-      : encodeShareCode(entry.family!.id, entry.engineVersion, entry.seed!);
+  /// The share code of [entry]: XXXXX-XXXXX, or five groups for a theme
+  /// steered by a ThemeIntent.
+  static String codeOf(FeedEntry entry) => entry.shareCode;
 
-  /// The theme a share code stands for; null for a mistyped code.
+  /// The theme a share code stands for; null for a mistyped code or one
+  /// from a newer app (see shareCodeStatus).
   static FeedEntry? entryOf(String code) {
     final payload = decodeShareCode(code);
-    if (payload == null) return null;
-    final family = ThemeFamily.fromId(payload.familyId);
-    if (payload.familyId == shareFamilyHero) {
-      return FeedEntry.hero(payload.seed);
-    }
-    if (family == null) return null;
-    return FeedEntry.generated(
-      seed: payload.seed,
-      family: family,
-      engineVersion: payload.engineVersion,
-    );
+    return payload == null ? null : FeedEntry.fromSharePayload(payload);
   }
 
   @override
