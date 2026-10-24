@@ -2,6 +2,45 @@
 
 Steering: generate themes that match a description.
 
+### Breaking changes
+
+- `ThemeVariant` has a new value, `steered`. A `switch` over
+  `ThemeVariant` without a default no longer compiles: add
+  `case ThemeVariant.steered` (a generated theme shaped by a
+  `ThemeIntent`; treat it like `generated`).
+
+### Compatibility
+
+- New themes are made with engine version 4. Unsteered v4 themes look
+  exactly like v3 (only the version number differs), and themes saved
+  or shared from versions 1 to 3 still open and reproduce exactly.
+- Apps on 1.x can't open what 2.0.0 makes. Share codes of new themes
+  carry engine version 4, which 1.x decodes but can't generate (it
+  throws `UnsupportedEngineVersion`, the "update the app" case), and
+  steered codes (25 symbols) read as invalid. A feed saved by 2.0.0 and
+  restored by 1.x drops its v4 themes. Nothing ever opens as a
+  different theme.
+- `normalizeShareCode` and `decodeShareCode` now also accept 25-symbol
+  steered codes. Code that assumed exactly 10 symbols, such as a text
+  field length limit, should allow 25 plus hyphens (29 characters).
+- `SharePayload`, `FeedEntry` and `ThemeSpec` have new optional fields
+  (intent, centred, link name), included in `==` and in JSON only when
+  set. Existing JSON and hashes are unchanged.
+
+### Migrating from 1.x
+
+1. Add `ThemeVariant.steered` to exhaustive switches.
+2. If you build share codes by hand with `encodeShareCode`, switch to
+   `entry.shareCode`, and use `FeedEntry.fromSharePayload` to decode.
+   Hand-built codes leave out a steered theme's intent.
+3. Optionally, show `shareCodeStatus(code) == ShareCodeStatus.needsUpdate`
+   as "update the app" rather than "invalid code".
+
+Nothing else needs to change: without an intent, the feed behaves as in
+1.x.
+
+### New
+
 - `ThemeIntent` describes the look a host wants: colours (26 named, such
   as green, navy or lavender), light or dark, how colourful, colour
   harmony and an optional name. A host builds one from the user's words
@@ -19,17 +58,17 @@ Steering: generate themes that match a description.
   `ThemeIntent.vocabulary` gives every field and value with a one-line
   description, and `ThemeIntent.jsonSchema()` and
   `ThemeIntent.promptFragment()` are generated from it.
-- Engine version 4. Unsteered themes are the same as version 3 apart
-  from the version number, and versions 1 to 3 still reproduce exactly.
-- Steered themes have a longer, 25-symbol share code that carries the
-  intent. `shareCodeStatus` tells an invalid code apart from one made by
-  a newer app. Links can carry a theme name (`?name=`). Builds before
-  2.0.0 reject steered codes as invalid.
+- Steered themes have a longer share code that carries the intent, and
+  `shareCodeStatus` tells an invalid code apart from one made by a newer
+  app. Links can carry a theme name (`?name=`).
 - `FeedEntry.shareCode` and `FeedEntry.fromSharePayload` turn feed
   entries into share codes and back.
+- The package now exports `HarmonyScheme` and `ThemeVariant` from
+  `calsee_themes.dart`.
 
-**Breaking:** `ThemeVariant` has a new value, `steered`. A `switch` over
-`ThemeVariant` without a default needs a `case ThemeVariant.steered`.
+### Fixes
+
+- Includes 1.1.1: Vaporwave's π and maths glyphs draw in Roboto Flex.
 
 ## 1.1.1
 

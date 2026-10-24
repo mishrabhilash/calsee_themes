@@ -27,7 +27,8 @@ import 'package:calsee_themes/calsee_themes.dart';
   `CalseeExpandable`, `CalseeTextField`
 - [Swipe for a theme](#swipe-for-a-theme): `CalseeSwipeArea`
 - [Your own widgets](#your-own-widgets): `CalcTheme.of`, `calseeDisplayStyle`
-- [Share codes](#share-codes): `encodeShareCode`, `themeOfTheDay`
+- [Share codes](#share-codes): `FeedEntry.shareCode`, `themeOfTheDay`
+- [Steering](#steering): `ThemeIntent`
 - [A whole screen](#a-whole-screen)
 
 ## Theme feed
@@ -367,28 +368,52 @@ Useful fields: `background`, `displayText`, `digitKey`, `operatorKey`,
 ## Share codes
 
 Every theme can be written as a short code (`XXXXX-XXXXX`) that shows the
-exact same theme on any device. `themeOfTheDay` gives every user the same
-theme on a given date. Show either with `jumpTo`. `previous()` then
-returns to where the user was.
+exact same theme on any device. Steered themes get a longer code with
+five groups, which carries the intent. `themeOfTheDay` gives every user
+the same theme on a given date. Show any of them with `jumpTo`.
+`previous()` then returns to where the user was.
 
 ```dart
 final themes = CalseeScope.of(context);
-final entry = themes.entry;
-final code = encodeShareCode(
-  entry.family!.id,
-  entry.engineVersion,
-  entry.seed!,
-);
+final code = themes.entry.shareCode;
+
+// Later, on any device:
+final payload = decodeShareCode(code);
+final entry = payload == null ? null : FeedEntry.fromSharePayload(payload);
+if (entry != null) themes.jumpTo(entry);
 
 themes.jumpTo(themeOfTheDay(DateTime.now()));
 ```
 
-Hand-crafted hero themes have no family or seed: encode them with
-`shareFamilyHero` and `entry.heroId`. The example shows both, and how to
-turn a code back into a `FeedEntry` with `decodeShareCode`.
+`decodeShareCode` returns null for a mistyped code. To tell that apart
+from a code made by a newer version of your app, check
+`shareCodeStatus(code)`: `ShareCodeStatus.needsUpdate` means "update the
+app to open this theme". A steered theme's name isn't in its code. To
+send it along, use `formatThemeDeepLink(code, name: spec.name)`, and
+`parseThemeDeepLink` reads it back.
 
 [▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/share) ·
 [Source](../example/lib/gallery/examples/share_example.dart)
+
+## Steering
+
+Give the scope or controller a `ThemeIntent`, and new themes follow it:
+
+```dart
+CalseeScope(
+  intent: ThemeIntent(
+    colors: const [IntentColor.teal, IntentColor.coral],
+    brightness: ThemeBrightness.dark,
+  ),
+  child: ...,
+)
+```
+
+Change it later with `CalseeScope.of(context).intent = …`, or set it to
+null to go back to the normal feed. Steered themes report
+`ThemeVariant.steered` in `spec.variant`. The
+[README](../README.md#steering-themes-from-words) covers turning a
+user's words into an intent with an on-device model.
 
 ## A whole screen
 

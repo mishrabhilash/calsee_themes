@@ -43,7 +43,7 @@ read.
 
 ```yaml
 dependencies:
-  calsee_themes: ^1.1.0
+  calsee_themes: ^2.0.0
 ```
 
 ```dart
