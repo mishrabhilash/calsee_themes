@@ -31,7 +31,7 @@ import 'package:flutter/widgets.dart';
 /// neither, and come from CalseeSymbols ([scriptFallbackFonts]), which
 /// also draws the labels' super- and subscript runs (`KeyLabel`).
 const List<String> vaporwaveFontFallback = [
-  'RobotoFlex',
+  '${fontPackagePrefix}RobotoFlex',
   ...scriptFallbackFonts,
 ];
 

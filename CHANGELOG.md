@@ -1,3 +1,11 @@
+## 1.1.1
+
+- Vaporwave's π and its maths operator glyphs (+ − × ÷ = ±) now draw in
+  the bundled Roboto Flex as intended. Its fallback font list named
+  Roboto Flex without the package prefix, so every app drew them in the
+  platform font. A test now checks that every font name the package uses
+  carries the prefix.
+
 ## 1.1.0
 
 - Form controls drawn by the theme: `CalseeCheckbox`, `CalseeRadio`,
