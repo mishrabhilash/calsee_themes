@@ -35,7 +35,11 @@ void main() {
     final pinned = <int, Set<int>>{};
     for (final f in Directory('test/engine/fixtures').listSync()) {
       final name = f.uri.pathSegments.last;
-      if (f is! File || !name.endsWith('.json') || name.startsWith('steered')) {
+      // steered_*.json pins steering; clear_keys.json the AC colours.
+      if (f is! File ||
+          !name.endsWith('.json') ||
+          name.startsWith('steered') ||
+          name == 'clear_keys.json') {
         continue;
       }
       final json = jsonDecode(f.readAsStringSync()) as Map<String, Object?>;

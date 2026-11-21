@@ -295,10 +295,11 @@ const double bauhausHoldBarClearance = 0.13;
 /// The thinnest long-press bar drawn, dp (none below it).
 const double bauhausMinHoldBar = 1.5;
 
-/// Key roles that carry the function accent (when the theme has one).
+/// Key roles that carry the function accent (when the theme has one). AC
+/// is a block in a primary of its own (`ThemeSpec.clearKey`), so it
+/// carries none.
 const Set<KeyRole> bauhausAccentRoles = {
   KeyRole.backspace,
-  KeyRole.clear,
   KeyRole.paren,
   KeyRole.percent,
 };

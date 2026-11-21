@@ -1,0 +1,1363 @@
+{
+  "cases": [
+    {
+      "family": 1,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffda7aa7",
+        "label": "ff131001",
+        "edge": "ffec98bf"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffd95546",
+        "label": "ff1f151a",
+        "edge": "ffb34639"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ff9e6400",
+        "label": "ffe4fbe7",
+        "edge": "ff805000"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ffee7974",
+        "label": "ff040f18",
+        "edge": "fffe9b95"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "colors": [
+          "orange",
+          "pink"
+        ]
+      },
+      "clear": {
+        "face": "ff963222",
+        "label": "fffff8f2",
+        "edge": "ff752316"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ff861c03",
+        "label": "ffffffff",
+        "edge": "ff631000"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffff9c96",
+        "label": "ff082763",
+        "edge": "ffffc5c0"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 8,
+      "engineVersion": 1,
+      "accessible": false,
+      "clear": {
+        "face": "ffdd64aa",
+        "label": "ff001504",
+        "edge": "ffb8558e"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 8,
+      "engineVersion": 2,
+      "accessible": false,
+      "clear": {
+        "face": "ffdd64aa",
+        "label": "ff001504",
+        "edge": "ffb8558e"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ffdd64aa",
+        "label": "ff001504",
+        "edge": "ffb8558e"
+      }
+    },
+    {
+      "family": 1,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ffdd64aa",
+        "label": "ff001504",
+        "edge": "ffb8558e"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "daff6456",
+        "label": "ff141016",
+        "edge": "7bfefaff"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "bcff6eb4",
+        "label": "ff0e0f0d",
+        "edge": "95f9fdf7"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "c2f28b74",
+        "label": "ff0e1213",
+        "edge": "80f6fdff"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "e7dd7670",
+        "label": "ff000000",
+        "edge": "ff432d1f"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "chroma": "muted"
+      },
+      "clear": {
+        "face": "f5995d3e",
+        "label": "fff1faff",
+        "edge": "ebf8fdff"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ccf77b71",
+        "label": "ff111117",
+        "edge": "89fbfbff"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "d0ff949e",
+        "label": "ff000001",
+        "edge": "fff6fdff"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 8,
+      "engineVersion": 2,
+      "accessible": false,
+      "clear": {
+        "face": "d0ff6628",
+        "label": "ff160f16",
+        "edge": "71fffaff"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "d0ff6628",
+        "label": "ff160f16",
+        "edge": "71fffaff"
+      }
+    },
+    {
+      "family": 2,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "d0ff6628",
+        "label": "ff160f16",
+        "edge": "71fffaff"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "fff58173",
+        "label": "ff140e08",
+        "edge": "ffae5147"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffff99c6",
+        "label": "ff0a1208",
+        "edge": "ffd54a91"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffb8770c",
+        "label": "ff190c02",
+        "edge": "ff744900"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ffffa09a",
+        "label": "ff001317",
+        "edge": "ffc06a65"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "brightness": "dark",
+        "colors": [
+          "blue"
+        ]
+      },
+      "clear": {
+        "face": "ffd95640",
+        "label": "ff05101c",
+        "edge": "ff883325"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ffff8d4f",
+        "label": "ff0d0d0d",
+        "edge": "ffb75d28"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffffa282",
+        "label": "ff000000",
+        "edge": "ffce4600"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 8,
+      "engineVersion": 1,
+      "accessible": false,
+      "clear": {
+        "face": "fff62372",
+        "label": "ff130e12",
+        "edge": "ffa20046"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 8,
+      "engineVersion": 2,
+      "accessible": false,
+      "clear": {
+        "face": "fffe3f48",
+        "label": "ff130e12",
+        "edge": "ffaf011f"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "fffe3f48",
+        "label": "ff130e12",
+        "edge": "ffaf011f"
+      }
+    },
+    {
+      "family": 3,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "fffe3f48",
+        "label": "ff130e12",
+        "edge": "ffaf011f"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffffa69a",
+        "label": "ff101115",
+        "edge": "ff6a6e77"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "fff2897a",
+        "label": "ff111116",
+        "edge": "ff746b76"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffe37a81",
+        "label": "ff17100b",
+        "edge": "ff7b6866"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ff8c2d2d",
+        "label": "fff2faff",
+        "edge": "ff8c7c73"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "colors": [
+          "red"
+        ]
+      },
+      "clear": {
+        "face": "ff721405",
+        "label": "fffff6f4",
+        "edge": "ff8e7e7c"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ff952e25",
+        "label": "fffff6f3",
+        "edge": "ff8e8578"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffffa096",
+        "label": "ff0b1317",
+        "edge": "ff626c79"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 8,
+      "engineVersion": 2,
+      "accessible": false,
+      "clear": {
+        "face": "ffa74f81",
+        "label": "fffafbf4",
+        "edge": "ff7d857d"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ffa74f81",
+        "label": "fffafbf4",
+        "edge": "ff7d857d"
+      }
+    },
+    {
+      "family": 4,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ffa74f81",
+        "label": "fffafbf4",
+        "edge": "ff7d857d"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "fff58c7f",
+        "label": "ff190b08",
+        "edge": "ffc96e63"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "fff38a7b",
+        "label": "ff140d0d",
+        "edge": "ffc76d5f"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffeb856e",
+        "label": "ff160d0c",
+        "edge": "ffc06753"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ffffa686",
+        "label": "ff110d1a",
+        "edge": "ffdd8161"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "colors": [
+          "orange",
+          "pink"
+        ]
+      },
+      "clear": {
+        "face": "ff7a1d0e",
+        "label": "ffb1a9a3",
+        "edge": "ff4e0902"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ff630d00",
+        "label": "fffff3e7",
+        "edge": "ff360400"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffffa58e",
+        "label": "ff091018",
+        "edge": "ffdb806a"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 8,
+      "engineVersion": 2,
+      "accessible": false,
+      "clear": {
+        "face": "ff903b6d",
+        "label": "ffd6cfce",
+        "edge": "ff691f4c"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ff903b6d",
+        "label": "ffd6cfce",
+        "edge": "ff691f4c"
+      }
+    },
+    {
+      "family": 5,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ff903b6d",
+        "label": "ffd6cfce",
+        "edge": "ff691f4c"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffc47c28",
+        "label": "ff0b0a08",
+        "edge": "ff0b0a08"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "fff3436b",
+        "label": "ff091013",
+        "edge": "ff091013"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "fff57c61",
+        "label": "ff121211",
+        "edge": "fff8f2e2"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ff9d2529",
+        "label": "fff4f5f3",
+        "edge": "ff0c0c0b"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "chroma": "muted"
+      },
+      "clear": {
+        "face": "fff0a798",
+        "label": "ff0b0b08",
+        "edge": "ff0b0b08"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ffffb095",
+        "label": "ff121212",
+        "edge": "ff121212"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffa02e27",
+        "label": "fffcfcfc",
+        "edge": "ff141414"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 8,
+      "engineVersion": 2,
+      "accessible": false,
+      "clear": {
+        "face": "ffff9d97",
+        "label": "ff090a0a",
+        "edge": "ff090a0a"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ffff9d97",
+        "label": "ff090a0a",
+        "edge": "ff090a0a"
+      }
+    },
+    {
+      "family": 6,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ffff9d97",
+        "label": "ff090a0a",
+        "edge": "ff090a0a"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffce685c",
+        "label": "ff291d12",
+        "edge": "70660002"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffd98d32",
+        "label": "ff1c2035",
+        "edge": "704b2a00"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffff9d87",
+        "label": "ff1a2516",
+        "edge": "70801700"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ffe584b9",
+        "label": "ff1e1524",
+        "edge": "70640044"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "brightness": "dark",
+        "colors": [
+          "blue"
+        ]
+      },
+      "clear": {
+        "face": "fff88f7b",
+        "label": "ff0d2337",
+        "edge": "cc010015"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ffd36555",
+        "label": "ff31181c",
+        "edge": "70650300"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ff611300",
+        "label": "ffd0baa3",
+        "edge": "705f1300"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "fffb9c40",
+        "label": "ff0f271b",
+        "edge": "70613400"
+      }
+    },
+    {
+      "family": 7,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "fffb9c40",
+        "label": "ff0f271b",
+        "edge": "70613400"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffffbb57",
+        "label": "ff0c1b1d",
+        "edge": "ff5c5751"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ff3eceff",
+        "label": "ff151b0d",
+        "edge": "ff52595e"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffffc867",
+        "label": "ff021d1f",
+        "edge": "ff5c5751"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ffe2ca16",
+        "label": "ff050d1c",
+        "edge": "ff53595e"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "chroma": "muted"
+      },
+      "clear": {
+        "face": "fffea679",
+        "label": "ff051b25",
+        "edge": "ff4f7c92"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ffff9e94",
+        "label": "ff051c1f",
+        "edge": "ff008e99"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ff00c2fc",
+        "label": "ff170903",
+        "edge": "ff53595f"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ffff807b",
+        "label": "ff0e1a20",
+        "edge": "ff006d96"
+      }
+    },
+    {
+      "family": 10,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ffff807b",
+        "label": "ff0e1a20",
+        "edge": "ff006d96"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ff824c00",
+        "label": "fff0f8f9",
+        "edge": "ff1c2738"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffc82419",
+        "label": "fffefdf7",
+        "edge": "ff162335"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffd9755f",
+        "label": "ff1d2337",
+        "edge": "ffe4ded2"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ff67010e",
+        "label": "fffffcf6",
+        "edge": "ff14221e"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "brightness": "dark",
+        "colors": [
+          "blue"
+        ]
+      },
+      "clear": {
+        "face": "fffe9581",
+        "label": "ff1b2224",
+        "edge": "ffd7e0ee"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ff8a1e00",
+        "label": "fffff9ef",
+        "edge": "ff0d1525"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffa90014",
+        "label": "fff2faff",
+        "edge": "ff171a1c"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ffc7202e",
+        "label": "fffff9f0",
+        "edge": "ff301f18"
+      }
+    },
+    {
+      "family": 11,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ffc7202e",
+        "label": "fffff9f0",
+        "edge": "ff301f18"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffffae59",
+        "label": "ff070d1a",
+        "edge": "ffffc68e"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffff8877",
+        "label": "ff17080f",
+        "edge": "ffffb7ab"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffffb554",
+        "label": "ff100e01",
+        "edge": "ff0f0600"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ffff5e5d",
+        "label": "ff000001",
+        "edge": "fffc9993"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "colors": [
+          "orange",
+          "pink"
+        ]
+      },
+      "clear": {
+        "face": "fff6516d",
+        "label": "ff180804",
+        "edge": "ff090102"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ffffc071",
+        "label": "ff060d1a",
+        "edge": "ffffd6a5"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffffb271",
+        "label": "ff0c0c03",
+        "edge": "ff100601"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ffffb270",
+        "label": "ff001112",
+        "edge": "ffffdbbe"
+      }
+    },
+    {
+      "family": 13,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ffffb270",
+        "label": "ff001112",
+        "edge": "ffffdbbe"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffd75398",
+        "label": "ff13132b",
+        "edge": "ff1d1a34"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffd1458d",
+        "label": "ff100b27",
+        "edge": "ff1b0e37"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffbd7900",
+        "label": "ff1d153c",
+        "edge": "ff050112"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ff983837",
+        "label": "fffdfeff",
+        "edge": "ff1d1742"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "chroma": "muted"
+      },
+      "clear": {
+        "face": "ffb36e61",
+        "label": "ff15122a",
+        "edge": "ff05040d"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "ffbd7900",
+        "label": "ff1d153c",
+        "edge": "ff050112"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ffe9e77c",
+        "label": "ff191535",
+        "edge": "ff1f1d38"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ffcf489a",
+        "label": "ff0f1024",
+        "edge": "ff030110"
+      }
+    },
+    {
+      "family": 14,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ffcf489a",
+        "label": "ff0f1024",
+        "edge": "ff030110"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 1,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ff2b4bac",
+        "label": "ffc6c6c6",
+        "edge": "ff2b4bac"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 2,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ff2b4bac",
+        "label": "fffef5ec",
+        "edge": "ff2b4bac"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 3,
+      "engineVersion": 5,
+      "accessible": false,
+      "clear": {
+        "face": "ffe3b400",
+        "label": "ff504a3e",
+        "edge": "ffe3b400"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 4,
+      "engineVersion": 5,
+      "accessible": true,
+      "clear": {
+        "face": "ff6d0900",
+        "label": "fffcf3e7",
+        "edge": "ff6d0900"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 5,
+      "engineVersion": 5,
+      "accessible": false,
+      "intent": {
+        "brightness": "dark",
+        "colors": [
+          "blue"
+        ]
+      },
+      "clear": {
+        "face": "ffcc2a15",
+        "label": "fff4f2fc",
+        "edge": "ffcc2a15"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 6,
+      "engineVersion": 5,
+      "accessible": false,
+      "hero": true,
+      "clear": {
+        "face": "fffcca21",
+        "label": "ff5e5950",
+        "edge": "fffcca21"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 7,
+      "engineVersion": 5,
+      "accessible": true,
+      "hero": true,
+      "clear": {
+        "face": "ff122b8a",
+        "label": "fff9f4e9",
+        "edge": "ff122b8a"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 8,
+      "engineVersion": 3,
+      "accessible": false,
+      "clear": {
+        "face": "ff2b4bac",
+        "label": "ffc7c5c2",
+        "edge": "ff2b4bac"
+      }
+    },
+    {
+      "family": 15,
+      "seed": 8,
+      "engineVersion": 4,
+      "accessible": false,
+      "clear": {
+        "face": "ff2b4bac",
+        "label": "ffc7c5c2",
+        "edge": "ff2b4bac"
+      }
+    }
+  ]
+}

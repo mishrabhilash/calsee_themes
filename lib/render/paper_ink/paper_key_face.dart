@@ -63,7 +63,9 @@ import 'package:flutter/widgets.dart';
 PaperArtKind paperArtKindOf(KeyRole role) => switch (role) {
   KeyRole.digit || KeyRole.decimal || KeyRole.sign => PaperArtKind.slipDigit,
   KeyRole.operator => PaperArtKind.operator,
-  KeyRole.equals => PaperArtKind.stamp,
+  // AC wears its own ink colour as a rubber stamp too (`ThemeSpec.clearKey`
+  // takes the `=` stamp's look).
+  KeyRole.equals || KeyRole.clear => PaperArtKind.stamp,
   _ => PaperArtKind.slipFunction,
 };
 

@@ -35,6 +35,7 @@ final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     required this.operatorSkirt,
     required this.equalsSkirt,
     required this.functionSkirt,
+    this.clearSkirt,
     this.cornerFraction = 0.15,
     this.highlight = const Color(0x8CFFFFFF),
     this.shade = const Color(0x47000000),
@@ -51,6 +52,9 @@ final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
   final Color operatorSkirt;
   final Color equalsSkirt;
   final Color functionSkirt;
+
+  /// Skirt of the AC key (`KeyRole.clear`); null = [functionSkirt].
+  final Color? clearSkirt;
 
   /// Cap corner radius as a fraction of its short side (0–0.5).
   final double cornerFraction;
@@ -75,6 +79,7 @@ final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     KeyRole.digit || KeyRole.decimal || KeyRole.sign => digitSkirt,
     KeyRole.operator => operatorSkirt,
     KeyRole.equals => equalsSkirt,
+    KeyRole.clear => clearSkirt ?? functionSkirt,
     _ => functionSkirt,
   };
 
@@ -141,6 +146,9 @@ final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       operatorSkirt: color(a.operatorSkirt, b.operatorSkirt),
       equalsSkirt: color(a.equalsSkirt, b.equalsSkirt),
       functionSkirt: color(a.functionSkirt, b.functionSkirt),
+      clearSkirt: a.clearSkirt == null && b.clearSkirt == null
+          ? null
+          : color(a.skirtFor(KeyRole.clear), b.skirtFor(KeyRole.clear)),
       cornerFraction:
           (a.cornerFraction + (b.cornerFraction - a.cornerFraction) * t).clamp(
             0.0,
@@ -166,6 +174,7 @@ final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       other.operatorSkirt == operatorSkirt &&
       other.equalsSkirt == equalsSkirt &&
       other.functionSkirt == functionSkirt &&
+      other.clearSkirt == clearSkirt &&
       other.cornerFraction == cornerFraction &&
       other.highlight == highlight &&
       other.shade == shade &&
@@ -181,6 +190,7 @@ final class RetroKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     operatorSkirt,
     equalsSkirt,
     functionSkirt,
+    clearSkirt,
     cornerFraction,
     highlight,
     shade,

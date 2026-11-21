@@ -66,7 +66,7 @@ Prefix commands with `export PATH=~/flutter-3.47.6/bin:$PATH && ...`
 ## Commands
 
 ```bash
-flutter test                                    # 698 tests, run on both toolchains
+flutter test                                    # 712 tests, run on both toolchains
 flutter analyze                                 # must be "No issues found" on 3.47.6
 dart format --output=none --set-exit-if-changed lib test example/lib example/screenshots
 (cd example && flutter analyze)
@@ -136,6 +136,11 @@ pana --no-warning --flutter-sdk ~/flutter-3.47.6 .   # pub.dev score, expect 160
   generator retries the next sub-seed and finally falls back to a hero.
 - Stable ids (family ids, font ids, hero ids, `IntentColor.code`, the
   `steeredHarmonies` order) are stored data. Never renumber them.
+- The AC key's colours (`clear_key.dart`, `ThemeSpec.clearKey`) are
+  derived from a finished spec, not stored in it. That's why every older
+  theme has them without a version bump. The derivation is frozen like
+  generator output: `fixtures/clear_keys.json` pins it, and any change
+  must be gated on a new engine version.
 
 ### Steering (`theme_intent.dart`, `steering.dart`)
 - A host turns words into a `ThemeIntent`. The package never sees text

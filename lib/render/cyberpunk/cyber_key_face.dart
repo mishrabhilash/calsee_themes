@@ -391,8 +391,12 @@ class CyberKeyPainter extends CustomPainter {
   CyberKeyGeometry? _geometry;
   Size? _geometrySize;
 
-  /// Whether this key is a slab (operator or `=`).
-  bool get slab => spec.role == KeyRole.operator || spec.role == KeyRole.equals;
+  /// Whether this key is a slab (operator, `=` or AC, which takes the
+  /// operator slab's look in its own colour: `ThemeSpec.clearKey`).
+  bool get slab =>
+      spec.role == KeyRole.operator ||
+      spec.role == KeyRole.equals ||
+      spec.role == KeyRole.clear;
 
   /// Press depth used for geometry: clamped to [0, 1], discrete under
   /// Reduce Motion.

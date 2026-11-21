@@ -31,6 +31,7 @@ final class CalcThemeData {
     required this.operatorKey,
     required this.equalsKey,
     required this.functionKey,
+    KeyStyle? clearKey,
     this.keyCornerFraction = 0.3,
     this.displayFontFamily,
     this.displayWeight,
@@ -49,7 +50,8 @@ final class CalcThemeData {
     this.displayFace,
     this.accessiblePreviewText,
     this.chrome,
-  }) : displayEntry = displayEntry ?? DisplayEntry.none,
+  }) : _clearKey = clearKey,
+       displayEntry = displayEntry ?? DisplayEntry.none,
        pressIn = pressIn ?? effectsFast,
        release = release ?? effectsDefault;
 
@@ -72,6 +74,9 @@ final class CalcThemeData {
       operatorKey: KeyStyle.lerp(a.operatorKey, b.operatorKey, t),
       equalsKey: KeyStyle.lerp(a.equalsKey, b.equalsKey, t),
       functionKey: KeyStyle.lerp(a.functionKey, b.functionKey, t),
+      clearKey: a._clearKey == null && b._clearKey == null
+          ? null
+          : KeyStyle.lerp(a.clearKey, b.clearKey, t),
       keyCornerFraction: number(a.keyCornerFraction, b.keyCornerFraction),
       displayFontFamily: pick(a.displayFontFamily, b.displayFontFamily),
       displayWeight: pick(a.displayWeight, b.displayWeight),
@@ -161,8 +166,16 @@ final class CalcThemeData {
   /// `=`.
   final KeyStyle equalsKey;
 
-  /// Everything else: ⌫/AC, `( )`, `%`, functions, memory, modes.
+  /// Everything else: ⌫, `( )`, `%`, functions, memory, modes (and AC,
+  /// when the theme has no [clearKey] of its own).
   final KeyStyle functionKey;
+
+  /// The all-clear key (`KeyRole.clear`, AC): a colour of its own, so AC
+  /// stands apart from every other key. Generated themes and the plain
+  /// theme have one; a theme built without one (a host's own
+  /// [CalcThemeData]) gives AC the [functionKey] style, as before.
+  KeyStyle get clearKey => _clearKey ?? functionKey;
+  final KeyStyle? _clearKey;
 
   /// Key corner radius as a fraction of the key's shorter side (0 = square,
   /// 0.5 = fully round). M3 adds real shapes.
@@ -263,10 +276,10 @@ final class CalcThemeData {
     KeyRole.digit || KeyRole.decimal || KeyRole.sign => digitKey,
     KeyRole.operator => operatorKey,
     KeyRole.equals => equalsKey,
+    KeyRole.clear => clearKey,
     KeyRole.function ||
     KeyRole.constant ||
     KeyRole.paren ||
-    KeyRole.clear ||
     KeyRole.backspace ||
     KeyRole.percent ||
     KeyRole.memory ||
@@ -287,6 +300,7 @@ final class CalcThemeData {
           other.operatorKey.labelWeight == operatorKey.labelWeight &&
           other.equalsKey.labelWeight == equalsKey.labelWeight &&
           other.functionKey.labelWeight == functionKey.labelWeight &&
+          other.clearKey.labelWeight == clearKey.labelWeight &&
           (other.digitKey.outline == null) == (digitKey.outline == null) &&
           _sameSpring(other.pressIn, pressIn) &&
           _sameSpring(other.release, release) &&
@@ -316,6 +330,7 @@ final class CalcThemeData {
       other.operatorKey == operatorKey &&
       other.equalsKey == equalsKey &&
       other.functionKey == functionKey &&
+      other.clearKey == clearKey &&
       other.keyCornerFraction == keyCornerFraction &&
       other.displayFontFamily == displayFontFamily &&
       other.displayWeight == displayWeight &&
@@ -348,6 +363,7 @@ final class CalcThemeData {
     operatorKey,
     equalsKey,
     functionKey,
+    clearKey,
     keyCornerFraction,
     displayFontFamily,
     displayWeight,

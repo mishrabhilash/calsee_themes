@@ -99,6 +99,7 @@ final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     required this.frostColor,
     required this.glow,
     required this.shadow,
+    this.clear,
     this.frost = 0.15,
     this.highlight = 0.6,
     this.refraction = 0.5,
@@ -121,6 +122,9 @@ final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
   final GlassTint operator;
   final GlassTint equals;
   final GlassTint function;
+
+  /// The AC key's tint (`KeyRole.clear`); null = [function].
+  final GlassTint? clear;
 
   /// The frost underlay: the background's base colour (opaque).
   final Color frostColor;
@@ -166,6 +170,7 @@ final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     KeyRole.digit || KeyRole.decimal || KeyRole.sign => digit,
     KeyRole.operator => operator,
     KeyRole.equals => equals,
+    KeyRole.clear => clear ?? function,
     _ => function,
   };
 
@@ -203,6 +208,13 @@ final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       operator: GlassTint.lerp(a.operator, b.operator, c),
       equals: GlassTint.lerp(a.equals, b.equals, c),
       function: GlassTint.lerp(a.function, b.function, c),
+      clear: a.clear == null && b.clear == null
+          ? null
+          : GlassTint.lerp(
+              a.tintFor(KeyRole.clear),
+              b.tintFor(KeyRole.clear),
+              c,
+            ),
       frostColor: color(a.frostColor, b.frostColor),
       glow: color(a.glow, b.glow),
       shadow: color(a.shadow, b.shadow),
@@ -247,6 +259,7 @@ final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       other.operator == operator &&
       other.equals == equals &&
       other.function == function &&
+      other.clear == clear &&
       other.frostColor == frostColor &&
       other.frost == frost &&
       other.glow == glow &&
@@ -271,6 +284,7 @@ final class GlassKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     operator,
     equals,
     function,
+    clear,
     frostColor,
     frost,
     glow,

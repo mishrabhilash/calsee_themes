@@ -115,8 +115,9 @@ The `role` picks which of the theme's faces the key wears:
 | `KeyRole.equals` | The one primary action (OK, Submit). It wears the theme's accent. Keep its label short: Material 3 Expressive and Bauhaus may draw it as a blob or a triangle. |
 | `KeyRole.operator` | Secondary actions. |
 | `KeyRole.function` | Tertiary actions and toggles. |
+| `KeyRole.clear` | Clear or reset everything (AC). It has a colour of its own, a warm alert key in most themes, that stands apart from every other key. |
 | `KeyRole.digit` | Everything else. |
-| `decimal`, `clear`, `backspace`, `sign`, `percent`, `constant`, `paren`, `memory`, `mode` | Calculator keys. They take the colours of `digit` (`decimal`, `sign`) or `function` (the rest). Material 3 Expressive and Bauhaus also give some roles their own shapes. |
+| `decimal`, `backspace`, `sign`, `percent`, `constant`, `paren`, `memory`, `mode` | Calculator keys. They take the colours of `digit` (`decimal`, `sign`) or `function` (the rest). Material 3 Expressive and Bauhaus also give some roles their own shapes. |
 
 - No `onPressed` and no `onLongPress`: the key is disabled and dimmed.
 - With `onLongPress`, a hold fills the face, then fires.
@@ -359,7 +360,7 @@ CustomPaint(
 ```
 
 Useful fields: `background`, `displayText`, `digitKey`, `operatorKey`,
-`functionKey` and `equalsKey` (each with `fill` and `label`),
+`functionKey`, `equalsKey` and `clearKey` (each with `fill` and `label`),
 `keyFontFamily`, `displayFontFamily` and `keyCornerFraction`.
 
 [▶ Try it](https://mishrabhilash.github.io/calsee_themes/#/theme-data) ·

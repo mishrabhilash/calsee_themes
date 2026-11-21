@@ -52,9 +52,10 @@ import 'package:calsee_themes/render/key_face.dart';
 import 'package:flutter/widgets.dart';
 
 /// Whether a key of [role] wears satin metal on a CHROME face (digit and
-/// function groups); operators and `=` are always gel.
+/// function groups); operators, `=` and AC (its own colour,
+/// `ThemeSpec.clearKey`) are always gel.
 bool y2kMetalRole(KeyRole role) => switch (role) {
-  KeyRole.operator || KeyRole.equals => false,
+  KeyRole.operator || KeyRole.equals || KeyRole.clear => false,
   _ => true,
 };
 

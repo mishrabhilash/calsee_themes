@@ -37,6 +37,7 @@ GlassKeyFace glassKeyFaceFor(
     operator: tint(p.operator),
     equals: tint(p.equals),
     function: tint(p.function),
+    clear: tint(spec.clearKey),
     frostColor: Color(glassDiffuseColor(spec.background)),
     frost: style.frostPermille / 1000,
     glow: Color(p.highlight),

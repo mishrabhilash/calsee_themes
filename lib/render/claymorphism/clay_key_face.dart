@@ -96,6 +96,7 @@ final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     required this.equalsShadow,
     required this.functionShadow,
     required this.highlight,
+    this.clearShadow,
     this.depth = 5,
     this.blur = 12,
     this.shadeDepth = 0.09,
@@ -118,6 +119,9 @@ final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
 
   /// Drop shadow of function keys.
   final Color functionShadow;
+
+  /// Drop shadow of the AC key (`KeyRole.clear`); null = [functionShadow].
+  final Color? clearShadow;
 
   /// The inner highlight (`Palette.highlight`: white at 0xA0–0xC8; the
   /// painted alpha follows [clayHighlightAlphaFor]).
@@ -164,6 +168,7 @@ final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     KeyRole.digit || KeyRole.decimal || KeyRole.sign => digitShadow,
     KeyRole.operator => operatorShadow,
     KeyRole.equals => equalsShadow,
+    KeyRole.clear => clearShadow ?? functionShadow,
     _ => functionShadow,
   };
 
@@ -249,6 +254,9 @@ final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       operatorShadow: color(a.operatorShadow, b.operatorShadow),
       equalsShadow: color(a.equalsShadow, b.equalsShadow),
       functionShadow: color(a.functionShadow, b.functionShadow),
+      clearShadow: a.clearShadow == null && b.clearShadow == null
+          ? null
+          : color(a.shadowFor(KeyRole.clear), b.shadowFor(KeyRole.clear)),
       highlight: color(a.highlight, b.highlight),
       depth: math.max(0, number(a.depth, b.depth)),
       blur: math.max(0, number(a.blur, b.blur)),
@@ -288,6 +296,7 @@ final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       other.operatorShadow == operatorShadow &&
       other.equalsShadow == equalsShadow &&
       other.functionShadow == functionShadow &&
+      other.clearShadow == clearShadow &&
       other.highlight == highlight &&
       other.depth == depth &&
       other.blur == blur &&
@@ -306,6 +315,7 @@ final class ClayKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     operatorShadow,
     equalsShadow,
     functionShadow,
+    clearShadow,
     highlight,
     depth,
     blur,

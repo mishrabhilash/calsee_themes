@@ -1,3 +1,31 @@
+## 2.2.0
+
+The all-clear key gets a colour of its own, so users can find it.
+
+- `KeyRole.clear` (AC) now wears its own colours in every family instead
+  of the function keys'. It's a warm alert key (red first, then
+  vermilion, crimson, amber or rose; Bauhaus uses a spare primary) that
+  stays apart from the digit, function, operator and `=` keys, including
+  for colour-blind users. It keeps each family's look: a NeoPOP slab
+  with its own sides, a Retro cap and skirt, a clay candy with its own
+  shadow, a glass tint, a Y2K gel, a Paper & ink stamp, a Cyberpunk neon
+  slab. Labels meet 4.5:1, and 7:1 under the Accessible lock.
+- `CalcThemeData.clearKey` is the new style, and `keyStyle(KeyRole.clear)`
+  returns it. A `CalcThemeData` built without one gives AC the function
+  style, as before. The plain theme has a red AC key in all four variants.
+- `ThemeSpec.clearKey` gives the colours as `KeyColors`. They're derived
+  from the finished theme, so every saved theme and share code gets them,
+  and `toJson`, `stableHash` and engine output are unchanged (engine
+  version stays 5). `test/engine/fixtures/clear_keys.json` pins them.
+- Family renderers take optional AC colours: `NeoPopKeyFace.clearEdges`,
+  `RetroKeyFace.clearSkirt`, `ClayKeyFace.clearShadow` and
+  `GlassKeyFace.clear`. Without them, AC uses the function key's.
+- Bauhaus no longer draws the function accent on AC; its AC block is the
+  accent.
+
+If your app puts `KeyRole.clear` on a key that shouldn't stand out, give
+it `KeyRole.function`.
+
 ## 2.1.0
 
 Every family now follows a `ThemeIntent`'s colours.

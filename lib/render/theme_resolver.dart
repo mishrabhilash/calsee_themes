@@ -45,7 +45,9 @@ SpringDescription springFromToken(SpringToken token) =>
     );
 
 /// The key colour group of [role] (digit/decimal/sign → digit; operator;
-/// equals; everything else → function).
+/// equals; everything else → function). AC (`KeyRole.clear`) is in the
+/// function group here but has colours of its own: `ThemeSpec.clearKey`
+/// and `CalcThemeData.clearKey`.
 KeyGroup keyGroupOf(KeyRole role) => switch (role) {
   KeyRole.digit || KeyRole.decimal || KeyRole.sign => KeyGroup.digit,
   KeyRole.operator => KeyGroup.operator,
@@ -166,6 +168,9 @@ abstract final class ThemeResolver {
       operatorKey: style(palette.operator, opWeight),
       equalsKey: style(palette.equals, opWeight),
       functionKey: style(palette.function, keyWeight),
+      // AC: its own alert colours (engine `clear_key.dart`), with the
+      // operators' heavier label weight.
+      clearKey: style(spec.clearKey, opWeight),
       keyCornerFraction: _focusCornerFraction(spec),
       displayFontFamily: BundledFont.fromId(type.displayFont).family,
       displayWeight: type.displayWeight,
@@ -435,6 +440,7 @@ RetroKeyFace retroFaceFor(ThemeSpec spec) {
     operatorSkirt: Color(palette.operator.edge),
     equalsSkirt: Color(palette.equals.edge),
     functionSkirt: Color(palette.function.edge),
+    clearSkirt: Color(spec.clearKey.edge),
     cornerFraction: spec.keyShape.cornerFraction.clamp(0.0, 0.5),
     highlight: Color(palette.highlight),
     shade: shadow,
@@ -496,6 +502,7 @@ NeoPopKeyFace neoPopFaceFor(ThemeSpec spec) {
     operatorEdges: edges(palette.operator),
     equalsEdges: edges(palette.equals),
     functionEdges: edges(palette.function),
+    clearEdges: edges(spec.clearKey),
     cornerFraction: spec.keyShape.cornerFraction,
     shape: shapeOf(spec.keyShape.kind),
     operatorShape: opKind == null ? null : shapeOf(opKind),

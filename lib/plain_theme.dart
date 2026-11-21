@@ -9,7 +9,9 @@ import 'package:flutter/widgets.dart';
 /// - display text ≥ 3:1 (actually ≥ 4.5:1) on the background, as are the
 ///   preview and error text;
 /// - operators and `=` differ from digits by more than colour: a heavier
-///   label weight, and `=` has a strongly contrasting fill.
+///   label weight, and `=` has a strongly contrasting fill;
+/// - AC (`clearKey`) is a red key, ΔEOK ≥ 0.08 from every other key fill
+///   under normal and colour-blind vision.
 abstract final class PlainTheme {
   /// Accent used for `=`, the caret and Material chrome.
   static const Color _accentLight = Color(0xFF2F5BD3);
@@ -29,6 +31,11 @@ abstract final class PlainTheme {
       fill: Color(0xFFD3D8E0),
       label: Color(0xFF111418),
       labelWeight: FontWeight.w500,
+    ),
+    clearKey: const KeyStyle(
+      fill: Color(0xFFFF8A7A),
+      label: Color(0xFF410E0B),
+      labelWeight: FontWeight.w600,
     ),
     operatorKey: const KeyStyle(
       fill: Color(0xFFD3DFFF),
@@ -56,6 +63,11 @@ abstract final class PlainTheme {
       fill: Color(0xFF3D424B),
       label: Color(0xFFF2F4F7),
       labelWeight: FontWeight.w500,
+    ),
+    clearKey: const KeyStyle(
+      fill: Color(0xFFB3261E),
+      label: Color(0xFFFFDAD6),
+      labelWeight: FontWeight.w600,
     ),
     operatorKey: const KeyStyle(
       fill: Color(0xFF213258),
@@ -89,6 +101,11 @@ abstract final class PlainTheme {
       label: Color(0xFFFFFFFF),
       labelWeight: FontWeight.w500,
     ),
+    clearKey: const KeyStyle(
+      fill: Color(0xFFC62828),
+      label: Color(0xFFFFFFFF),
+      labelWeight: FontWeight.w600,
+    ),
     operatorKey: const KeyStyle(
       fill: Color(0xFF1A3A9E),
       label: Color(0xFFFFFFFF),
@@ -117,6 +134,11 @@ abstract final class PlainTheme {
       fill: Color(0xFFD5D9E0),
       label: Color(0xFF000000),
       labelWeight: FontWeight.w500,
+    ),
+    clearKey: const KeyStyle(
+      fill: Color(0xFFFF6B5B),
+      label: Color(0xFF000000),
+      labelWeight: FontWeight.w600,
     ),
     operatorKey: const KeyStyle(
       fill: Color(0xFF9CC0FF),

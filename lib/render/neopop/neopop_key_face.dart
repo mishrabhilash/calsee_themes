@@ -58,6 +58,7 @@ final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     required this.operatorEdges,
     required this.equalsEdges,
     required this.functionEdges,
+    this.clearEdges,
     this.cornerFraction = 0,
     this.shape = NeoPopShape.roundedRect,
     this.operatorShape,
@@ -75,6 +76,9 @@ final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
   final NeoPopEdges operatorEdges;
   final NeoPopEdges equalsEdges;
   final NeoPopEdges functionEdges;
+
+  /// Edge tones of the AC key (`KeyRole.clear`); null = [functionEdges].
+  final NeoPopEdges? clearEdges;
 
   /// Corner radius as a fraction of the face's short side (0–0.5).
   final double cornerFraction;
@@ -119,6 +123,9 @@ final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       operatorEdges: edges(a.operatorEdges, b.operatorEdges),
       equalsEdges: edges(a.equalsEdges, b.equalsEdges),
       functionEdges: edges(a.functionEdges, b.functionEdges),
+      clearEdges: a.clearEdges == null && b.clearEdges == null
+          ? null
+          : edges(a.edgesFor(KeyRole.clear), b.edgesFor(KeyRole.clear)),
       cornerFraction: number(a.cornerFraction, b.cornerFraction).clamp(0, 0.5),
       shape: near.shape,
       operatorShape: near.operatorShape,
@@ -138,6 +145,7 @@ final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     KeyRole.digit || KeyRole.decimal || KeyRole.sign => digitEdges,
     KeyRole.operator => operatorEdges,
     KeyRole.equals => equalsEdges,
+    KeyRole.clear => clearEdges ?? functionEdges,
     _ => functionEdges,
   };
 
@@ -203,6 +211,7 @@ final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
       other.operatorEdges == operatorEdges &&
       other.equalsEdges == equalsEdges &&
       other.functionEdges == functionEdges &&
+      other.clearEdges == clearEdges &&
       other.cornerFraction == cornerFraction &&
       other.shape == shape &&
       other.operatorShape == operatorShape &&
@@ -219,6 +228,7 @@ final class NeoPopKeyFace extends ThemedKeyFace implements LerpableKeyFace {
     operatorEdges,
     equalsEdges,
     functionEdges,
+    clearEdges,
     cornerFraction,
     shape,
     operatorShape,

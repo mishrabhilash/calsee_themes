@@ -94,6 +94,7 @@ Swap each visual piece for its themed version and keep your callbacks.
 | Number keys | `CalseeKey.text(d, role: KeyRole.digit)` |
 | `.` key | `CalseeKey.text('.', role: KeyRole.decimal)` |
 | Backspace | `CalseeKey.icon(..., role: KeyRole.backspace)` |
+| Clear all (AC, reset) | `CalseeKey.text('AC', role: KeyRole.clear)` (its own alert colour) |
 | Primary action (OK, Submit) | `CalseeKey.text(..., role: KeyRole.equals)` (the theme's accent) |
 | Secondary actions | `KeyRole.operator` or `KeyRole.function` |
 | Amount, score or timer | `CalseeDisplayPanel` + `CalseeReadout` |

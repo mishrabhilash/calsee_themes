@@ -35,6 +35,7 @@ KeyFaceRenderer claymorphismKeyFaceFor(
     operatorShadow: Color(p.operator.edge),
     equalsShadow: Color(p.equals.edge),
     functionShadow: Color(p.function.edge),
+    clearShadow: Color(spec.clearKey.edge),
     highlight: Color(p.highlight),
     depth: depth / 100,
     blur: blur / 100,

@@ -13,6 +13,7 @@ library;
 
 import 'dart:convert';
 
+import 'package:calsee_themes/engine/clear_key.dart' show clearKeyColors;
 import 'package:calsee_themes/engine/families.dart';
 import 'package:calsee_themes/engine/rng.dart' show mul32;
 import 'package:calsee_themes/engine/theme_intent.dart';
@@ -1545,6 +1546,12 @@ final class ThemeSpec {
 
   /// Whether this is a dark theme.
   bool get isDark => brightness == ThemeBrightness.dark;
+
+  /// The all-clear (AC, `KeyRole.clear`) key's colours: a warm, alert key
+  /// that stands apart from every other key group. Derived from this spec
+  /// (not part of [palette], `toJson` or [stableHash]), so every theme of
+  /// every engine version has one; see `clear_key.dart`.
+  KeyColors get clearKey => clearKeyColors(this);
 
   ThemeSpec copyWith({
     int? seed,

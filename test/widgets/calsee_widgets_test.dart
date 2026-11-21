@@ -200,6 +200,7 @@ void main() {
                       KeyRole.equals,
                       KeyRole.function,
                       KeyRole.operator,
+                      KeyRole.clear,
                     ])
                       SizedBox(
                         width: width,
